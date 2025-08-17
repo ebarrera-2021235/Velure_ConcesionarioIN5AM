@@ -10,12 +10,16 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import modelo.Usuario;
+import modelo.UsuarioDAO;
 
 /**
  *
- * @author USUARIO
+ * @author Estuardo
  */
 public class Validar extends HttpServlet {
+    Usuario usuario = new Usuario();
+    UsuarioDAO usuarioDAO = new UsuarioDAO();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,7 +38,7 @@ public class Validar extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Validar</title>");            
+            out.println("<title>Servlet Validar</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet Validar at " + request.getContextPath() + "</h1>");
@@ -69,7 +73,23 @@ public class Validar extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        //validar que exista un usuario
+        String accion = request.getParameter("accion");
+        if (accion.equalsIgnoreCase("Ingresar")) {
+            String user = request.getParameter("txtUser");
+            String pass = request.getParameter("txtPass");
+            usuario = usuarioDAO.validar(user, pass);
+            if (usuario.getUserName() != null) {
+                request.setAttribute("usuario", usuario);
+                request.getRequestDispatcher("Controlador?menu=Principal").forward(request, response);
+            } else {
+                request.setAttribute("loginError", "failed");
+                request.getRequestDispatcher("index.jsp").forward(request, response);
+            }
+
+        } else {
+            request.getRequestDispatcher("index.jsp").forward(request, response);
+        }
     }
 
     /**
