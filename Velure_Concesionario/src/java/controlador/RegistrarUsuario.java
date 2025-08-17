@@ -10,15 +10,17 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import modelo.Empleado;
+import modelo.EmpleadoDAO;
 import modelo.Usuario;
 import modelo.UsuarioDAO;
 
 /**
  *
- * @author Estuardo
+ * @author Estuardo Gomez
  */
-public class Validar extends HttpServlet {
-    Usuario usuario = new Usuario();
+public class RegistrarUsuario extends HttpServlet {
+    EmpleadoDAO empleadoDAO = new EmpleadoDAO();
     UsuarioDAO usuarioDAO = new UsuarioDAO();
 
     /**
@@ -38,10 +40,10 @@ public class Validar extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Validar</title>");
+            out.println("<title>Servlet RegistrarUsuario</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet Validar at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet RegistrarUsuario at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -73,23 +75,60 @@ public class Validar extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //validar que exista un usuario
-        String accion = request.getParameter("accion");
-        if (accion.equalsIgnoreCase("Ingresar")) {
-            String user = request.getParameter("txtUser");
-            String pass = request.getParameter("txtPass");
-            usuario = usuarioDAO.validar(user, pass);
-            if (usuario.getUserName() != null) {
-                request.setAttribute("usuario", usuario);
-                request.getRequestDispatcher("Controlador?menu=Principal").forward(request, response);
-            } else {
-                request.setAttribute("loginError", "failed");
-                request.getRequestDispatcher("index.jsp").forward(request, response);
-            }
-
-        } else {
-            request.getRequestDispatcher("index.jsp").forward(request, response);
+        //request se encarga de saber si es post o do
+        String nombresUsuario = request.getParameter("nombre");
+        String userName = request.getParameter("usuario");
+        String contrasenia = request.getParameter("pass");
+        String correoUsuario = request.getParameter("correo");
+        
+        if(!correoUsuario.matches("^[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,5}$")){
+            request.setAttribute("error", "campoVacio");
+            request.getRequestDispatcher("Registrarse.jsp").forward(request, response);
         }
+        
+        //aqui se busca
+        Empleado empleado = empleadoDAO.validar(correoUsuario);
+        
+        if(empleado.getCodigoEmpleado() <= 0){
+            request.setAttribute("error", "existeEmp");
+            request.getRequestDispatcher("Registrarse.jsp").forward(request, response);
+            return;
+            //valida si el nombre de un usuario ya  existe
+        }else if(usuarioDAO.existeUsuario(userName)){
+            request.setAttribute("error", "existeUser");
+            request.getRequestDispatcher("Registrarse.jsp").forward(request, response);
+            return;
+            //valida que el empleado no tenga ya un usuario
+        }else if(usuarioDAO.tieneUsuario(empleado.getCodigoEmpleado())){
+            request.setAttribute("error", "existeUserEmp");
+            request.getRequestDispatcher("Registrarse.jsp").forward(request, response);
+            return;
+        }
+          
+        Usuario newUser = new Usuario();
+        newUser.setNombresUsuario(nombresUsuario);
+        newUser.setUserName(userName);
+        newUser.setContrasenia(contrasenia);
+        newUser.setCorreoUsuario(correoUsuario);
+        newUser.setCodigoEmpleado(empleado.getCodigoEmpleado());
+        
+        try{
+            int resultado = usuarioDAO.agregar(newUser);
+        
+        if(resultado > 0){
+            request.getRequestDispatcher("index.jsp").forward(request, response);
+        }else{
+            request.setAttribute("error", "noExiste");
+            request.getRequestDispatcher("Registrarse.jsp").forward(request, response);
+        }
+        }catch(Exception e){
+            e.printStackTrace();
+            request.setAttribute("error", "existeEmp"); // o crea un código específico como "fkError"
+            request.getRequestDispatcher("Registrarse.jsp").forward(request, response);
+
+        }
+        
+        
     }
 
     /**

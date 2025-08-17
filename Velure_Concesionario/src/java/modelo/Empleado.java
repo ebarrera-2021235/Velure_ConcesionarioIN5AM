@@ -1,13 +1,71 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package modelo;
 
-/**
- *
- * @author USUARIO
- */
 public class Empleado {
+    private int codigoEmpleado;
+    private String nombresEmpleado;
+    private String DPIEmpleado;
+    private String estado;
+    private String telefonoEmpleado;
+    private String correoEmpleado;
+
+    public Empleado() {
+    }
+
+    public Empleado(int codigoEmpleado, String DPIEmpleado, String nombresEmpleado, String telefonoEmpleado, String estado, String correoEmpleado) {
+        this.codigoEmpleado = codigoEmpleado;
+        this.DPIEmpleado = DPIEmpleado;
+        this.nombresEmpleado = nombresEmpleado;
+        this.telefonoEmpleado = telefonoEmpleado;
+        this.estado = estado;
+        this.correoEmpleado = correoEmpleado;
+    }
+
+    public int getCodigoEmpleado() {
+        return codigoEmpleado;
+    }
+
+    public void setCodigoEmpleado(int codigoEmpleado) {
+        this.codigoEmpleado = codigoEmpleado;
+    }
+
+    public String getDPIEmpleado() {
+        return DPIEmpleado;
+    }
+
+    public void setDPIEmpleado(String DPIEmpleado) {
+        this.DPIEmpleado = DPIEmpleado;
+    }
+
+    public String getNombresEmpleado() {
+        return nombresEmpleado;
+    }
+
+    public void setNombresEmpleado(String nombresEmpleado) {
+        this.nombresEmpleado = nombresEmpleado;
+    }
+
+    public String getTelefonoEmpleado() {
+        return telefonoEmpleado;
+    }
+
+    public void setTelefonoEmpleado(String telefonoEmpleado) {
+        this.telefonoEmpleado = telefonoEmpleado;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public String getCorreoEmpleado() {
+        return correoEmpleado;
+    }
+
+    public void setCorreoEmpleado(String correoEmpleado) {
+        this.correoEmpleado = correoEmpleado;
+    }
     
 }
