@@ -8,6 +8,7 @@
 <!DOCTYPE html>
 <html lang="es">
     <head>
+        <link rel="stylesheet" href="styles/css.css">
         <meta charset="UTF-8">
         <title>Concesionario Velure</title>
 

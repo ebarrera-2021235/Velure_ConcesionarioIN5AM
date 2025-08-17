@@ -10,6 +10,7 @@
     <head>
         <meta charset="UTF-8">
         <title>Concesionario Velure - Registro</title>
+        <link rel="stylesheet" href="styles/css.css">
 
         <!-- Bootstrap e Iconos -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
