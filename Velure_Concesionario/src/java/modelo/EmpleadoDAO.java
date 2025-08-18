@@ -17,13 +17,13 @@ public class EmpleadoDAO {
     int resp;
     
     //buscar empleado por correo para verificar si ya existe
-    public Empleado validar(int id){
+    public Empleado validar(String correoEmpleado){
         Empleado empleado = new Empleado();
-        String sql = "select * from Empleados where correoEmpleado =" + id;
+        String sql = "select * from Empleados where correoEmpleado = ?" ;
         try{
             con = cn.Conexion();
             ps = con.prepareStatement(sql);
-            ps.setInt(1, id);
+            ps.setString(1, correoEmpleado);
             rs = ps.executeQuery();
             while(rs.next()){
                 empleado.setCodigoEmpleado(rs.getInt("codigoEmpleado"));
