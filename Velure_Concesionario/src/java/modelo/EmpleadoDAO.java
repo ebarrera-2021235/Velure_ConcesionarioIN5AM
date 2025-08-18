@@ -1,3 +1,4 @@
+
 package modelo;
 
 import config.Conexion;
@@ -5,10 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-/**
- *
- * @author USUARIO
- */
+
 public class EmpleadoDAO {
     Conexion cn = new Conexion();
     Connection con;
@@ -16,14 +14,13 @@ public class EmpleadoDAO {
     ResultSet rs;
     int resp;
     
-    //buscar empleado por correo para verificar si ya existe
-    public Empleado validar(String correo){
+    public Empleado validar(String correoEmpleado){
         Empleado empleado = new Empleado();
         String sql = "select * from Empleados where correoEmpleado = ?";
         try{
             con = cn.Conexion();
             ps = con.prepareStatement(sql);
-            ps.setString(1, correo);
+            ps.setString(1, correoEmpleado);
             rs = ps.executeQuery();
             while(rs.next()){
                 empleado.setCodigoEmpleado(rs.getInt("codigoEmpleado"));
@@ -37,4 +34,5 @@ public class EmpleadoDAO {
         
         return empleado;
     }
+    
 }
