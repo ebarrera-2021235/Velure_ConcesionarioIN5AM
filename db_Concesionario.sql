@@ -146,14 +146,4 @@ Create table DetalleVenta(
 		references Ventas (codigoVenta)
 );
 
-select * from empleados;
-select * from usuarios;
-insert into empleados (nombresEmpleado, DPIEmpleado, estado, telefonoEmpleado, correoEmpleado)
-	value('Estuardo Gómez', '1234567890', '1', '12345678', 'egomez@gmail.com');
-    
-insert into empleados (nombresEmpleado, DPIEmpleado, estado, telefonoEmpleado, correoEmpleado)
-	value('Javier', '1233257839', '1', '56478912', 'javier@gmail.com');
-
-insert into usuarios (nombresUsuario, userName, contrasenia, correoUsuario, codigoEmpleado)
-	value ('Estuardo Gómez', 'egomez', '123', 'egomez@gmail.com', 1);
 
