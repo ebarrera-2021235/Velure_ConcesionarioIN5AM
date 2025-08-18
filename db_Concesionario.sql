@@ -146,4 +146,11 @@ Create table DetalleVenta(
 		references Ventas (codigoVenta)
 );
 
+select * from empleados;
+select * from usuarios;
+insert into empleados (nombresEmpleado, DPIEmpleado, estado, telefonoEmpleado, correoEmpleado)
+	value('Estuardo Gómez', '1234567890', '1', '12345678', 'egomez@gmail.com');
+    
+insert into empleados (nombresEmpleado, DPIEmpleado, estado, telefonoEmpleado, correoEmpleado)
+	value('Juan Perez', '0987654321', '1', '87654321', 'jperez@gmail.com');
 
