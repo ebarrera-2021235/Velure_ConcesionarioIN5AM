@@ -1,5 +1,6 @@
 -- BASE DE DATOS DE APLICACION
 -- AUTHOR: Edgar Roberto Catalan
+-- fecha de modificación: 18/08/25
 
 Drop database if exists DBConcesionarioIN5AM;
 Create database DBConcesionarioIN5AM;
