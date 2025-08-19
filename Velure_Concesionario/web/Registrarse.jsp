@@ -79,7 +79,7 @@
         }
 
         .input-group-text {
-            baccomkground: #1a1a1a;
+            background: #1a1a1a;
             cursor: pointer;
             padding: 0 12px;
             display: flex;
@@ -176,7 +176,19 @@
                     <!-- Correo -->
                     <div class="form-group">
                         <label><strong>Correo electrónico</strong></label>
-                        <input type="email" name="correo" class="form-control">
+                        <input type="email" name="correo"  class="form-control">
+                    </div>
+                    
+                    <!-- DPI -->
+                    <div class="form-group">
+                        <label><strong>DPI</strong></label>
+                        <input type="text" name="dpi" maxlength="13" class="form-control">
+                    </div>
+                    
+                    <!-- Telefono -->
+                    <div class="form-group">
+                        <label><strong>Telefono</strong></label>
+                        <input type="text" name="telefono" maxlength="8" class="form-control">
                     </div>
 
                     <!-- Usuario -->
@@ -227,7 +239,7 @@
                     <p class="text-danger text-center mt-2">
                         <i class="bi bi-exclamation-triangle-fill"></i> 
                         <%if ("existeEmp".equals(error)){ %>
-                            No se encontró un empleado con ese correo. Comuniquese con el administrador.
+                            No se encontró un empleado con ese correo.
                         <% }else if ("existeUser".equals(error)){ %>
                             Nombre de Usuario existente, ingrese otro.
                         <% }else if ("existeUserEmp".equals(error)){ %>
