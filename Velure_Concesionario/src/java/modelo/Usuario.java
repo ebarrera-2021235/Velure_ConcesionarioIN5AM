@@ -10,6 +10,8 @@ public class Usuario {
     private String contrasenia;
     private String correoUsuario;
     private int codigoEmpleado;
+    private String DPIEmpleado;
+    private String telefonoEmpleado;
 
     public Usuario() {
     }
@@ -22,6 +24,19 @@ public class Usuario {
         this.correoUsuario = correoUsuario;
         this.codigoEmpleado = codigoEmpleado;
     }
+
+    public Usuario(int codigoUsuario, String nombresUsuario, String userName, String contrasenia, String correoUsuario, int codigoEmpleado, String DPIEmpleado, String telefonoEmpleado) {
+        this.codigoUsuario = codigoUsuario;
+        this.nombresUsuario = nombresUsuario;
+        this.userName = userName;
+        this.contrasenia = contrasenia;
+        this.correoUsuario = correoUsuario;
+        this.codigoEmpleado = codigoEmpleado;
+        this.DPIEmpleado = DPIEmpleado;
+        this.telefonoEmpleado = telefonoEmpleado;
+    }
+    
+    
 
     public int getCodigoUsuario() {
         return codigoUsuario;
@@ -69,7 +84,24 @@ public class Usuario {
 
     public void setCodigoEmpleado(int codigoEmpleado) {
         this.codigoEmpleado = codigoEmpleado;
-    }   
+    }
+
+    public String getDPIEmpleado() {
+        return DPIEmpleado;
+    }
+
+    public void setDPIEmpleado(String DPIEmpleado) {
+        this.DPIEmpleado = DPIEmpleado;
+    }
+
+    public String getTelefonoEmpleado() {
+        return telefonoEmpleado;
+    }
+
+    public void setTelefonoEmpleado(String telefonoEmpleado) {
+        this.telefonoEmpleado = telefonoEmpleado;
+    }
+    
 }
 
 
