@@ -70,6 +70,8 @@ public class RegistrarUsuario extends HttpServlet {
         String userName = request.getParameter("usuario");
         String contrasenia = request.getParameter("pass");
         String correoUsuario = request.getParameter("correo");
+        String dpiEmpleado = request.getParameter("dpi");
+        String telefonoEmpleado = request.getParameter("telefono");
         
         if(!correoUsuario.matches("^[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,5}$")){
             request.setAttribute("error", "campoVacio");
@@ -80,18 +82,26 @@ public class RegistrarUsuario extends HttpServlet {
        // int codigoEmpleado = Integer.parseInt(request.getParameter("codigoEmpleado"));
         Empleado empleado = empleadoDAO.validar(correoUsuario);
         
-        if(empleado.getCodigoEmpleado() <= 0){
-            request.setAttribute("error", "existeEmp");
-            request.getRequestDispatcher("Registrarse.jsp").forward(request, response);
-            return;
-            //valida si el nombre de un usuario ya  existe
-        }else if(usuarioDAO.existeUsuario(userName)){
+//        if(empleado.getCodigoEmpleado() <= 0){
+//            request.setAttribute("error", "existeEmp");
+//            request.getRequestDispatcher("Registrarse.jsp").forward(request, response);
+//            return;
+//        }else 
+        if(usuarioDAO.existeUsuario(userName)){
             request.setAttribute("error", "existeUser");
             request.getRequestDispatcher("Registrarse.jsp").forward(request, response);
             return;
             //valida que el empleado no tenga ya un usuario
         }else if(usuarioDAO.tieneUsuario(empleado.getCodigoEmpleado())){
             request.setAttribute("error", "existeUserEmp");
+            request.getRequestDispatcher("Registrarse.jsp").forward(request, response);
+            return;
+        }else if(dpiEmpleado == " "){
+            request.setAttribute("error", "campoVacio");
+            request.getRequestDispatcher("Registrarse.jsp").forward(request, response);
+            return;
+        }else if(telefonoEmpleado == " "){
+            request.setAttribute("error", "campoVacio");
             request.getRequestDispatcher("Registrarse.jsp").forward(request, response);
             return;
         }
@@ -101,7 +111,8 @@ public class RegistrarUsuario extends HttpServlet {
         newUser.setUserName(userName);
         newUser.setContrasenia(contrasenia);
         newUser.setCorreoUsuario(correoUsuario);
-        newUser.setCodigoEmpleado(empleado.getCodigoEmpleado());
+        newUser.setDPIEmpleado(dpiEmpleado);
+        newUser.setTelefonoEmpleado(telefonoEmpleado);
         
         try{
             int resultado = usuarioDAO.agregar(newUser);
@@ -116,7 +127,6 @@ public class RegistrarUsuario extends HttpServlet {
             e.printStackTrace();
             request.setAttribute("error", "existeEmp"); // o crea un código específico como "fkError"
             request.getRequestDispatcher("Registrarse.jsp").forward(request, response);
-
         }
         
     }
