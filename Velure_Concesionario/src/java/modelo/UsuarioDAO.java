@@ -60,7 +60,7 @@ public class UsuarioDAO {
         int codEmpleado = 0; // se inicializa para asegurarme que no guarde el último valor
         try{
             con = cn.Conexion();
-            ps = con.prepareStatement(sqlEmpleado);
+            ps = con.prepareStatement(sqlIdEmpleado);
             ps.setString(1, user.getCorreoUsuario());
             rs = ps.executeQuery();
             while(rs.next()){
@@ -79,7 +79,7 @@ public class UsuarioDAO {
             ps.setString(2, user.getUserName());
             ps.setString(3, user.getContrasenia());
             ps.setString(4, user.getCorreoUsuario());
-            ps.setInt(5, user.getCodigoEmpleado());
+            ps.setInt(5, codEmpleado);
             return ps.executeUpdate();
         }catch(Exception e){
             e.printStackTrace();
