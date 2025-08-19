@@ -377,7 +377,7 @@
             ${usuario.nombresUsuario}
         </button>
         <div class="dropdown-menu dropdown-menu-right text-center" aria-labelledby="dropdownUser">
-    <img src="img/user.png" width="60" alt="Usuario" class="mb-2"/>
+    <img src="img/Hola.png" width="60" alt="Usuario" class="mb-2"/>
     <div>${usuario.nombresUsuario}</div> <!-- aquí corregido -->
     <div>usuario@gmail.com</div>
     <div class="dropdown-divider"></div>
