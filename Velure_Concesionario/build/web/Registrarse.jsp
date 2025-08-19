@@ -79,7 +79,7 @@
         }
 
         .input-group-text {
-            background: #1a1a1a;
+            baccomkground: #1a1a1a;
             cursor: pointer;
             padding: 0 12px;
             display: flex;
@@ -189,7 +189,7 @@
                     <div class="form-group">
                         <label><strong>Contraseña</strong></label>
                         <div class="input-group">
-                            <input type="password" name="pass" id="pass" class="form-control" required>
+                            <input type="password" name="pass" id="confirmarClave" class="form-control" required>
                             <div class="input-group-append">
                                 <span class="input-group-text" onclick="togglePassword('clave', 'eyeIcon1')" style="cursor:pointer;">
                                     <i id="eyeIcon1" class="bi bi-eye"></i>
