@@ -157,7 +157,7 @@
             <div class="card p-4" style="width: 100%; max-width: 400px;">
                 <form action="RegistrarUsuario" method="POST" onsubmit="return validarRegistro()">
                     <div class="text-center">
-                        <img src="img/Velure.png" alt="Logo Suplex Cars">
+                        <img src="img/Velure.png" height="120px" alt="Logo Suplex Cars">
                         <h4 class="mt-3 text-uppercase font-weight-bold">Registro</h4>
                         <p class="text-muted small">Unete a Velure</p>
                     </div>
