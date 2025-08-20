@@ -182,13 +182,13 @@
                     <!-- DPI -->
                     <div class="form-group">
                         <label><strong>DPI</strong></label>
-                        <input type="text" name="dpi" maxlength="13" minlength="13" class="form-control">
+                        <input type="text" name="dpi" maxlength="13" minlength="13" pattern="\d{13}" class="form-control">
                     </div>
                     
                     <!-- Telefono -->
                     <div class="form-group">
                         <label><strong>Telefono</strong></label>
-                        <input type="text" name="telefono" maxlength="8" minlength="8" class="form-control">
+                        <input type="text" name="telefono" maxlength="8" minlength="8" pattern="\d{8}" class="form-control">
                     </div>
 
                     <!-- Usuario -->
