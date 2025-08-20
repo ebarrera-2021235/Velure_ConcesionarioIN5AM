@@ -39,9 +39,6 @@ public class EmpleadoDAO {
                 empleado.setCodigoEmpleado(rs.getInt("codigoEmpleado"));
                 empleado.setNombresEmpleado(rs.getString("nombresEmpleado"));
                 empleado.setDPIEmpleado(rs.getString("DPIEmpleado"));
-                empleado.setTelefonoEmpleado(rs.getString("telefonoEmpleado"));
-                empleado.setEstado(rs.getString("estado"));
-                empleado.setCorreoEmpleado(rs.getString("correoEmpleado"));
             }
         }catch(Exception e){
             e.printStackTrace();
