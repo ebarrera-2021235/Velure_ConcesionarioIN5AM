@@ -175,7 +175,7 @@
 
                     <!-- Correo -->
                     <div class="form-group">
-                        <label><strong>Correo electr�nico</strong></label>
+                        <label><strong>Correo electronico</strong></label>
                         <input type="email" name="correo"  class="form-control">
                     </div>
                     
