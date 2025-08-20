@@ -11,6 +11,8 @@ import modelo.Cliente;
 import modelo.ClienteDAO;
 import modelo.Empleado;
 import modelo.EmpleadoDAO;
+import modelo.Proveedor;
+import modelo.ProveedorDAO;
 import modelo.Servicios;
 import modelo.ServiciosDAO;
 
@@ -34,6 +36,12 @@ public class Controlador extends HttpServlet {
     Servicios servicio = new Servicios();
     ServiciosDAO servicioDAO = new ServiciosDAO();
     int codServicio;
+    
+    // Objetos para Proveedor
+    Proveedor proveedor = new Proveedor();
+    ProveedorDAO proveedorDao = new ProveedorDAO();
+    int codProveedor;
+
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -331,7 +339,96 @@ public class Controlador extends HttpServlet {
             request.getRequestDispatcher("Producto.jsp").forward(request, response);
         } else if ("NuevaVenta".equals(menu)) {
             request.getRequestDispatcher("RegistrarVenta.jsp").forward(request, response);
-        }
+        }else if ("Proveedor".equals(menu)) { 
+            switch (accion) {                     
+            case "Listar":          
+            List<Proveedor> listaProveedores = proveedorDao.listar(); 
+            request.setAttribute("proveedores", listaProveedores);  
+            break;
+
+        case "Agregar":           
+            String nombre = request.getParameter("txtNombreProveedor");
+            String telefono = request.getParameter("txtTelefonoProveedor");
+            String direccion = request.getParameter("txtDireccionProveedor");
+            String correo = request.getParameter("txtCorreoProveedor");
+
+            // --- VALIDACIONES ---
+            if (nombre == null || nombre.isEmpty() || nombre.matches(".*\\d.*")) {
+                request.setAttribute("error", "El nombre no debe contener números y no puede estar vacío.");
+                request.getRequestDispatcher("Proveedor.jsp").forward(request, response);
+                return;
+            }
+
+            if (telefono == null || telefono.isEmpty() || !telefono.matches("\\d+")) {
+                request.setAttribute("error", "El teléfono debe contener solo números y no puede estar vacío.");
+                request.getRequestDispatcher("Proveedor.jsp").forward(request, response);
+                return;
+            }
+
+            if (correo == null || correo.isEmpty() || !correo.contains("@") || !correo.substring(correo.indexOf("@")).contains(".")) {
+                request.setAttribute("error", "El correo debe tener un formato válido (ej: usuario@gmail.com).");
+                request.getRequestDispatcher("Proveedor.jsp").forward(request, response);
+                return;
+            }
+
+            proveedor.setNombreProveedor(nombre);
+            proveedor.setTelefonoProveedor(telefono);
+            proveedor.setDireccionProveedor(direccion);
+            proveedor.setCorreoProveedor(correo);
+
+            proveedorDao.agregar(proveedor);
+            response.sendRedirect("Controlador?menu=Proveedor&accion=Listar");
+            return;
+
+        case "Editar":
+            codProveedor = Integer.parseInt(request.getParameter("codigoProveedor")); 
+            Proveedor p = proveedorDao.listarCodigoProveedor(codProveedor); 
+            request.setAttribute("proveedor", p);
+            break;
+
+        case "Actualizar":
+            String nombreP = request.getParameter("txtNombreProveedor");
+            String telefonoP = request.getParameter("txtTelefonoProveedor");
+            String direccionP = request.getParameter("txtDireccionProveedor");
+            String correoP = request.getParameter("txtCorreoProveedor");
+
+            // --- VALIDACIONES ---
+            if (nombreP == null || nombreP.isEmpty() || nombreP.matches(".*\\d.*")) {
+                request.setAttribute("error", "El nombre no debe contener números y no puede estar vacío.");
+                request.getRequestDispatcher("Proveedor.jsp").forward(request, response);
+                return;
+            }
+
+            if (telefonoP == null || telefonoP.isEmpty() || !telefonoP.matches("\\d+")) {
+                request.setAttribute("error", "El teléfono debe contener solo números y no puede estar vacío.");
+                request.getRequestDispatcher("Proveedor.jsp").forward(request, response);
+                return;
+            }
+
+            if (correoP == null || correoP.isEmpty() || !correoP.contains("@") || !correoP.substring(correoP.indexOf("@")).contains(".")) {
+                request.setAttribute("error", "El correo debe tener un formato válido (ej: usuario@gmail.com).");
+                request.getRequestDispatcher("Proveedor.jsp").forward(request, response);
+                return;
+            }
+
+            proveedor.setNombreProveedor(nombreP);
+            proveedor.setTelefonoProveedor(telefonoP);
+            proveedor.setDireccionProveedor(direccionP);
+            proveedor.setCorreoProveedor(correoP);
+            proveedor.setCodigoProveedor(codProveedor);
+
+            proveedorDao.actualizar(proveedor);
+            response.sendRedirect("Controlador?menu=Proveedor&accion=Listar");
+            return;
+
+        case "Eliminar":
+            codProveedor = Integer.parseInt(request.getParameter("codigoProveedor"));
+            proveedorDao.eliminar(codProveedor);
+            response.sendRedirect("Controlador?menu=Proveedor&accion=Listar");
+            return;
+    }
+    request.getRequestDispatcher("Proveedor.jsp").forward(request, response);
+    }
     }
 
     @Override
