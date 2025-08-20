@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import modelo.Cliente;
 import modelo.ClienteDAO;
+import modelo.Compra;
+import modelo.CompraDAO;
 import modelo.Empleado;
 import modelo.EmpleadoDAO;
 import modelo.Proveedor;
@@ -41,6 +43,11 @@ public class Controlador extends HttpServlet {
     Proveedor proveedor = new Proveedor();
     ProveedorDAO proveedorDao = new ProveedorDAO();
     int codProveedor;
+    
+    //Objetos para Compra
+    Compra compra = new Compra();
+    CompraDAO compraDao = new CompraDAO();
+    int codCompra;
 
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -428,7 +435,55 @@ public class Controlador extends HttpServlet {
             return;
     }
     request.getRequestDispatcher("Proveedor.jsp").forward(request, response);
-    }
+    }else if (menu.equals("Compras")) {
+            switch(accion){
+                case "Listar":
+                    List listaCompras = compraDao.listarCompra();
+                    request.setAttribute("compras", listaCompras);
+                    break;
+                case "Agregar":
+                    
+                    Date fecha = java.sql.Date.valueOf(request.getParameter("txtFecha"));
+                    Double total = Double.parseDouble(request.getParameter("txtTotal"));
+                    String descripcion = request.getParameter("txtDescripcion");
+                    String estado = request.getParameter("txtEstado");
+                    int codigoEmpleado = Integer.parseInt(request.getParameter("txtCodigoEmpleado"));
+                    
+                    compra.setFecha(fecha);
+                    compra.setTotal(total);
+                    compra.setDescripcion(descripcion);
+                    compra.setEstado(estado);
+                    compra.setCodigoEmpleado(codigoEmpleado);
+                     compraDao.agregar(compra);
+                    request.getRequestDispatcher("Controlador?menu=Compras&accion=Listar").forward(request, response);
+                    break;
+                case "Editar":
+                    codCompra = Integer.parseInt(request.getParameter("codigoCompra"));
+                    Compra c = compraDao.buscar(codCompra);
+                    request.setAttribute("compra", c);
+                    request.getRequestDispatcher("Controlador?menu=Compras&accion=Listar").forward(request, response);
+                    break;
+                case "Actualizar":
+                    Date fechaA = java.sql.Date.valueOf(request.getParameter("txtFecha"));
+                    Double totalA = Double.parseDouble(request.getParameter("txtTotal"));
+                    String descripcionA = request.getParameter("txtDescripcion");
+                    String estadoA = request.getParameter("txtEstado");
+                    compra.setFecha(fechaA);
+                    compra.setTotal(totalA);
+                    compra.setDescripcion(descripcionA);
+                    compra.setEstado(estadoA);
+                    compra.setCodigoCompra(codCompra);
+                    compraDao.actualizar(compra);
+                    request.getRequestDispatcher("Controlador?menu=Compras&accion=Listar").forward(request, response);
+                    break;
+                case "Eliminar":
+                    codCompra = Integer.parseInt(request.getParameter("codigoCompra"));
+                    compraDao.eliminar(codCompra);
+                    request.getRequestDispatcher("Controlador?menu=Compras&accion=Listar").forward(request, response);
+                    break;
+            }
+            request.getRequestDispatcher("Compras.jsp").forward(request, response);
+        }
     }
 
     @Override
