@@ -123,14 +123,13 @@ public class Controlador extends HttpServlet {
                     cliente.setCorreoCliente(correoCliente);
 
                     clienteDAO.agregarCliente(cliente);
-                    request.getRequestDispatcher("Controlador?menu=Clientes&accion=Listar").forward(request, response);
+                    response.sendRedirect("Controlador?menu=Clientes&accion=Listar");
                     return;
 
                 case "Editar":
                     codCliente = Integer.parseInt(request.getParameter("codigoCliente"));
                     Cliente cl = clienteDAO.listarCodigoCliente(codCliente);
                     request.setAttribute("cliente", cl);
-                    request.getRequestDispatcher("Controlador?menu=Clientes&accion=Listar").forward(request, response);
                     break;
 
                 case "Actualizar":
@@ -197,13 +196,13 @@ public class Controlador extends HttpServlet {
                     cliente.setCorreoCliente(request.getParameter("txtCorreoCliente"));
                     cliente.setCodigoCliente(codCliente);
                     clienteDAO.actualizar(cliente);
-                    request.getRequestDispatcher("Controlador?menu=Clientes&accion=Listar").forward(request, response);
+                    response.sendRedirect("Controlador?menu=Clientes&accion=Listar");
                     return;
 
                 case "Eliminar":
                     codCliente = Integer.parseInt(request.getParameter("codigoCliente"));
                     clienteDAO.eliminar(codCliente);
-                    request.getRequestDispatcher("Controlador?menu=Clientes&accion=Listar").forward(request, response);
+                    response.sendRedirect("Controlador?menu=Clientes&accion=Listar");
                     return;
             }
             request.getRequestDispatcher("Clientes.jsp").forward(request, response);
