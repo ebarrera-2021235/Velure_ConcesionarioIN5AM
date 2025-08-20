@@ -1,11 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package controlador;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.sql.Date;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -15,6 +11,8 @@ import modelo.Cliente;
 import modelo.ClienteDAO;
 import modelo.Empleado;
 import modelo.EmpleadoDAO;
+import modelo.Servicios;
+import modelo.ServiciosDAO;
 
 /**
  *
@@ -32,12 +30,16 @@ public class Controlador extends HttpServlet {
     ClienteDAO clienteDAO = new ClienteDAO();
     int codCliente;
 
+    // Objetos para Servicios
+    Servicios servicio = new Servicios();
+    ServiciosDAO servicioDAO = new ServiciosDAO();
+    int codServicio;
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         String menu = request.getParameter("menu");
         String accion = request.getParameter("accion");
-
 
         if (menu == null || menu.isEmpty() || accion == null || accion.isEmpty()) {
             request.getRequestDispatcher("Principal.jsp").forward(request, response);
@@ -48,8 +50,7 @@ public class Controlador extends HttpServlet {
         if ("Principal".equals(menu)) {
             request.getRequestDispatcher("Principal.jsp").forward(request, response);
 
-            // --- CLIENTE ---
-         
+        // --- CLIENTES ---
         } else if ("Clientes".equals(menu)) {
             switch (accion) {
                 case "Listar":
@@ -65,7 +66,6 @@ public class Controlador extends HttpServlet {
                     String telefonoCliente = request.getParameter("txtTelefonoCliente");
                     String correoCliente = request.getParameter("txtCorreoCliente");
 
-                  
                     if (nombresCliente == null || nombresCliente.isEmpty()
                             || dpiCliente == null || dpiCliente.isEmpty()
                             || direccionCliente == null || direccionCliente.isEmpty()
@@ -77,8 +77,6 @@ public class Controlador extends HttpServlet {
                         request.getRequestDispatcher("Controlador?menu=Clientes&accion=Listar").forward(request, response);
                         return;
                     }
-                    
-                  
 
                     if (correoCliente == null || correoCliente.isEmpty()
                             || (!correoCliente.endsWith("@gmail.com")
@@ -114,7 +112,6 @@ public class Controlador extends HttpServlet {
                         return;
                     }
 
-                    
                     cliente.setNombresCliente(nombresCliente);
                     cliente.setDPICliente(dpiCliente);
                     cliente.setDireccionCliente(direccionCliente);
@@ -133,7 +130,6 @@ public class Controlador extends HttpServlet {
                     break;
 
                 case "Actualizar":
-
                     nombresCliente = request.getParameter("txtNombresCliente");
                     dpiCliente = request.getParameter("txtDPICliente");
                     direccionCliente = request.getParameter("txtDireccionCliente");
@@ -141,7 +137,6 @@ public class Controlador extends HttpServlet {
                     telefonoCliente = request.getParameter("txtTelefonoCliente");
                     correoCliente = request.getParameter("txtCorreoCliente");
 
-                    // Ahora, valida si alguna de las variables es nula o vacía
                     if (nombresCliente == null || nombresCliente.isEmpty()
                             || dpiCliente == null || dpiCliente.isEmpty()
                             || direccionCliente == null || direccionCliente.isEmpty()
@@ -207,7 +202,131 @@ public class Controlador extends HttpServlet {
             }
             request.getRequestDispatcher("Clientes.jsp").forward(request, response);
 
-            // --- OTRAS VISTAS ---
+        // --- SERVICIOS ---
+        } else if ("Servicios".equals(menu)) {
+
+            switch (accion) {
+
+                // LISTAR 
+                case "Listar":
+                    // Llama al DAO para obtener todos los servicios
+                    List<Servicios> listaServicios = servicioDAO.listar();
+                    // Guarda la lista en la petición para enviarla al JSP
+                    request.setAttribute("servicios", listaServicios);
+                    break;
+
+                //  AGREGAR 
+                case "Agregar":
+                    try {
+                        // Obtiene los valores ingresados en el formulario
+                        String nombre = request.getParameter("txtNombreServicio");
+                        String descripcion = request.getParameter("txtDescripcion");
+                        String tipo = request.getParameter("txtTipo");
+                        String fechaStr = request.getParameter("txtFechaServicio");
+                        String codVehiculoStr = request.getParameter("txtCodigoVehiculo");
+
+                        // Convierte los valores a los tipos correctos
+                        Date fecha = null;
+                        int codVehiculo = 0;
+
+                        if (fechaStr != null && !fechaStr.isEmpty()) {
+                            fecha = Date.valueOf(fechaStr);
+                        }
+                        if (codVehiculoStr != null && !codVehiculoStr.isEmpty()) {
+                            codVehiculo = Integer.parseInt(codVehiculoStr);
+                        }
+
+                        // Setea los valores en el objeto servicio
+                        servicio.setNombreServicio(nombre);
+                        servicio.setDescripcion(descripcion);
+                        servicio.setTipo(tipo);
+                        servicio.setFechaServicio(fecha);
+                        servicio.setCodigoVehiculo(codVehiculo);
+
+                        // Llama al DAO para agregar el servicio
+                        servicioDAO.agregar(servicio);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        // Gaurda un mensaje de error si ocurre algún problema
+                        request.setAttribute("error", "Ocurrió un error al agregar el servicio.");
+                    }
+                    break;
+
+                //  EDITAR
+                case "Editar":
+                    try {
+                        // Obtiene el código del servicio seleccionado
+                        codServicio = Integer.parseInt(request.getParameter("codigoServicio"));
+                        // Obtiene el servicio de la base de datos
+                        Servicios serv = servicioDAO.listarCodigoServicio(codServicio);
+                        // Guardo el servicio en la petición para cargar el formulario
+                        request.setAttribute("servicio", serv);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        request.setAttribute("error", "Ocurrió un error al cargar el servicio para editar.");
+                    }
+                    break;
+
+                //  ACTUALIZAR 
+                case "Actualizar":
+                    try {
+                        // Obtiene el código del servicio a actualizar
+                        codServicio = Integer.parseInt(request.getParameter("txtCodigoServicio"));
+                        servicio.setCodigoServicio(codServicio);
+
+                        // Obtiene los valores del formulario
+                        servicio.setNombreServicio(request.getParameter("txtNombreServicio"));
+                        servicio.setDescripcion(request.getParameter("txtDescripcion"));
+                        servicio.setTipo(request.getParameter("txtTipo"));
+
+                        String fechaStr = request.getParameter("txtFechaServicio");
+                        String codVehiculoStr = request.getParameter("txtCodigoVehiculo");
+
+                        Date fecha = null;
+                        int codVehiculo = 0;
+
+                        if (fechaStr != null && !fechaStr.isEmpty()) {
+                            fecha = Date.valueOf(fechaStr);
+                        }
+                        if (codVehiculoStr != null && !codVehiculoStr.isEmpty()) {
+                            codVehiculo = Integer.parseInt(codVehiculoStr);
+                        }
+
+                        servicio.setFechaServicio(fecha);
+                        servicio.setCodigoVehiculo(codVehiculo);
+
+                        // LLama al DAO para actualizar el servicio
+                        servicioDAO.actualizar(servicio);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        request.setAttribute("error", "Ocurrió un error al actualizar el servicio.");
+                    }
+                    break;
+
+                // ELIMINAR 
+                case "Eliminar":
+                    try {
+                        // Obtiene el código del servicio a eliminar
+                        codServicio = Integer.parseInt(request.getParameter("codigoServicio"));
+                        // Llama al DAO para eliminar el servicio
+                        servicioDAO.eliminar(codServicio);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        request.setAttribute("error", "Ocurrió un error al eliminar el servicio.");
+                    }
+                    break;
+
+                default:
+                    break;
+            }
+
+            // Después de cualquier acción, se obtiene la lista actualizada
+            List<Servicios> listaServicios = servicioDAO.listar();
+            request.setAttribute("servicios", listaServicios);
+            // Redirige al JSP para mostrar la información
+            request.getRequestDispatcher("Servicios.jsp").forward(request, response);
+
+        // --- OTRAS VISTAS ---
         } else if ("Producto".equals(menu)) {
             request.getRequestDispatcher("Producto.jsp").forward(request, response);
         } else if ("NuevaVenta".equals(menu)) {
@@ -229,6 +348,6 @@ public class Controlador extends HttpServlet {
 
     @Override
     public String getServletInfo() {
-        return "Controlador Principal";
+        return "Controlador Principal con Clientes y Servicios";
     }
 }
