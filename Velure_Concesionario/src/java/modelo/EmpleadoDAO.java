@@ -27,24 +27,24 @@ public class EmpleadoDAO {
         return valor != null && (valor.equals("1") || valor.equals("2"));
     }
 
-    public Empleado validar(String usuario, String DPIEmpleado) {
+    public Empleado validar(String correoEmpleado){
         Empleado empleado = new Empleado();
-        String sql = "select * from Empleado where usuario = ? and DPIEmpleado = ?";
-        try {
+        String sql = "select * from Empleados where correoEmpleado = ?";
+        try{
             con = cn.Conexion();
             ps = con.prepareStatement(sql);
-            ps.setString(1, usuario);
-            ps.setString(2, DPIEmpleado);
+            ps.setString(1, correoEmpleado);
             rs = ps.executeQuery();
-            while (rs.next()) {
+            while(rs.next()){
                 empleado.setCodigoEmpleado(rs.getInt("codigoEmpleado"));
-                empleado.setDPIEmpleado(rs.getString("DPIEmpleado"));
                 empleado.setNombresEmpleado(rs.getString("nombresEmpleado"));
-                empleado.setUsuario(rs.getString("usuario"));
+                empleado.setDPIEmpleado(rs.getString("DPIEmpleado"));
             }
-        } catch (Exception e) {
+        }catch(Exception e){
             e.printStackTrace();
         }
+        
+        
         return empleado;
     }
 
