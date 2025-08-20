@@ -3,7 +3,7 @@
     Created on : 13/08/2025, 17:42:00
     Author     : luisf
 --%>
-
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -157,9 +157,9 @@
             <div class="card p-4" style="width: 100%; max-width: 400px;">
                 <form action="RegistrarUsuario" method="POST" onsubmit="return validarRegistro()">
                     <div class="text-center">
-                        <img src="img/LogoV.png" alt="Logo Suplex Cars">
+                        <img src="img/Velure.png" height="120px" alt="Logo Suplex Cars">
                         <h4 class="mt-3 text-uppercase font-weight-bold">Registro</h4>
-                        <p class="text-muted small">¡Únete a Velure!</p>
+                        <p class="text-muted small">Unete a Velure</p>
                     </div>
 
                     <!-- Mensaje de error -->
@@ -175,7 +175,7 @@
 
                     <!-- Correo -->
                     <div class="form-group">
-                        <label><strong>Correo electrónico</strong></label>
+                        <label><strong>Correo electronico</strong></label>
                         <input type="email" name="correo"  class="form-control">
                     </div>
                     
@@ -197,9 +197,9 @@
                         <input type="text" name="usuario" id="usuario" class="form-control" required>
                     </div>
 
-                    <!-- Contraseña -->
+                    <!-- Contraseï¿½a -->
                     <div class="form-group">
-                        <label><strong>Contraseña</strong></label>
+                        <label><strong>ContraseÃ±a</strong></label>
                         <div class="input-group">
                             <input type="password" name="pass" id="confirmarClave" class="form-control" required>
                             <div class="input-group-append">
@@ -214,7 +214,7 @@
 
                     <!-- Agregar Imagen -->
                     <!-- comment <div class="form-group">
-                        <label><strong>Añadir foto perfil</strong></label>
+                        <label><strong>Aï¿½adir foto perfil</strong></label>
                         <input type="file" name="fileImagen">
                     </div> 
                     
@@ -222,7 +222,7 @@
                         <button class="btn btn-outline-primary" name="accion" value="Guardar">Guardar imagen</button>
                     </div> -->
 
-                    <!-- Botón -->
+                    <!-- Botï¿½n -->
                     <div class="mt-4">
                         <input type="submit" name="accion" value="Registrarse" class="btn btn-primary btn-block">
                     </div>
@@ -239,7 +239,7 @@
                     <p class="text-danger text-center mt-2">
                         <i class="bi bi-exclamation-triangle-fill"></i> 
                         <%if ("existeEmp".equals(error)){ %>
-                            No se encontró un empleado con ese correo.
+                            No se encontro un empleado con ese correo.
                         <% }else if ("existeUser".equals(error)){ %>
                             Nombre de Usuario existente, ingrese otro.
                         <% }else if ("existeUserEmp".equals(error)){ %>
@@ -255,7 +255,7 @@
                     <!-- Ir a login -->
                     <div class="text-center mt-3">
                         <a href="index.jsp" class="text-primary font-weight-bold" style="text-decoration: none;">
-                            <i class="bi bi-box-arrow-in-left"></i> ¿Ya tienes cuenta? Inicia sesión
+                            <i class="bi bi-box-arrow-in-left"></i> Â¿Ya tienes cuenta? Inicia sesiÃ³n
                         </a>
                     </div>
                 </form>
@@ -263,7 +263,7 @@
         </div>
 
         <script>
-            // Mostrar/Ocultar contraseña
+            // Mostrar/Ocultar contraseï¿½a
             function togglePassword(inputId, iconId) {
                 const input = document.getElementById(inputId);
                 const icon = document.getElementById(iconId);
@@ -286,7 +286,7 @@
                 }
 
                 if (clave !== confirmarClave) {
-                    mostrarError("Las contraseñas no coinciden.");
+                    mostrarError("Las contraseï¿½as no coinciden.");
                     return false;
                 }
 
