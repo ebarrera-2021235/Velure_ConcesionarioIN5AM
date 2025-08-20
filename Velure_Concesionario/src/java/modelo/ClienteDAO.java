@@ -129,12 +129,24 @@ public class ClienteDAO {
             ps.setString(5, cli.getTelefonoCliente());
             ps.setString(6, cli.getCorreoCliente());
             ps.setInt(7, cli.getCodigoCliente());
-            resp = ps.executeUpdate(); // Se corrige la asignación del valor de retorno
+            resp = ps.executeUpdate(); 
         }catch(Exception e){
             e.printStackTrace();
         }
         
         return resp;
+    }
+    
+    //ELIMINAR
+    public void eliminar(int id){
+        String sql = "delete from Clientes where codigoCliente ="+id;
+        try{
+            con = cn.Conexion();
+            ps = con.prepareStatement(sql);
+            ps.executeUpdate();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
     
     
