@@ -350,7 +350,7 @@
                 <div class="dropdown-menu" aria-labelledby="entidadesDropdown">
                     <a class="dropdown-item" href="Controlador?menu=Producto" target="contenido" onclick="showIframe()">Productos</a>
                     <a class="dropdown-item" href="Controlador?menu=Empleado&accion=Listar" target="contenido" onclick="showIframe()">Empleados</a>
-                    <a class="dropdown-item" href="Controlador?menu=Clientes" target="contenido" onclick="showIframe()">Clientes</a>
+                    <a class="dropdown-item" href="Controlador?menu=Clientes&accion=Listar" target="contenido" onclick="showIframe()">Clientes</a>
                     <a class="dropdown-item" href="Controlador?menu=NuevaVenta" target="contenido" onclick="showIframe()">Nueva Venta</a>
                     <a class="dropdown-item" href="Controlador?menu=Vehiculo&accion=Listar" target="contenido" onclick="showIframe()">Vehiculos</a>
                     <a class="dropdown-item" href="Controlador?menu=Proveedor&accion=Listar" target="contenido" onclick="showIframe()">Proveedores</a>
