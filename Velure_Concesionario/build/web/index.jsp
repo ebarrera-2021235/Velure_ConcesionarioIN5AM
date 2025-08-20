@@ -17,7 +17,7 @@
         <div class="card p-4" style="width: 100%; max-width: 400px;">
             <form action="Validar" method="POST" onsubmit="return validarFormulario()">
                 <div class="text-center">
-                    <img src="img/LogoV.png" alt="Logo Suplex Cars">
+                    <img src="img/V.png" alt="Logo Suplex Cars">
                     <h4 class="mt-3 text-uppercase font-weight-bold">Inicia sesión</h4>
                     <p class="text-muted small">Suavidad, poder, presencia.</p>
                 </div>
