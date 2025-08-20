@@ -239,7 +239,7 @@
                     <p class="text-danger text-center mt-2">
                         <i class="bi bi-exclamation-triangle-fill"></i> 
                         <%if ("existeEmp".equals(error)){ %>
-                            No se encontr� un empleado con ese correo.
+                            No se encontro un empleado con ese correo.
                         <% }else if ("existeUser".equals(error)){ %>
                             Nombre de Usuario existente, ingrese otro.
                         <% }else if ("existeUserEmp".equals(error)){ %>
@@ -255,7 +255,7 @@
                     <!-- Ir a login -->
                     <div class="text-center mt-3">
                         <a href="index.jsp" class="text-primary font-weight-bold" style="text-decoration: none;">
-                            <i class="bi bi-box-arrow-in-left"></i> �Ya tienes cuenta? Inicia sesi�n
+                            <i class="bi bi-box-arrow-in-left"></i> ¿Ya tienes cuenta? Inicia sesión
                         </a>
                     </div>
                 </form>
