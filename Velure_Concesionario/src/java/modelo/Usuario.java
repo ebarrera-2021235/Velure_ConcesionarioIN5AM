@@ -10,6 +10,7 @@ public class Usuario {
     private String contrasenia;
     private String correoUsuario;
     private int codigoEmpleado;
+    private String imagen;
     private String DPIEmpleado;
     private String telefonoEmpleado;
 
@@ -35,6 +36,19 @@ public class Usuario {
         this.DPIEmpleado = DPIEmpleado;
         this.telefonoEmpleado = telefonoEmpleado;
     }
+
+    public Usuario(int codigoUsuario, String nombresUsuario, String userName, String contrasenia, String correoUsuario, int codigoEmpleado, String imagen, String DPIEmpleado, String telefonoEmpleado) {
+        this.codigoUsuario = codigoUsuario;
+        this.nombresUsuario = nombresUsuario;
+        this.userName = userName;
+        this.contrasenia = contrasenia;
+        this.correoUsuario = correoUsuario;
+        this.codigoEmpleado = codigoEmpleado;
+        this.imagen = imagen;
+        this.DPIEmpleado = DPIEmpleado;
+        this.telefonoEmpleado = telefonoEmpleado;
+    }
+    
     
     
 
@@ -101,6 +115,16 @@ public class Usuario {
     public void setTelefonoEmpleado(String telefonoEmpleado) {
         this.telefonoEmpleado = telefonoEmpleado;
     }
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
+    
+    
     
 }
 
