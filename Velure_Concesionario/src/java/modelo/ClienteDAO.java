@@ -43,6 +43,33 @@ public class ClienteDAO {
         return clien;
     }
     
+    //LISTAR
+    public List listarCliente() {
+        String sql = "Select * from Clientes";
+        List<Cliente> listaCliente = new ArrayList<>();
+        try {
+            con = cn.Conexion();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Cliente clie = new Cliente();
+                clie.setCodigoCliente(rs.getInt(1));
+                clie.setNombresCliente(rs.getString(2));
+                clie.setDPICliente(rs.getString(3));
+                clie.setDireccionCliente(rs.getString(4));
+                clie.setEstado(rs.getString(5));
+                clie.setTelefonoCliente(rs.getString(6));
+                clie.setCorreoCliente(rs.getString(7));
+                listaCliente.add(clie);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return listaCliente;
+    }
+    
     
     
     
