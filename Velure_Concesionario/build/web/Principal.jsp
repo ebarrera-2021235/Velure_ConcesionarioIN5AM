@@ -472,20 +472,19 @@
             <img src="img/V.png" alt="Logo">
         </a>
         <div class="dropdown">
-            <button class="btn btn-outline-light dropdown-toggle" type="button" id="dropdownUser" data-toggle="dropdown">
-                ${usuario.nombresUsuario}
-            </button>
-            <div class="dropdown-menu dropdown-menu-right text-center" aria-labelledby="dropdow nUser"
-                style="min-width: 180px; padding: 10px;">
-                <img src="img/Hola.png" width="60" height="60" alt="Usuario" class="mb-2 rounded-circle" />
-                <div>${usuario.nombresUsuario}</div>
-                <div class="text-muted">usuario@gmail.com</div>
-                <div class="dropdown-divider"></div>
-                <form action="Validar" method="POST">
-                    <button name="accion" value="Salir" class="dropdown-item btn btn-sm">Salir</button>
-                </form>
-            </div>
-        </div>
+           <button class="btn btn-outline-light dropdown-toggle" type="button" id="dropdownUser" data-toggle="dropdown">
+        ${usuario.nombresUsuario}
+    </button>
+    <div class="dropdown-menu dropdown-menu-right text-center" aria-labelledby="dropdow nUser" style="min-width: 180px; padding: 10px;">
+        <img src="${usuario.imagen}" width="60" height="60" alt="Usuario" class="mb-2 rounded-circle"/>
+        <div>${usuario.nombresUsuario}</div>
+        <div class="">${usuario.correoUsuario}</div>
+        <div class="dropdown-divider"></div>
+        <form action="Validar" method="POST">
+            <button name="accion" value="Salir" class="dropdown-item btn btn-sm">Salir</button>
+        </form>
+    </div>
+</div>
     </header>
 
     <div class="content-wrapper" id="contentWrapper">
