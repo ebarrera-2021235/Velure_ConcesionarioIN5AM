@@ -91,6 +91,30 @@ public class ClienteDAO {
         return resp;
     }
     
+    //BUSCAR POR CÓDIGO
+    public Cliente listarCodigoCliente(int id) {
+        Cliente cli = new Cliente();
+        String sql = "Select * from Clientes where codigoCliente =" + id;
+        try {
+            con = cn.Conexion();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                cli.setCodigoCliente(rs.getInt(1));
+                cli.setNombresCliente(rs.getString(2));
+                cli.setDPICliente(rs.getString(3));
+                cli.setDireccionCliente(rs.getString(4));
+                cli.setEstado(rs.getString(5));
+                cli.setTelefonoCliente(rs.getString(6));
+                cli.setCorreoCliente(rs.getString(7));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return cli;
+    }
+    
     
     
     
