@@ -199,7 +199,7 @@
 
                     <!-- Contrase�a -->
                     <div class="form-group">
-                        <label><strong>Contrase�a</strong></label>
+                        <label><strong>Contraseña</strong></label>
                         <div class="input-group">
                             <input type="password" name="pass" id="confirmarClave" class="form-control" required>
                             <div class="input-group-append">
