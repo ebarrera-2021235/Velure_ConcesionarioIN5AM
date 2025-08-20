@@ -115,6 +115,28 @@ public class ClienteDAO {
         return cli;
     }
     
+     //ACTUALIZAR 
+    public int actualizar(Cliente cli){
+        String sql = "Update Clientes set nombresCliente=?, DPICliente=?, direccionCliente=?, estado=?, telefonoCliente=?, correoCliente=? WHERE codigoCliente=?";
+
+        try{
+            con = cn.Conexion();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, cli.getNombresCliente());
+            ps.setString(2, cli.getDPICliente());
+            ps.setString(3, cli.getDireccionCliente());
+            ps.setString(4, cli.getEstado());
+            ps.setString(5, cli.getTelefonoCliente());
+            ps.setString(6, cli.getCorreoCliente());
+            ps.setInt(7, cli.getCodigoCliente());
+            resp = ps.executeUpdate(); // Se corrige la asignación del valor de retorno
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        
+        return resp;
+    }
+    
     
     
     
