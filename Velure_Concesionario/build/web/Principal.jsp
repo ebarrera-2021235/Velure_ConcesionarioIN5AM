@@ -597,7 +597,7 @@
 
                 <section id="empresa" class="info-section">
                     <div class="info-card">
-                        <img src="img/Velure.png" alt="Logo Velure" />
+                        <img src="img/V.png" alt="Logo Velure" />
                         <div class="info-text">
                             <h2>VELURE</h2>
                             <p>"Suavidad, poder, presencia."</p>
@@ -617,7 +617,7 @@
                 </section>
 
                 <footer class="main-footer">
-                    <img src="img/Velure.png" alt="Velure Logo" class="footer-logo" />
+                    <img src="img/V.png" alt="Velure Logo" class="footer-logo" />
                     <p>Copyright © 2025 Automobili Velure.</p>
                     <p>
                         <a href="#">Velure</a> |
