@@ -3,7 +3,7 @@
     Created on : 13/08/2025, 17:42:00
     Author     : luisf
 --%>
-
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="es">
     <head>
