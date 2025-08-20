@@ -70,6 +70,27 @@ public class ClienteDAO {
         return listaCliente;
     }
     
+    //AGREGAR
+    public int agregarCliente(Cliente cli) {
+        String sql = "insert into Clientes (nombresCliente, DPICliente, direccionCliente, estado, telefonoCliente, correoCliente) values (?,?,?,?,?,?)";
+        try {
+            con = cn.Conexion();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, cli.getNombresCliente());
+            ps.setString(2, cli.getDPICliente());
+            ps.setString(3, cli.getDireccionCliente());
+            ps.setString(4, cli.getEstado());
+            ps.setString(5, cli.getTelefonoCliente());
+            ps.setString(6, cli.getCorreoCliente());
+            resp = ps.executeUpdate(); 
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return resp;
+    }
+    
     
     
     
