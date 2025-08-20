@@ -353,7 +353,7 @@
                     <a class="dropdown-item" href="Controlador?menu=Clientes" target="contenido" onclick="showIframe()">Clientes</a>
                     <a class="dropdown-item" href="Controlador?menu=NuevaVenta" target="contenido" onclick="showIframe()">Nueva Venta</a>
                     <a class="dropdown-item" href="Controlador?menu=Vehiculo&accion=Listar" target="contenido" onclick="showIframe()">Vehiculos</a>
-                    <a class="dropdown-item" href="#" target="contenido" onclick="showIframe()">Entidad 6</a>
+                    <a class="dropdown-item" href="Controlador?menu=Proveedor&accion=Listar" target="contenido" onclick="showIframe()">Proveedores</a>
                     <a class="dropdown-item" href="#" target="contenido" onclick="showIframe()">Entidad 7</a>
                     <a class="dropdown-item" href="#" target="contenido" onclick="showIframe()">Entidad 8</a>
                     <a class="dropdown-item" href="#" target="contenido" onclick="showIframe()">Entidad 9</a>
