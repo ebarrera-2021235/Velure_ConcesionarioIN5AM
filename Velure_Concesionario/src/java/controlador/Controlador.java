@@ -699,7 +699,7 @@ public class Controlador extends HttpServlet {
                         break;            
             }
             request.getRequestDispatcher("Compras.jsp").forward(request, response);
-        } else if (menu.equals("DetalleCompra")) {
+        }  else if (menu.equals("DetalleCompra")) {
             switch (accion) {
                 case "Listar":
                     List listaDetalle = detalleDaoC.listar();
