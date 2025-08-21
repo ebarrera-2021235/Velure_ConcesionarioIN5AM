@@ -1,26 +1,38 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%-- 
+    Document   : DetalleCompra
+    Created on : 20/08/2025, 18:45:31
+    Author     : Edwin Muxtay
+--%>
+
+<%--
+    Document   : DetalleCompra
+    Created on : 18/08/2025, 22:28:23
+    Author     : Pc
+--%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Proveedores</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Detalles De Compras</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"/>
     <!-- Google Fonts Montserrat -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
     <style>
+        /* Mantengo los mismos estilos */
         body {
             font-family: 'Montserrat', Arial, sans-serif;
             margin: 0;
             min-height: 100vh;
         }
-
-        /* --- Zona superior --- */
         .zona-superior {
-            background: url('img/em.jpg') no-repeat center center fixed;
+            background: url('img/em2.jpg') no-repeat center -250px fixed;
             background-size: cover;
             position: relative;
-            min-height: 350px;
+            min-height: 400px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -30,39 +42,30 @@
         .zona-superior::after {
             content: "";
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            top: 0; left: 0; right: 0; bottom: 0;
             background: rgba(0,0,0,0.55);
             z-index: 0;
         }
-
-        .descripcion-velure,
-        .titulo-proveedor {
+        .descripcion-velure, .titulo-detalleCompra {
             position: relative;
             z-index: 1;
             text-align: center;
             color: #fff;
             text-shadow: 2px 2px 8px #000;
         }
-
         .descripcion-velure {
             padding-top: 40px;
             font-size: 2rem;
             font-weight: 700;
         }
-
-        .titulo-proveedor {
+        .titulo-detalleCompra {
             font-size: 2.8rem;
             font-weight: 700;
             margin-top: 18px;
             margin-bottom: 38px;
             letter-spacing: 2px;
         }
-
-        /* --- Descripción compras --- */
-        .descripcion-proveedor {
+        .descripcion-detalleCompra {
             max-width: 900px;
             margin: 70px auto 0 auto;
             padding: 40px 30px 30px 30px;
@@ -71,8 +74,7 @@
             box-shadow: 0 8px 32px rgba(0,0,0,0.10);
             color: #222;
         }
-
-        .titulo-equipo {
+        .titulo-UnaMeta {
             font-size: 2.3rem;
             font-weight: 700;
             text-align: center;
@@ -80,8 +82,6 @@
             color: #1a1a1a;
             letter-spacing: 1px;
         }
-
-        /* --- Zona CRUD --- */
         .zona-crud {
             background: #fff;
             border-radius: 24px;
@@ -90,14 +90,12 @@
             margin: 70px auto 40px auto;
             padding: 40px 30px;
         }
-
         .crud-container {
             display: flex;
             flex-direction: row;
             gap: 30px;
         }
-
-        .tabla-proveedor {
+        .tabla-detalleCompra {
             background: transparent;
             box-shadow: none;
             border-radius: 0;
@@ -105,8 +103,8 @@
             min-width: 0;
             padding: 0;
         }
-
-        /* --- Card Form --- */
+        
+        /* FORMULARIO CARDS STYLE */
         .card-form {
             background: white;
             border-radius: 8px;
@@ -114,17 +112,15 @@
             border: none;
             transition: all 0.3s ease;
         }
-
         .card-form:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 25px rgba(0,0,0,0.15);
         }
-
         .card-form .card-body {
             padding: 20px;
         }
-
-        /* --- Botones formulario --- */
+        
+        /* Botones del formulario con el mismo estilo */
         .btn-form-minimal {
             padding: 8px 16px;
             font-size: 0.9rem;
@@ -139,37 +135,32 @@
             gap: 4px;
             cursor: pointer;
         }
-
         .btn-add-minimal {
             background: #fff;
             color: #17a2b8;
             border-color: #17a2b8;
         }
-
         .btn-add-minimal:hover {
             background: #17a2b8;
             color: white;
         }
-
         .btn-update-minimal {
             background: #fff;
             color: #28a745;
             border-color: #28a745;
         }
-
         .btn-update-minimal:hover {
             background: #28a745;
             color: white;
         }
-
-        /* --- Tabla tarjetas --- */
+        
+        /* TABLA CARDS STYLE */
         .table-cards {
             border: none;
             background: transparent;
         }
-
         .table-cards .thead-cards th {
-            background: #000;
+            background: #000000;
             color: white;
             padding: 16px 12px;
             font-weight: 600;
@@ -179,7 +170,6 @@
             letter-spacing: 0.5px;
             font-size: 0.9rem;
         }
-
         .table-cards tbody tr {
             background: white;
             margin-bottom: 8px;
@@ -187,27 +177,23 @@
             box-shadow: 0 2px 10px rgba(0,0,0,0.08);
             transition: all 0.3s ease;
         }
-
         .table-cards tbody tr:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 25px rgba(0,0,0,0.15);
         }
-
         .table-cards tbody td {
             border: none;
             padding: 15px 12px;
             vertical-align: middle;
         }
-
         .table-cards tbody tr td:first-child {
             border-radius: 8px 0 0 8px;
         }
-
         .table-cards tbody tr td:last-child {
             border-radius: 0 8px 8px 0;
         }
-
-        /* --- Botones acciones --- */
+        
+        /* Botones minimalistas */
         .btn-action-minimal {
             padding: 5px 10px;
             font-size: 0.8rem;
@@ -220,155 +206,182 @@
             align-items: center;
             gap: 4px;
         }
-
         .btn-edit-minimal {
             background: #fff;
             color: #007bff;
             border-color: #007bff;
         }
-
         .btn-edit-minimal:hover {
             background: #007bff;
             color: white;
             text-decoration: none;
         }
-
         .btn-delete-minimal {
             background: #fff;
             color: #dc3545;
             border-color: #dc3545;
         }
-
         .btn-delete-minimal:hover {
             background: #dc3545;
             color: white;
             text-decoration: none;
         }
-
         .acciones-btns {
             display: flex;
             gap: 8px;
             justify-content: center;
         }
-
-        html { scroll-behavior: smooth; }
-
-        /* --- Media Queries --- */
+        
+        /* Animación suave para el scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+        
         @media (max-width: 991px) {
-            .zona-crud { 
-                padding: 20px 5px; 
+            .zona-crud {
+                padding: 20px 5px;
             }
             .crud-container {
-                flex-direction: column; 
-                gap: 20px; 
+                flex-direction: column;
+                gap: 20px;
             }
-            .titulo-equipo { 
-                font-size: 1.5rem; 
+            .titulo-detalleCompra {
+                font-size: 2rem;
             }
-            .table-responsive { 
-                font-size: 0.85rem; 
+            .descripcion-detalleCompra {
+                padding: 20px 5px 15px 5px;
+            }
+            .titulo-UnaMeta {
+                font-size: 1.5rem;
+            }
+            .table-responsive {
+                font-size: 0.85rem;
             }
             .btn-action-minimal {
-                padding: 4px 8px; 
+                padding: 4px 8px;
                 font-size: 0.75rem;
             }
-            .btn-form-minimal { 
-                padding: 6px 12px; 
-                font-size: 0.8rem; 
+            .btn-form-minimal {
+                padding: 6px 12px;
+                font-size: 0.8rem;
             }
         }
     </style>
 </head>
 <body>
-     <!-- Encabezado con imagen de fondo -->
     <div class="zona-superior">
         <div class="descripcion-velure">
             Velure es <span style="color:#FFD700;">Velocidad</span> y <span style="color:#FFD700;">Lujosidad</span><br>
             <span style="font-size:1.2rem; font-weight:400;">El mejor lugar para encontrar tu auto deportivo soñado.</span>
         </div>
-        <div class="titulo-proveedor">Proveedores</div>
+        <div class="titulo-detalleCompra">
+            DETALLES DE COMPRAS
+        </div>
     </div>
-     
-     <!-- Sección descriptiva de los proveedores -->
-    <div class="descripcion-proveedor">
-        <div class="titulo-proveedor">Nuestros Proveedores, Nuestra Garantía</div>
-        <p>En Velure Motors, entendemos que cada vehículo que entregamos es el resultado de una cadena de suministros meticulosamente seleccionada. Nuestros proveedores son el corazón de nuestro concesionario, proporcionando los mejores autos y repuestos de la industria.</p>
-        <p>Trabajamos con los fabricantes más prestigiosos y con talleres especializados que nos permiten ofrecer vehículos de alta calidad, tecnología avanzada y la mejor experiencia para nuestros clientes.</p>
-        <p>La confianza y compromiso de nuestros proveedores nos permite mantener una flota de vehículos en excelente estado, garantizando seguridad, durabilidad y un servicio postventa que se extiende más allá de la compra.</p>
-        <p>En Velure Motors, sabemos que un buen vehículo empieza con un buen proveedor. Por eso, seleccionamos con cuidado a cada uno de nuestros socios estratégicos, quienes comparten nuestra visión de calidad y excelencia.</p>
+    
+    <div class="descripcion-detalleCompra">
+        <div class="titulo-UnaMeta">
+            Una Meta, Varias Ventas
+        </div>
+        <p>
+            En el corazón de nuestra estrategia, cada Detalle de Compra es una pieza fundamental. No son simplemente líneas en una factura, sino la manifestación tangible de la confianza que nuestros clientes depositan en nosotros y la prueba del meticuloso trabajo de nuestro equipo. Cada artículo, cada cantidad y cada especificación registrada es un testimonio de la dedicación que ponemos en cada transacción, asegurando un crecimiento que es tan preciso como sostenible.
+        </p>
+        <p>
+            Cada compra es más que un simple intercambio; es una oportunidad para fortalecer nuestras relaciones comerciales. No solo estamos procesando un pedido, sino que estamos construyendo una historia de éxito compartida. Estamos resolviendo necesidades, superando expectativas y demostrando que el valor de nuestra marca reside en la exactitud y la fiabilidad de cada producto y servicio que entregamos. Cada registro en un detalle de compra es un "sí" a la calidad y al profesionalismo que nos define.       
+        </p>
+        <p>
+            El éxito de nuestra empresa no es un evento fortuito, sino el resultado de un proceso continuo de excelencia operativa. Es la suma de la disciplina, la atención y la consistencia en cada paso del ciclo de venta. No se trata de un solo pedido grande o de una victoria aislada, sino de la acumulación de cada detalle bien gestionado, de cada problema evitado y de cada cliente satisfecho. Somos un equipo que no se conforma con lo estándar, sino que busca constantemente la perfección en cada transacción.
+        </p>
+        <p>
+            Cada venta no es un fin en sí mismo, sino una semilla que plantamos para cosechar el futuro más próspero.
+        </p>
     </div>
 
-      <!-- Área CRUD de proveedores -->
+    <!-- CRUD -->
     <div class="zona-crud" id="zona-crud">
         <div class="crud-container">
-            <!-- Formulario de registro/edición -->
             <div style="flex:1;">
-                <div class="card-form">
+                <div class="card">
                     <div class="card-body">
-                        <form action="Controlador?menu=Proveedor" method="POST">
-                            <!-- Campo Nombre -->
+                        <form action="Controlador?menu=DetalleCompra" method="POST">
                             <div class="form-group">
-                                <label><strong>Nombre:</strong></label>
-                                <input type="text" value="${proveedor.nombreProveedor}" name="txtNombreProveedor" class="form-control" required>
+                                <label><strong>Precio Unitario:</strong></label>
+                                <input type="text" value="${detalleCompra.getPrecioUnitario()}" name="txtPrecioUnitario" class="form-control">
                             </div>
-                            <!-- Campo Teléfono -->
                             <div class="form-group">
-                                <label><strong>Teléfono:</strong></label>
-                                <input type="tel" value="${proveedor.telefonoProveedor}" name="txtTelefonoProveedor" class="form-control" required>
+                                <label><strong>Cantidad:</strong></label>
+                                <input type="text" value="${detalleCompra.getCantidad()}" name="txtCantidad" class="form-control">
                             </div>
-                            <!-- Campo Dirección -->
                             <div class="form-group">
-                                <label><strong>Dirección:</strong></label>
-                                <input type="text" value="${proveedor.direccionProveedor}" name="txtDireccionProveedor" class="form-control" required>
-                            </div>
-                            <!-- Campo Correo -->
-                            <div class="form-group">
-                                <label><strong>Correo:</strong></label>
-                                <input type="email" value="${proveedor.correoProveedor}" name="txtCorreoProveedor" class="form-control" required>
-                            </div>
-                            <!-- Botones Agregar y Actualizar -->
-                            <div class="d-flex justify-content-between">
-                                <c:choose>
-                                    <c:when test="${modo eq 'editar'}">
-                                        <input type="submit" name="accion" value="Actualizar" class="btn-form-minimal btn-update-minimal">
-                                        <a class="btn-action-minimal btn-delete-minimal" href="Controlador?menu=Proveedor&accion=Cancelar">Cancelar</a>
+                                    <label><strong>Código Vehículo:</strong></label>
+                                    <c:choose>
+                                        <c:when test="${modo eq 'editar'}">
+                        
+                                            <input type="number" value="${detalleCompra.getCodigoVehiculo()}" class="form-control" disabled>
+         
+                                            <input type="hidden" name="txtCodigoVehiculo" value="${detalleCompra.getCodigoVehiculo()}">
+                                        </c:when>
+                                        <c:otherwise>
+                                            <input type="number" value="<c:out value='${detalleCompra.getCodigoVehiculo()}' default='0'/>" name="txtCodigoVehiculo" class="form-control" placeholder="0">
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
+
+                                <div class="form-group">
+                                    <label><strong>Código Compra:</strong></label>
+                                    <c:choose>
+                                        <c:when test="${modo eq 'editar'}">
+                                            <input type="number" value="${detalleCompra.getCodigoCompra()}" class="form-control" disabled>
+                                            <input type="hidden" name="txtCodigoCompra" value="${detalleCompra.getCodigoCompra()}">
+                                        </c:when>
+                                        <c:otherwise>
+                                            <input type="number" value="<c:out value='${detalleCompra.getCodigoCompra()}' default='0'/>" name="txtCodigoCompra" class="form-control" placeholder="0">
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
+
+
+                                <div class="d-flex justify-content-between">
+                                    <c:choose>
+                                        <c:when test="${modo eq 'editar'}">
+                                            <input type="submit" name="accion" value="Actualizar" class="btn btn-primary">
                                     </c:when>
                                     <c:otherwise>
-                                        <input type="submit" name="accion" value="Agregar" class="btn-form-minimal btn-add-minimal">
+                                        <input type="submit" name="accion" value="Agregar" class="btn btn-success">
                                     </c:otherwise>
                                 </c:choose>
-                            </div>
-                        </form>
+                                </div>
+                            </form>
                     </div>
                 </div>
             </div>
-             <!-- Tabla de proveedores -->
+
             <div style="flex:1;">
-                <div class="tabla-proveedor">
+                 <div class="tabla-empleados">
                     <div class="table-responsive">
                         <table class="table table-cards">
                             <thead class="thead-cards">
                                 <tr>
-                                    <th>CÓDIGO</th>
-                                    <th>NOMBRE</th>
-                                    <th>TELÉFONO</th>
-                                    <th>DIRECCIÓN</th>
-                                    <th>CORREO</th>
-                                    <th>ACCIONES</th>
+                                    <th>Código</th>
+                                    <th>Precio Unitario</th>
+                                    <th>Cantidad</th>
+                                    <th>Código Vehículo</th>
+                                    <th>Código Compra</th>
+                                    <th>Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <c:forEach var="proveedor" items="${proveedores}">
+                                <c:forEach var="detalleCompra" items="${detalleCompras}">
                                     <tr>
-                                        <td>${proveedor.codigoProveedor}</td>
-                                        <td>${proveedor.nombreProveedor}</td>
-                                        <td>${proveedor.telefonoProveedor}</td>
-                                        <td>${proveedor.direccionProveedor}</td>
-                                        <td>${proveedor.correoProveedor}</td>
+                                        <td>${detalleCompra.getCodigoDetalleCompra()}</td>
+                                        <td>${detalleCompra.getPrecioUnitario()}</td>
+                                        <td>${detalleCompra.getCantidad()}</td>
+                                        <td>${detalleCompra.getCodigoVehiculo()}</td>
+                                        <td>${detalleCompra.getCodigoCompra()}</td>
                                         <td>
                                             <div class="acciones-btns">
-                                                <a class="btn-action-minimal btn-edit-minimal" href="Controlador?menu=Proveedor&accion=Editar&codigoProveedor=${proveedor.codigoProveedor}">Editar</a>
-                                                <a class="btn-action-minimal btn-delete-minimal" href="Controlador?menu=Proveedor&accion=Eliminar&codigoProveedor=${proveedor.codigoProveedor}" onclick="return confirmarEliminar(this);">Eliminar</a>
+                                                <a class="btn-action-minimal btn-edit-minimal" href="Controlador?menu=DetalleCompra&accion=Editar&codigoDetalleCompra=${detalleCompra.getCodigoDetalleCompra()}">Editar</a>    
+                                                <a class="btn-action-minimal btn-delete-minimal" href="Controlador?menu=DetalleCompra&accion=Eliminar&codigoDetalleCompra=${detalleCompra.getCodigoDetalleCompra()}" onclick="confirmarEliminar(event, this);">Eliminar</a>
                                             </div>
                                         </td>
                                     </tr>
@@ -381,15 +394,18 @@
         </div>
     </div>
 
-    <!-- Scripts Bootstrap y Confirmación -->
+ <!-- Scripts Bootstrap -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"></script>
-     <!-- SweetAlert2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    <!-- Script de confirmación antes de eliminar -->
     <script>
-        function confirmarEliminar(link) {
+        // mantener arriba al cargar
+        window.addEventListener('load', function () {
+            window.scrollTo(0, 0);
+        });
+
+        function confirmarEliminar(event, link) {
             event.preventDefault();
             Swal.fire({
                 title: '¿Está seguro?',
@@ -405,12 +421,9 @@
                     window.location.href = link.href;
                 }
             });
-            return false;
         }
     </script>
     <script>
-            // Este bloque de código verifica si existe un mensaje de error
-            // en los atributos de la solicitud y lo muestra con SweetAlert2.
             var error = "${error}";
             if (error && error !== "null") {
                 Swal.fire({
@@ -420,7 +433,7 @@
                     confirmButtonText: 'Aceptar'
                 });
             }
-</script>
-
+    </script>
 </body>
 </html>
+
