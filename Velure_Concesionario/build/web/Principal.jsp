@@ -355,7 +355,8 @@
                     <a class="dropdown-item" href="Controlador?menu=Vehiculo&accion=Listar" target="contenido" onclick="showIframe()">Vehiculos</a>
                     <a class="dropdown-item" href="Controlador?menu=Proveedor&accion=Listar" target="contenido" onclick="showIframe()">Proveedores</a>
                     <a class="dropdown-item" href="Controlador?menu=Compras&accion=Listar" target="contenido" onclick="showIframe()">Compras</a>
-                    <a class="dropdown-item" href="#" target="contenido" onclick="showIframe()">Entidad 8</a>
+                    <a class="dropdown-item" href="Controlador?menu=Seguros&accion=Listar" target="contenido" onclick="showIframe()">Servicios </a>
+                    <a class="dropdown-item" href="Controlador?menu=Seguro&accion=Listar" target="contenido" onclick="showIframe()">Seguros</a>
                     <a class="dropdown-item" href="#" target="contenido" onclick="showIframe()">Entidad 9</a>
                     <a class="dropdown-item" href="Controlador?menu=DetalleCompra&accion=Listar" target="contenido" onclick="showIframe()">Detalles de Compras</a>
                     <a class="dropdown-item" href="Controlador?menu=DetalleVenta&accion=Listar" target="contenido" onclick="showIframe()">Detalles de Ventas</a>
