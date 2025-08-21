@@ -223,6 +223,7 @@ public class UsuarioDAO {
                         + "kyPPiFmqdYK91ehXrvjS2lXD6RGWVy2N+r1rFEV7s/cv8z1pRCz1U2G288SE8zzsTXuN1HiD5FoMULib39mv"
                         + "wDLkTujpN2KnwAAAABJRU5ErkJggg==";
                 
+                
                 user.setImagen(imageUser);
                 break;
         }
