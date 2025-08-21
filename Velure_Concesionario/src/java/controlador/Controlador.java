@@ -770,6 +770,10 @@ public class Controlador extends HttpServlet {
                     detalleDaoC.eliminar(codDetalleCompra);
                     request.getRequestDispatcher("Controlador?menu=DetalleCompra&accion=Listar").forward(request, response);
                     return;
+                case "cancelar":
+                    request.setAttribute("modo", "agregar");
+                    request.getRequestDispatcher("Controlador?menu=DetalleCompra&accion=Listar").forward(request, response);
+                    break;
             }
 
             request.getRequestDispatcher("DetalleCompra.jsp").forward(request, response);
