@@ -227,6 +227,7 @@
                         <c:choose>
                             <c:when test="${modo eq 'editar'}">
                                 <input type="submit" name="accion" value="Actualizar" class="btn btn-success btn-form-minimal btn-update-minimal">
+                                <a class="btn btn-danger btn-action-minimal" href="Controlador?menu=Empleado&accion=Cancelar">Cancelar</a>
                             </c:when>
                             <c:otherwise>
                                 <input type="submit" name="accion" value="Agregar" class="btn btn-info btn-form-minimal btn-add-minimal">

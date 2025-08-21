@@ -342,14 +342,16 @@
 
 
                                 <div class="d-flex justify-content-between">
+
                                     <c:choose>
-                                        <c:when test="${modo eq 'editar'}">
-                                            <input type="submit" name="accion" value="Actualizar" class="btn btn-primary">
-                                    </c:when>
-                                    <c:otherwise>
-                                        <input type="submit" name="accion" value="Agregar" class="btn btn-success">
-                                    </c:otherwise>
-                                </c:choose>
+                                        <c:when test="${modo eq 'editar'}" >
+                                            <input type="submit" name="accion" value="Actualizar" class="btn-form-minimal btn-update-minimal">
+                                            <a class="btn-action-minimal btn-delete-minimal" href="Controlador?menu=DetalleCompra&accion=Cancelar">Cancelar</a>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <input type="submit" name="accion" value="Agregar" class="btn-form-minimal btn-add-minimal">
+                                        </c:otherwise>
+                                    </c:choose>
                                 </div>
                             </form>
                     </div>

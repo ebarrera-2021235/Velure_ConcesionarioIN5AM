@@ -1,31 +1,25 @@
-<%-- 
-    Document   : Clientes
-    Created on : 13/08/2025, 22:41:42
-    Author     : USUARIO
---%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Cliente</title>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"/>
-        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-        <style>
+        <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+        <%@page contentType="text/html" pageEncoding="UTF-8"%>
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+            <title>Seguro</title>
+            <!-- Bootstrap CSS -->
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"/>
+            <!-- Google Fonts Montserrat -->
+            <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
+            <style>
             body {
                 font-family: 'Montserrat', Arial, sans-serif;
                 margin: 0;
                 min-height: 100vh;
             }
             .zona-superior {
-                background: url('img/hos.jpg') no-repeat center center fixed;
+                background: url('img/em.jpg') no-repeat center center fixed;
                 background-size: cover;
                 position: relative;
-                min-height: 450px;
+                min-height: 350px;
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
@@ -34,14 +28,11 @@
             .zona-superior::after {
                 content: "";
                 position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
+                top: 0; left: 0; right: 0; bottom: 0;
                 background: rgba(0,0,0,0.55);
                 z-index: 0;
             }
-            .descripcion-velure, .titulo-empleados {
+            .descripcion-velure, .titulo-seguros {
                 position: relative;
                 z-index: 1;
                 text-align: center;
@@ -53,14 +44,14 @@
                 font-size: 2rem;
                 font-weight: 700;
             }
-            .titulo-empleados {
+            .titulo-seguros {
                 font-size: 2.8rem;
                 font-weight: 700;
                 margin-top: 18px;
                 margin-bottom: 38px;
                 letter-spacing: 2px;
             }
-            .descripcion-empleados {
+            .descripcion-seguros {
                 max-width: 900px;
                 margin: 70px auto 0 auto;
                 padding: 40px 30px 30px 30px;
@@ -81,7 +72,7 @@
                 background: #fff;
                 border-radius: 24px;
                 box-shadow: 0 8px 32px rgba(0,0,0,0.18);
-                max-width: 1500px;
+                max-width: 1200px;
                 margin: 70px auto 40px auto;
                 padding: 40px 30px;
             }
@@ -90,7 +81,7 @@
                 flex-direction: row;
                 gap: 30px;
             }
-            .tabla-empleados {
+            .tabla-seguros {
                 background: transparent;
                 box-shadow: none;
                 border-radius: 0;
@@ -157,7 +148,7 @@
             .table-cards .thead-cards th {
                 background: #000000;
                 color: white;
-                padding: 24px 20px;
+                padding: 16px 12px;
                 font-weight: 600;
                 text-align: center;
                 border: none;
@@ -199,7 +190,6 @@
                 text-decoration: none;
                 display: inline-flex;
                 align-items: center;
-                justify-content: center;
                 gap: 4px;
             }
             .btn-edit-minimal {
@@ -241,10 +231,10 @@
                     flex-direction: column;
                     gap: 20px;
                 }
-                .titulo-empleados {
+                .titulo-seguros {
                     font-size: 2rem;
                 }
-                .descripcion-empleados {
+                .descripcion-seguros{
                     padding: 20px 5px 15px 5px;
                 }
                 .titulo-equipo {
@@ -261,137 +251,129 @@
                     padding: 6px 12px;
                     font-size: 0.8rem;
                 }
-
-                .card-form .form-control{
-                    width: 1600px;
-                }
             }
         </style>
-
-    </head>
-    <body>
+        </head>
+        <body>
         <div class="zona-superior">
             <div class="descripcion-velure">
                 Velure es <span style="color:#FFD700;">Velocidad</span> y <span style="color:#FFD700;">Lujosidad</span><br>
                 <span style="font-size:1.2rem; font-weight:400;">El mejor lugar para encontrar tu auto deportivo soñado.</span>
             </div>
-            <div class="titulo-empleados">
-                CLIENTES
-            </div>
+            <div class="titulo-seguros">Seguros</div>
         </div>
-        <div class="descripcion-empleados">
-            <div class="titulo-equipo">
-                Tu Confianza es Nuestra Máxima Velocidad
+            <div class="descripcion-seguros">
+                <div class="titulo-equipo">Nuestros Seguros, Tu Tranquilidad</div>
+                <p>En Velure, sabemos que proteger tu vehículo es tan importante como disfrutarlo. Por eso ofrecemos seguros confiables, adaptados a tus necesidades, con coberturas completas desde Básica hasta Riesgo sin franquicia.</p>
+                <p>Nuestros seguros están diseñados para brindarte tranquilidad y confianza, respaldando tu inversión y cuidando lo que más valoras. Cada póliza se gestiona con transparencia y claridad, para que entiendas exactamente los beneficios de tu cobertura.</p>
+                <p>Contamos con un equipo de expertos que evalúa cada caso de manera personalizada, asegurando soluciones rápidas y efectivas ante cualquier eventualidad. Nuestro soporte y atención están disponibles cuando los necesitas.</p>
+                <p>Porque en Velure no solo ofrecemos seguros, también construimos seguridad, confianza y tranquilidad para cada cliente que confía en nosotros, protegiendo tu vehículo y tu bienestar en todo momento.</p>
+                <p>Además, ponemos a tu disposición herramientas digitales fáciles de usar. Queremos que tu experiencia con Velure sea siempre sencilla, segura y confiable, acompañándote en cada paso para cuidar lo que más valoras.</p>
             </div>
-            <p>
-                En Velure, tu satisfacción es nuestro motor y la fuerza que nos impulsa a ir más allá. Sabemos que comprar un auto deportivo es una decisión que va más allá de la mecánica; es la culminación de un sueño, la expresión de tu pasión por la velocidad y la elegancia. Por eso, nuestra misión no es solo venderte un vehículo, sino construir una relación de confianza contigo.
-            </p>
-            <p>
-                Desde el primer momento en que nos contactas, nos comprometemos a escuchar tus necesidades y entender tus deseos. Nuestro equipo de expertos está dedicado a guiarte en cada paso del proceso, ofreciéndote un servicio personalizado y transparente. Te garantizamos una experiencia tan emocionante y fluida como la conducción de nuestros autos, sin sorpresas, solo con la máxima dedicación.
-            </p>
-            <p>
-                En Velure, no solo te entregamos las llaves de tu próximo auto soñado, te damos la seguridad de que estás tomando la mejor decisión. Te invitamos a descubrir por qué nuestros clientes no solo encuentran un vehículo de lujo, sino que se unen a una comunidad que valora la excelencia y la confianza.
-            </p>
-            <p>
-                Tu confianza en nosotros es el lujo más grande que podemos tener.
-            </p>
-        </div>
-
-        <div class="zona-crud">
+        <div class="zona-crud" id="zona-crud">
             <div class="crud-container">
                 <div style="flex:1;">
-                    <div class="card-form">
+                    <div class="card">
                         <div class="card-body">
-                            <form action="Controlador?menu=Clientes" method="POST">
+                            <form action="Controlador?menu=Seguro" method="POST">
                                 <div class="form-group">
-                                    <label><strong>Nombres:</strong></label>
-                                    <input type="text" value="${cliente.nombresCliente}" name="txtNombresCliente" class="form-control">
+                                    <label><strong>Tipo de Cobertura:</strong></label>
+                                    <select name="txttipoCobertura" class="form-control">
+                                        <option value="Básica" ${seguro.getTipoCobertura() == "Básica" ? "selected" : ""}>Básica</option>
+                                        <option value="Limitada" ${seguro.getTipoCobertura() == "Limitada" ? "selected" : ""}>Limitada</option>
+                                        <option value="Amplia" ${seguro.getTipoCobertura() == "Amplia" ? "selected" : ""}>Amplia</option>
+                                        <option value="Riesgo y franquicia" ${seguro.getTipoCobertura() == "Riesgo y franquicia" ? "selected" : ""}>Riesgo y franquicia</option>
+                                        <option value="Riesgo sin franquicia" ${seguro.getTipoCobertura() == "Riesgo sin franquicia" ? "selected" : ""}>Riesgo sin franquicia</option>
+                                    </select>
                                 </div>
                                 <div class="form-group">
-                                    <label><strong>DPI:</strong></label>
-                                    <input type="text" value="${cliente.DPICliente}" name="txtDPICliente" class="form-control">
+                                    <label><strong>Descripcion:</strong></label>
+                                    <input type="text" value="${seguro.descripcion}" name="txtdescripcion" class="form-control" required>
                                 </div>
                                 <div class="form-group">
-                                    <label><strong>Direccion:</strong></label>
-                                    <input type="text" value="${cliente.direccionCliente}" name="txtDireccionCliente" class="form-control">
+                                    <label>Fecha Inicio:</label>
+                                    <input type="date" value="${seguro.getFechaInicio()}" name="txtfechaInicio" class="form-control" required>
                                 </div>
                                 <div class="form-group">
-                                    <label><strong>Estado:</strong></label>
-                                    <input type="text" value="${cliente.estado}" name="txtEstado" class="form-control">
+                                    <label>Fecha Fin:</label>
+                                    <input type="date" value="${seguro.getFechaFin()}" name="txtfechaFin" class="form-control" required>
                                 </div>
                                 <div class="form-group">
-                                    <label><strong>Teléfono:</strong></label>
-                                    <input type="text" value="${cliente.telefonoCliente}" name="txtTelefonoCliente" class="form-control">
+                                    <label><strong>Costo:</strong></label>
+                                    <input type="number" value="${seguro.costo}" name="txtcosto" class="form-control" required>
                                 </div>
                                 <div class="form-group">
-                                    <label><strong>Correo:</strong></label>
-                                    <input type="text" value="${cliente.correoCliente}" name="txtCorreoCliente" class="form-control">
+                                    <label><strong>Código del Vehículo:</strong></label>
+                                    <input type="number" step="1" min="0" value="${seguro != null ? seguro.getCodigoVehiculo() : ''}" name="txtcodigoVehiculo" class="form-control" required
+                                        <c:if test="${seguro != null}"> readonly</c:if>>
+
+
                                 </div>
-                                <div class="d-flex justify-content-between">
+                                <input type="hidden" name="txtcodigoSeguro" value="${seguro.codigoSeguro}">
+                               <div class="d-flex justify-content-between">
                                     <c:choose>
                                         <c:when test="${modo eq 'editar'}">
                                             <input type="submit" name="accion" value="Actualizar" class="btn-form-minimal btn-update-minimal">
-                                            <a class="btn-action-minimal btn-delete-minimal" href="Controlador?menu=Clientes&accion=Cancelar">Cancelar</a>
+                                            <a class="btn-action-minimal btn-delete-minimal" href="Controlador?menu=Seguro&accion=Cancelar">Cancelar</a>
                                         </c:when>
                                         <c:otherwise>
                                             <input type="submit" name="accion" value="Agregar" class="btn-form-minimal btn-add-minimal">
                                         </c:otherwise>
                                     </c:choose>
-                                </div>
-                            </form>
-                        </div>
+                                </div>  
+                            </form> 
+                        </div>  
+                    </div>
+                </div>
+                <div style="flex:1;">
+                    <div class="tabla-seguros">
+                        <div class="table-responsive">
+                        <table class="table table-cards">
+                            <thead class="thead-cards">
+                                <tr>
+                                    <th>CODIGO</th>
+                                    <th>TIPO DE COBERTURA</th>
+                                    <th>DESCRIPCION</th>
+                                    <th>FECHA INICIO</th>
+                                    <th>FECHA FIN</th>
+                                    <th>COSTO</th>
+                                    <th>VEHICULO</th>
+                                    <th>ACCIONES</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <c:forEach var="seguro" items="${seguros}">
+                                <tr>
+                                    <td>${seguro.getCodigoSeguro()}</td>
+                                    <td>${seguro.getTipoCobertura()}</td>
+                                    <td>${seguro.getDescripcion()}</td>
+                                    <td>${seguro.getFechaInicio()}</td>
+                                    <td>${seguro.getFechaFin()}</td>
+                                    <td>${seguro.getCosto()}</td>
+                                    <td>${seguro.getCodigoVehiculo()}</td>
+                                    <td 
+                                        <div class="text-center align-middle">
+                                        <div class="d-flex justify-content-center gap-2">
+                                            <a class="btn-action-minimal btn-edit-minimal"href="Controlador?menu=Seguro&accion=Editar&codigoSeguro=${seguro.getCodigoSeguro()}">Editar</a>
+                                            <a class="btn-action-minimal btn-delete-minimal"href="Controlador?menu=Seguro&accion=Eliminar&codigoSeguro=${seguro.getCodigoSeguro()}"onclick="return confirmarEliminar(this, event);">Eliminar</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                        </tbody>    
+                        </table>
                     </div>
                 </div>
 
-                <div style="flex:1;">
-                    <div class="tabla-empleados">
-                        <div class="table-responsive">
-                            <table class="table table-cards">
-                                <thead class="thead-cards">
-                                    <tr>
-                                        <th>CODIGO</th>
-                                        <th>NOMBRES</th>
-                                        <th>DPI</th>
-                                        <th>DIRECCION</th>
-                                        <th>ESTADO</th>
-                                        <th>TELEFONO</th>
-                                        <th>CORREO</th>
-                                        <th>ACCIONES</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <c:forEach var="cli" items="${clientes}">
-                                        <tr>
-                                            <td>${cli.codigoCliente}</td>
-                                            <td>${cli.nombresCliente}</td>
-                                            <td>${cli.DPICliente}</td>
-                                            <td>${cli.direccionCliente}</td>
-                                            <td>${cli.estado}</td>
-                                            <td>${cli.telefonoCliente}</td>
-                                            <td>${cli.correoCliente}</td>
-                                            <td>
-                                                <div class="acciones-btns">
-                                                    <a class="btn-action-minimal btn-edit-minimal" href="Controlador?menu=Clientes&accion=Editar&codigoCliente=${cli.codigoCliente}">Editar</a>
-                                                    <a class="btn-action-minimal btn-delete-minimal" href="Controlador?menu=Clientes&accion=Eliminar&codigoCliente=${cli.codigoCliente}" onclick="return Eliminar(this);">Eliminar</a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </c:forEach>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
-
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
-
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
-            function Eliminar(link) {
-                event.preventDefault();
+            function confirmarEliminar(link, event) {
+                event.preventDefault(); // Evita que el enlace se siga automáticamente
                 Swal.fire({
                     title: '¿Está seguro?',
                     text: "¡No podrá deshacer esta acción!",
@@ -408,20 +390,8 @@
                 });
                 return false;
             }
-        </script>
 
-        <script>
-            // Este bloque de código verifica si existe un mensaje de error
-            // en los atributos de la solicitud y lo muestra con SweetAlert2.
-            var error = "${error}";
-            if (error && error !== "null") {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: error,
-                    confirmButtonText: 'Aceptar'
-                });
-            }
+        </script>   
         </script>
-    </body>
-</html>
+        </body>
+        </html>
