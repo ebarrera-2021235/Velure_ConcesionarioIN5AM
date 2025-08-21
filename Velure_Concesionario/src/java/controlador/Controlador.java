@@ -13,6 +13,8 @@ import modelo.Compra;
 import modelo.CompraDAO;
 import modelo.DetalleCompra;
 import modelo.DetalleCompraDAO;
+import modelo.DetalleVenta;
+import modelo.DetalleVentaDAO;
 import modelo.Empleado;
 import modelo.EmpleadoDAO;
 import modelo.Proveedor;
@@ -51,10 +53,15 @@ public class Controlador extends HttpServlet {
     CompraDAO compraDao = new CompraDAO();
     int codCompra;
     
+    //Objetos para DetalleCompra
     DetalleCompra detalleCompra = new DetalleCompra();
     DetalleCompraDAO detalleDaoC = new DetalleCompraDAO();
     int codDetalleCompra;
-
+    
+    //Objeto para DetalleVenta
+    DetalleVenta detalleVenta = new DetalleVenta();
+    DetalleVentaDAO detalleDao = new DetalleVentaDAO();
+    int codDetalleVenta;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -714,7 +721,168 @@ public class Controlador extends HttpServlet {
             }
 
             request.getRequestDispatcher("DetalleCompra.jsp").forward(request, response);
-        }
+        }else if (menu.equals("DetalleVenta")) {
+            switch (accion) {
+                case "Listar":
+                    List listaDetalle = detalleDao.listar();
+                    request.setAttribute("detalleVentas", listaDetalle);
+                    break;
+
+                case "Agregar":
+                    String cantAgr = request.getParameter("txtCantidad");
+                    String precVentaAgr = request.getParameter("txtPrecioVenta");
+                    String codVehiculoAgr = request.getParameter("txtCodigoVehiculo");
+                    String codVentaAgr = request.getParameter("txtCodigoVenta");
+
+                    if (cantAgr == null || cantAgr.isEmpty()
+                            || precVentaAgr == null || precVentaAgr.isEmpty()
+                            || codVehiculoAgr == null || codVehiculoAgr.isEmpty()
+                            || codVentaAgr == null || codVentaAgr.isEmpty()) {
+
+                        request.setAttribute("error", "Todos los campos deben estar llenos.");
+                        request.getRequestDispatcher("Controlador?menu=DetalleVenta&accion=Listar").forward(request, response);
+                        return;
+                    }
+
+                    if (!cantAgr.matches("\\d+")) {
+                        request.setAttribute("error", "La cantidad debe ser ingresada en forma de número entero");
+                        request.getRequestDispatcher("Controlador?menu=DetalleVenta&accion=Listar").forward(request, response);
+                        return;
+                    }
+
+                    if (!precVentaAgr.matches("\\d+(\\.\\d+)?")) {
+                        request.setAttribute("error", "El precio de venta debe ser ingresada en forma de número decimal");
+                        request.getRequestDispatcher("Controlador?menu=DetalleVenta&accion=Listar").forward(request, response);
+                        return;
+                    }
+
+                    if (!codVehiculoAgr.matches("\\d+")) {
+                        request.setAttribute("error", "El codigo de Vehiculo debe ser ingresada en forma de número entero");
+                        request.getRequestDispatcher("Controlador?menu=DetalleVenta&accion=Listar").forward(request, response);
+                        return;
+                    }
+
+                    if (!codVentaAgr.matches("\\d+")) {
+                        request.setAttribute("error", "El codigo de Venta debe ser ingresada en forma de número entero");
+                        request.getRequestDispatcher("Controlador?menu=DetalleVenta&accion=Listar").forward(request, response);
+                        return;
+                    }
+
+                    int cantInt = Integer.parseInt(cantAgr);
+                    double precVentaInt = Double.parseDouble(precVentaAgr);
+                    int codVehiculoInt = Integer.parseInt(codVehiculoAgr);
+                    int codVentaInt = Integer.parseInt(codVentaAgr);
+
+                    if (cantInt <= 0) {
+                        request.setAttribute("error", "La cantidad debe ser mayor a 0.");
+                        request.getRequestDispatcher("Controlador?menu=DetalleVenta&accion=Listar").forward(request, response);
+                        return;
+                    }
+
+                    if (precVentaInt <= 0) {
+                        request.setAttribute("error", "El Precio de Venta debe ser mayor a 0.");
+                        request.getRequestDispatcher("Controlador?menu=DetalleVenta&accion=Listar").forward(request, response);
+                        return;
+                    }
+
+                    DetalleVenta detalleVentaN = new DetalleVenta();
+                    detalleVentaN.setCantidad(cantInt);
+                    detalleVentaN.setPrecioVenta(precVentaInt);
+                    detalleVentaN.setCodigoVehiculo(codVehiculoInt);
+                    detalleVentaN.setCodigoVenta(codVentaInt);
+                    detalleDao.agregar(detalleVentaN);
+
+
+                    request.getRequestDispatcher("Controlador?menu=DetalleVenta&accion=Listar").forward(request, response);
+                    return;
+
+                case "Editar":
+
+                    codDetalleVenta = Integer.parseInt(request.getParameter("codigoDetalleVenta"));
+                    DetalleVenta dv = detalleDao.listarPorCodigoDetalle(codDetalleVenta);
+                    request.setAttribute("detalleVenta", dv);
+                    request.setAttribute("modo", "editar");
+                    request.getRequestDispatcher("Controlador?menu=DetalleVenta&accion=Listar").forward(request, response);
+                    break;
+
+                case "Actualizar":
+                    String cantAct = request.getParameter("txtCantidad");
+                    String precVentaAct = request.getParameter("txtPrecioVenta");
+                    String codVehiculoAct = request.getParameter("txtCodigoVehiculo");
+                    String codVentaAct = request.getParameter("txtCodigoVenta");
+
+                    if (cantAct == null || cantAct.isEmpty()
+                            || precVentaAct == null || precVentaAct.isEmpty()
+                            || codVehiculoAct == null || codVehiculoAct.isEmpty()
+                            || codVentaAct == null || codVentaAct.isEmpty()) {
+
+                        request.setAttribute("error", "Debe seleccionar una tupla de la tabla.");
+                        request.getRequestDispatcher("Controlador?menu=DetalleVenta&accion=Listar").forward(request, response);
+                        return;
+                    }
+
+                    if (!cantAct.matches("\\d+")) {
+                        request.setAttribute("error", "La cantidad debe ser ingresada en forma de número entero");
+                        request.getRequestDispatcher("Controlador?menu=DetalleVenta&accion=Listar").forward(request, response);
+                        return;
+                    }
+
+                    if (!precVentaAct.matches("\\d+(\\.\\d+)?")) {
+                        request.setAttribute("error", "El precio de venta debe ser ingresada en forma de número decimal");
+                        request.getRequestDispatcher("Controlador?menu=DetalleVenta&accion=Listar").forward(request, response);
+                        return;
+                    }
+
+                    if (!codVehiculoAct.matches("\\d+")) {
+                        request.setAttribute("error", "El codigo de Vehiculo debe ser ingresada en forma de número entero");
+                        request.getRequestDispatcher("Controlador?menu=DetalleVenta&accion=Listar").forward(request, response);
+                        return;
+                    }
+
+                    if (!codVentaAct.matches("\\d+")) {
+                        request.setAttribute("error", "El codigo de Venta debe ser ingresada en forma de número entero");
+                        request.getRequestDispatcher("Controlador?menu=DetalleVenta&accion=Listar").forward(request, response);
+                        return;
+                    }
+
+                    int cantidadAct = Integer.parseInt(cantAct);
+                    double precioAct = Double.parseDouble(precVentaAct);
+
+                    DetalleVenta original = detalleDao.listarPorCodigoDetalle(codDetalleVenta);
+
+                    if (cantidadAct <= 0) {
+                        request.setAttribute("error", "La cantidad debe ser mayor a 0.");
+                        request.getRequestDispatcher("Controlador?menu=DetalleVenta&accion=Listar").forward(request, response);
+                        return;
+                    }
+
+                    if (precioAct <= 0) {
+                        request.setAttribute("error", "El Precio de Venta debe ser mayor a 0.");
+                        request.getRequestDispatcher("Controlador?menu=DetalleVenta&accion=Listar").forward(request, response);
+                        return;
+                    }
+
+                    DetalleVenta actualizado = new DetalleVenta();
+                    actualizado.setCodigoDetalleVenta(codDetalleVenta);
+                    actualizado.setCantidad(cantidadAct);
+                    actualizado.setPrecioVenta(precioAct);
+                    actualizado.setCodigoVehiculo(Integer.parseInt(codVehiculoAct));
+                    actualizado.setCodigoVenta(Integer.parseInt(codVentaAct));
+
+                    detalleDao.actualizar(actualizado);
+                    request.setAttribute("modo", "agregar");
+                    request.getRequestDispatcher("Controlador?menu=DetalleVenta&accion=Listar").forward(request, response);
+                    return;
+
+                case "Eliminar":
+                    codDetalleVenta = Integer.parseInt(request.getParameter("codigoDetalleVenta"));
+                    detalleDao.eliminar(codDetalleVenta);
+                    request.getRequestDispatcher("Controlador?menu=DetalleVenta&accion=Listar").forward(request, response);
+                    return;
+            }
+
+            request.getRequestDispatcher("DetalleVenta.jsp").forward(request, response);
+        } 
     }
 
     @Override
