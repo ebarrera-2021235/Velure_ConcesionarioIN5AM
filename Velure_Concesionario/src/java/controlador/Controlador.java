@@ -280,7 +280,8 @@ public class Controlador extends HttpServlet {
         // --- SERVICIOS ---
         } 
         else if (menu.equals("Empleado")) {
-    switch(accion){
+    switch (accion) {
+
         case "Listar":
             List listaEmpleados = empleadoDAO.listar();
             request.setAttribute("empleados", listaEmpleados);
@@ -292,6 +293,34 @@ public class Controlador extends HttpServlet {
             String telefono = request.getParameter("txtTelefonoEmpleado");
             String est = request.getParameter("txtEstadoEmpleado");
             String correo = request.getParameter("txtCorreoEmpleado");
+
+            // ✅ Validaciones
+            if (DPI == null || !DPI.matches("\\d{13}")) {
+                request.setAttribute("error", "El DPI debe contener exactamente 13 dígitos.");
+                request.getRequestDispatcher("Controlador?menu=Empleado&accion=Listar").forward(request, response);
+                return;
+            }
+
+            if (telefono == null || !telefono.matches("\\d{8}")) {
+                request.setAttribute("error", "El teléfono debe contener exactamente 8 dígitos.");
+                request.getRequestDispatcher("Controlador?menu=Empleado&accion=Listar").forward(request, response);
+                return;
+            }
+
+            if (correo == null || correo.isEmpty() || 
+               !(correo.endsWith("@gmail.com") || correo.endsWith("@outlook.com") || correo.endsWith("@yahoo.com"))) {
+                request.setAttribute("error", "El correo debe terminar en @gmail.com, @outlook.com o @yahoo.com");
+                request.getRequestDispatcher("Controlador?menu=Empleado&accion=Listar").forward(request, response);
+                return;
+            }
+
+            if (est == null || !(est.equals("1") || est.equals("2"))) {
+                request.setAttribute("error", "El estado solo puede ser 1 (Activo) o 2 (Inactivo).");
+                request.getRequestDispatcher("Controlador?menu=Empleado&accion=Listar").forward(request, response);
+                return;
+            }
+
+            // Si pasa las validaciones → guardar
             empleado.setDPIEmpleado(DPI);
             empleado.setNombresEmpleado(nombres);
             empleado.setTelefonoEmpleado(telefono);
@@ -305,7 +334,7 @@ public class Controlador extends HttpServlet {
             codEmpleado = Integer.parseInt(request.getParameter("codigoEmpleado"));
             Empleado e = empleadoDAO.listarCodigoEmpleado(codEmpleado);
             request.setAttribute("empleado", e);
-            request.setAttribute("modo", "editar"); // 🔹 NECESARIO
+            request.setAttribute("modo", "editar");
             request.getRequestDispatcher("Controlador?menu=Empleado&accion=Listar").forward(request, response);
             break;
 
@@ -315,6 +344,34 @@ public class Controlador extends HttpServlet {
             String telefonoEmp = request.getParameter("txtTelefonoEmpleado");
             String estEmp = request.getParameter("txtEstadoEmpleado");
             String correoEmp = request.getParameter("txtCorreoEmpleado");
+
+            // ✅ Validaciones (igual que en Agregar)
+            if (DPIEmp == null || !DPIEmp.matches("\\d{13}")) {
+                request.setAttribute("error", "El DPI debe contener exactamente 13 dígitos.");
+                request.getRequestDispatcher("Controlador?menu=Empleado&accion=Listar").forward(request, response);
+                return;
+            }
+
+            if (telefonoEmp == null || !telefonoEmp.matches("\\d{8}")) {
+                request.setAttribute("error", "El teléfono debe contener exactamente 8 dígitos.");
+                request.getRequestDispatcher("Controlador?menu=Empleado&accion=Listar").forward(request, response);
+                return;
+            }
+
+            if (correoEmp == null || correoEmp.isEmpty() ||
+               !(correoEmp.endsWith("@gmail.com") || correoEmp.endsWith("@outlook.com") || correoEmp.endsWith("@yahoo.com"))) {
+                request.setAttribute("error", "El correo debe terminar en @gmail.com, @outlook.com o @yahoo.com");
+                request.getRequestDispatcher("Controlador?menu=Empleado&accion=Listar").forward(request, response);
+                return;
+            }
+
+            if (estEmp == null || !(estEmp.equals("1") || estEmp.equals("2"))) {
+                request.setAttribute("error", "El estado solo puede ser 1 (Activo) o 2 (Inactivo).");
+                request.getRequestDispatcher("Controlador?menu=Empleado&accion=Listar").forward(request, response);
+                return;
+            }
+
+            // Si pasa las validaciones → actualizar
             empleado.setDPIEmpleado(DPIEmp);
             empleado.setNombresEmpleado(nombreEmp);
             empleado.setTelefonoEmpleado(telefonoEmp);
@@ -339,6 +396,7 @@ public class Controlador extends HttpServlet {
 
     request.getRequestDispatcher("Empleado.jsp").forward(request, response);
 }
+
 
         
         
