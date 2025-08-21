@@ -350,15 +350,15 @@
                 <div class="dropdown-menu" aria-labelledby="entidadesDropdown">
                     <a class="dropdown-item" href="Controlador?menu=Producto" target="contenido" onclick="showIframe()">Productos</a>
                     <a class="dropdown-item" href="Controlador?menu=Empleado&accion=Listar" target="contenido" onclick="showIframe()">Empleados</a>
-                    <a class="dropdown-item" href="Controlador?menu=Clientes" target="contenido" onclick="showIframe()">Clientes</a>
+                    <a class="dropdown-item" href="Controlador?menu=Clientes&accion=Listar" target="contenido" onclick="showIframe()">Clientes</a>
                     <a class="dropdown-item" href="Controlador?menu=NuevaVenta" target="contenido" onclick="showIframe()">Nueva Venta</a>
                     <a class="dropdown-item" href="Controlador?menu=Vehiculo&accion=Listar" target="contenido" onclick="showIframe()">Vehiculos</a>
-                    <a class="dropdown-item" href="#" target="contenido" onclick="showIframe()">Entidad 6</a>
-                    <a class="dropdown-item" href="#" target="contenido" onclick="showIframe()">Entidad 7</a>
-                    <a class="dropdown-item" href="#" target="contenido" onclick="showIframe()">Entidad 8</a>
+                    <a class="dropdown-item" href="Controlador?menu=Proveedor&accion=Listar" target="contenido" onclick="showIframe()">Proveedores</a>
+                    <a class="dropdown-item" href="Controlador?menu=Compras&accion=Listar" target="contenido" onclick="showIframe()">Compras</a>
+                    <a class="dropdown-item" href="Controlador?menu=Seguros&accion=Listar" target="contenido" onclick="showIframe()">Servicios </a>
                     <a class="dropdown-item" href="#" target="contenido" onclick="showIframe()">Entidad 9</a>
-                    <a class="dropdown-item" href="#" target="contenido" onclick="showIframe()">Entidad 10</a>
-                    <a class="dropdown-item" href="#" target="contenido" onclick="showIframe()">Entidad 11</a>
+                    <a class="dropdown-item" href="Controlador?menu=DetalleCompra&accion=Listar" target="contenido" onclick="showIframe()">Detalles de Compras</a>
+                    <a class="dropdown-item" href="Controlador?menu=DetalleVenta&accion=Listar" target="contenido" onclick="showIframe()">Detalles de Ventas</a>
                 </div>
             </li>
             <!-- Otro enlace -->

@@ -27,30 +27,29 @@ public class EmpleadoDAO {
         return valor != null && (valor.equals("1") || valor.equals("2"));
     }
 
-    public Empleado validar(String usuario, String DPIEmpleado) {
+    public Empleado validar(String correoEmpleado){
         Empleado empleado = new Empleado();
-        String sql = "select * from Empleado where usuario = ? and DPIEmpleado = ?";
-        try {
+        String sql = "select * from Empleados where correoEmpleado = ?";
+        try{
             con = cn.Conexion();
             ps = con.prepareStatement(sql);
-            ps.setString(1, usuario);
-            ps.setString(2, DPIEmpleado);
+            ps.setString(1, correoEmpleado);
             rs = ps.executeQuery();
-            while (rs.next()) {
+            while(rs.next()){
                 empleado.setCodigoEmpleado(rs.getInt("codigoEmpleado"));
-                empleado.setDPIEmpleado(rs.getString("DPIEmpleado"));
                 empleado.setNombresEmpleado(rs.getString("nombresEmpleado"));
-                empleado.setUsuario(rs.getString("usuario"));
+                empleado.setDPIEmpleado(rs.getString("DPIEmpleado"));
             }
-        } catch (Exception e) {
+        }catch(Exception e){
             e.printStackTrace();
         }
+
         return empleado;
     }
 
     // LISTAR
-    public List listar() {
-        String sql = "select * from empleado";
+    public List<Empleado> listar() {
+        String sql = "select * from Empleados";
         List<Empleado> listaEmpleado = new ArrayList<>();
         try {
             con = cn.Conexion();
@@ -58,12 +57,12 @@ public class EmpleadoDAO {
             rs = ps.executeQuery();
             while (rs.next()) {
                 Empleado em = new Empleado();
-                em.setCodigoEmpleado(rs.getInt(1));
-                em.setDPIEmpleado(rs.getString(2));
-                em.setNombresEmpleado(rs.getString(3));
-                em.setTelefonoEmpleado(rs.getString(4));
-                em.setEstado(rs.getString(5));
-                em.setUsuario(rs.getString(6));
+                em.setCodigoEmpleado(rs.getInt("codigoEmpleado"));
+                em.setDPIEmpleado(rs.getString("DPIEmpleado"));
+                em.setNombresEmpleado(rs.getString("nombresEmpleado"));
+                em.setTelefonoEmpleado(rs.getString("telefonoEmpleado"));
+                em.setEstado(rs.getString("estado"));
+                em.setCorreoEmpleado(rs.getString("correoEmpleado"));
                 listaEmpleado.add(em);
             }
         } catch (Exception e) {
@@ -81,7 +80,7 @@ public class EmpleadoDAO {
             return 0; // No inserta si no pasa validación
         }
 
-        String sql = "insert into Empleado (DPIEmpleado, nombresEmpleado, telefonoEmpleado, estado, usuario) values (?,?,?,?,?)";
+        String sql = "insert into Empleados (DPIEmpleado, nombresEmpleado, telefonoEmpleado, estado, correoEmpleado) values (?,?,?,?,?)";
         try {
             con = cn.Conexion();
             ps = con.prepareStatement(sql);
@@ -89,7 +88,7 @@ public class EmpleadoDAO {
             ps.setString(2, emp.getNombresEmpleado());
             ps.setString(3, emp.getTelefonoEmpleado());
             ps.setString(4, emp.getEstado());
-            ps.setString(5, emp.getUsuario());
+            ps.setString(5, emp.getCorreoEmpleado());
             resp = ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
@@ -100,18 +99,17 @@ public class EmpleadoDAO {
     // BUSCAR POR CODIGO
     public Empleado listarCodigoEmpleado(int id) {
         Empleado emp = new Empleado();
-        String sql = "Select * from Empleado where codigoEmpleado =" + id;
+        String sql = "Select * from Empleados where codigoEmpleado =" + id;
         try {
             con = cn.Conexion();
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             while (rs.next()) {
-                emp.setCodigoEmpleado(rs.getInt(1));
-                emp.setDPIEmpleado(rs.getString(2));
-                emp.setNombresEmpleado(rs.getString(3));
-                emp.setTelefonoEmpleado(rs.getString(4));
-                emp.setEstado(rs.getString(5));
-                emp.setUsuario(rs.getString(6));
+                emp.setDPIEmpleado(rs.getString("DPIEmpleado"));
+                emp.setNombresEmpleado(rs.getString("nombresEmpleado"));
+                emp.setTelefonoEmpleado(rs.getString("telefonoEmpleado"));
+                emp.setEstado(rs.getString("estado"));
+                emp.setCorreoEmpleado(rs.getString("correoEmpleado"));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -128,7 +126,7 @@ public class EmpleadoDAO {
             return 0;
         }
 
-        String sql = "Update Empleado set DPIEmpleado = ?, nombresEmpleado = ?, telefonoEmpleado = ?, estado = ?, usuario = ? where codigoEmpleado = ?";
+        String sql = "Update Empleados set DPIEmpleado = ?, nombresEmpleado = ?, telefonoEmpleado = ?, estado = ?, correoEmpleado = ? where codigoEmpleado = ?";
         try {
             con = cn.Conexion();
             ps = con.prepareStatement(sql);
@@ -136,7 +134,7 @@ public class EmpleadoDAO {
             ps.setString(2, emp.getNombresEmpleado());
             ps.setString(3, emp.getTelefonoEmpleado());
             ps.setString(4, emp.getEstado());
-            ps.setString(5, emp.getUsuario());
+            ps.setString(5, emp.getCorreoEmpleado());
             ps.setInt(6, emp.getCodigoEmpleado());
             resp = ps.executeUpdate();
         } catch (Exception e) {
@@ -147,7 +145,7 @@ public class EmpleadoDAO {
 
     // ELIMINAR
     public void eliminar(int id) {
-        String sql = "delete from empleado where codigoEmpleado =" + id;
+        String sql = "delete from Empleados where codigoEmpleado =" + id;
         try {
             con = cn.Conexion();
             ps = con.prepareStatement(sql);

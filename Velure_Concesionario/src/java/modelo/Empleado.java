@@ -1,25 +1,29 @@
 package modelo;
 
 public class Empleado {
-   private int codigoEmpleado;
-   private String DPIEmpleado;
-   private String nombresEmpleado;
-   private String telefonoEmpleado;
-   private String estado;
-   private String usuario;
+    private int codigoEmpleado;
+    private String DPIEmpleado;
+    private String nombresEmpleado;
+    private String telefonoEmpleado;
+    private String estado;
+    private String correoEmpleado;
 
+    // Constructor vacío
     public Empleado() {
     }
 
-    public Empleado(int codigoEmpleado, String DPIEmpleado, String nombresEmpleado, String telefonoEmpleado, String estado, String usuario) {
+    // Constructor con parámetros
+    public Empleado(int codigoEmpleado, String DPIEmpleado, String nombresEmpleado, String telefonoEmpleado,
+                    String estado, String correoEmpleado) {
         this.codigoEmpleado = codigoEmpleado;
         this.DPIEmpleado = DPIEmpleado;
         this.nombresEmpleado = nombresEmpleado;
         this.telefonoEmpleado = telefonoEmpleado;
         this.estado = estado;
-        this.usuario = usuario;
+        this.correoEmpleado = correoEmpleado;
     }
 
+    // Getters y Setters
     public int getCodigoEmpleado() {
         return codigoEmpleado;
     }
@@ -60,13 +64,11 @@ public class Empleado {
         this.estado = estado;
     }
 
-    public String getUsuario() {
-        return usuario;
+    public String getCorreoEmpleado() {
+        return correoEmpleado;
     }
 
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
+    public void setCorreoEmpleado(String correoEmpleado) {
+        this.correoEmpleado = correoEmpleado;
     }
-   
-   
 }
