@@ -19,6 +19,8 @@ import modelo.Empleado;
 import modelo.EmpleadoDAO;
 import modelo.Proveedor;
 import modelo.ProveedorDAO;
+import modelo.Seguro;
+import modelo.SeguroDAO;
 import modelo.Servicios;
 import modelo.ServiciosDAO;
 
@@ -62,6 +64,11 @@ public class Controlador extends HttpServlet {
     DetalleVenta detalleVenta = new DetalleVenta();
     DetalleVentaDAO detalleDao = new DetalleVentaDAO();
     int codDetalleVenta;
+    
+    // Seguros
+    Seguro seguro = new Seguro();
+    SeguroDAO seguroDao = new SeguroDAO();
+    int codSeguro;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -906,7 +913,122 @@ public class Controlador extends HttpServlet {
             }
 
             request.getRequestDispatcher("DetalleVenta.jsp").forward(request, response);
-        } 
+        }else if (menu.equals("Seguro")) {
+            switch (accion) {
+                case "Listar":
+                    List<Seguro> listaSeguros = seguroDao.listar();
+                    request.setAttribute("seguros", listaSeguros);
+                    request.getRequestDispatcher("Seguros.jsp").forward(request, response);
+                    break;
+
+                case "Agregar":
+                    String tipoCobertura = request.getParameter("txttipoCobertura");
+                    String descripcion = request.getParameter("txtdescripcion");
+                    String costoStr = request.getParameter("txtcosto");
+                    String fechaInicioStr = request.getParameter("txtfechaInicio");
+                    String fechaFinStr = request.getParameter("txtfechaFin");
+                    String codigoVehiculoStr = request.getParameter("txtcodigoVehiculo");
+
+                    // VALIDACIÓN DE DESCRIPCIÓN (solo letras y espacios)
+                    if (descripcion == null || descripcion.trim().isEmpty() || !descripcion.matches("^[a-zA-Z\\s]+$")) {
+                        request.setAttribute("error", "El campo Descripción solo puede contener letras y espacios, sin acentos ni caracteres especiales.");
+                        request.getRequestDispatcher("Controlador?menu=Seguro&accion=Listar").forward(request, response);
+                        return;
+                    }
+
+                    // VALIDACIÓN DE COSTO (solo números decimales o enteros)
+                    if (costoStr == null || costoStr.trim().isEmpty() || !costoStr.matches("^\\d+(\\.\\d+)?$")) {
+                        request.setAttribute("error", "El campo Costo solo puede contener números válidos (ej: 100 o 100.50).");
+                        request.getRequestDispatcher("Controlador?menu=Seguro&accion=Listar").forward(request, response);
+                        return;
+                    }
+
+                    // Conversión segura de datos
+                    Date fechaInicio = java.sql.Date.valueOf(fechaInicioStr);
+                    Date fechaFin = java.sql.Date.valueOf(fechaFinStr);
+                    double costo = Double.parseDouble(costoStr);
+                    int codigoVehiculo = Integer.parseInt(codigoVehiculoStr);
+
+                    seguro.setTipoCobertura(tipoCobertura);
+                    seguro.setDescripcion(descripcion);
+                    seguro.setFechaInicio(fechaInicio);
+                    seguro.setFechaFin(fechaFin);
+                    seguro.setCosto(costo);
+                    seguro.setCodigoVehiculo(codigoVehiculo);
+
+                    seguroDao.agregar(seguro);
+                    request.setAttribute("modo", "editar");
+                    request.getRequestDispatcher("Controlador?menu=Seguro&accion=Listar").forward(request, response);
+                    break;
+                    
+                    case "Editar":
+                    codSeguro = Integer.parseInt(request.getParameter("codigoSeguro"));
+                    Seguro s = seguroDao.listarCodigoSeguro(codSeguro);
+                    request.setAttribute("seguro", s); // objeto a editar
+                    request.setAttribute("modo", "editar");
+                    // Solo hacemos forward a Seguros.jsp, no a "Listar"
+                    request.getRequestDispatcher("Controlador?menu=Seguro&accion=Listar").forward(request, response);
+                    break;
+
+
+                                    case "Actualizar":
+                        String tipoCoberturaS = request.getParameter("txttipoCobertura");
+                        String descripcionS = request.getParameter("txtdescripcion");
+                        String costoStrS = request.getParameter("txtcosto");
+                        String fechaInicioStrS = request.getParameter("txtfechaInicio");
+                        String fechaFinStrS = request.getParameter("txtfechaFin");
+                        String codigoSeguroStr = request.getParameter("txtcodigoSeguro");
+
+                        // VALIDACIONES
+                        if (descripcionS == null || descripcionS.trim().isEmpty() || !descripcionS.matches("^[a-zA-Z\\s]+$")) {
+                            request.setAttribute("error", "El campo Descripción solo puede contener letras y espacios.");
+                            request.getRequestDispatcher("Controlador?menu=Seguro&accion=Listar").forward(request, response);
+                            return;
+                        }
+                        if (costoStrS == null || costoStrS.trim().isEmpty() || !costoStrS.matches("^\\d+(\\.\\d+)?$")) {
+                            request.setAttribute("error", "El campo Costo solo puede contener números válidos.");
+                            request.getRequestDispatcher("Controlador?menu=Seguro&accion=Listar").forward(request, response);
+                            return;
+                        }
+
+                        // CONVERSIÓN DE DATOS
+                        Date fechaInicioS = java.sql.Date.valueOf(fechaInicioStrS);
+                        Date fechaFinS = java.sql.Date.valueOf(fechaFinStrS);
+                        double costoS = Double.parseDouble(costoStrS);
+                        int codigoSeguro = Integer.parseInt(codigoSeguroStr);
+
+                        // SETEO DEL OBJETO
+                        seguro.setCodigoSeguro(codigoSeguro);
+                        seguro.setTipoCobertura(tipoCoberturaS);
+                        seguro.setDescripcion(descripcionS);
+                        seguro.setFechaInicio(fechaInicioS);
+                        seguro.setFechaFin(fechaFinS);
+                        seguro.setCosto(costoS);
+
+                        // ACTUALIZAR EN LA BASE DE DATOS
+                        seguroDao.actualizar(seguro);
+
+                        // REDIRECCIÓN PARA RECARGAR LISTA
+                        request.setAttribute("modo", "agregar");
+                        request.getRequestDispatcher("Controlador?menu=Seguro&accion=Listar").forward(request, response);
+                        break;
+
+
+
+                case "Eliminar":
+                    codSeguro = Integer.parseInt(request.getParameter("codigoSeguro")); // Se obtiene el código del seguro
+                    seguroDao.eliminar(codSeguro); // Se llama al SeguroDAO para eliminarlo de la base de datos
+                    request.getRequestDispatcher("Controlador?menu=Seguro&accion=Listar").forward(request, response);
+                    break;    
+                
+                case "Cancelar":
+                    request.setAttribute("modo", "agregar");
+                    request.getRequestDispatcher("Controlador?menu=Seguro&accion=Listar").forward(request, response);
+                    break;
+                        
+            }       
+            request.getRequestDispatcher("Seguros.jsp").forward(request, response);
+        }
     }
 
     @Override
