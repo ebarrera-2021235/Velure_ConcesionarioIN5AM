@@ -240,85 +240,66 @@ public class Controlador extends HttpServlet {
         // --- SERVICIOS ---
         } 
         else if (menu.equals("Empleado")) {
-
     switch(accion){
-
         case "Listar":
-
             List listaEmpleados = empleadoDAO.listar();
-
             request.setAttribute("empleados", listaEmpleados);
-
             break;
 
         case "Agregar":
-
             String DPI = request.getParameter("txtDPIEmpleado");
             String nombres = request.getParameter("txtNombresEmpleado");
             String telefono = request.getParameter("txtTelefonoEmpleado");
             String est = request.getParameter("txtEstadoEmpleado");
             String correo = request.getParameter("txtCorreoEmpleado");
-
             empleado.setDPIEmpleado(DPI);
             empleado.setNombresEmpleado(nombres);
             empleado.setTelefonoEmpleado(telefono);
             empleado.setEstado(est);
             empleado.setCorreoEmpleado(correo);
-
             empleadoDAO.agregar(empleado);
-
             request.getRequestDispatcher("Controlador?menu=Empleado&accion=Listar").forward(request, response);
-
             break;
 
         case "Editar":
-
             codEmpleado = Integer.parseInt(request.getParameter("codigoEmpleado"));
-
             Empleado e = empleadoDAO.listarCodigoEmpleado(codEmpleado);
-
             request.setAttribute("empleado", e);
-
+            request.setAttribute("modo", "editar"); // 🔹 NECESARIO
             request.getRequestDispatcher("Controlador?menu=Empleado&accion=Listar").forward(request, response);
-
             break;
 
         case "Actualizar":
-
             String DPIEmp = request.getParameter("txtDPIEmpleado");
             String nombreEmp = request.getParameter("txtNombresEmpleado");
             String telefonoEmp = request.getParameter("txtTelefonoEmpleado");
             String estEmp = request.getParameter("txtEstadoEmpleado");
             String correoEmp = request.getParameter("txtCorreoEmpleado");
-
             empleado.setDPIEmpleado(DPIEmp);
             empleado.setNombresEmpleado(nombreEmp);
             empleado.setTelefonoEmpleado(telefonoEmp);
             empleado.setEstado(estEmp);
             empleado.setCorreoEmpleado(correoEmp);
             empleado.setCodigoEmpleado(codEmpleado);
-
             empleadoDAO.actualizar(empleado);
-
             request.getRequestDispatcher("Controlador?menu=Empleado&accion=Listar").forward(request, response);
-
             break;
 
         case "Eliminar":
-
             codEmpleado = Integer.parseInt(request.getParameter("codigoEmpleado"));
-
             empleadoDAO.eliminar(codEmpleado);
-
             request.getRequestDispatcher("Controlador?menu=Empleado&accion=Listar").forward(request, response);
-
             break;
 
+        case "Cancelar":
+            request.setAttribute("modo", "agregar");
+            request.getRequestDispatcher("Controlador?menu=Empleado&accion=Listar").forward(request, response);
+            break;
     }
 
     request.getRequestDispatcher("Empleado.jsp").forward(request, response);
-
 }
+
         
         
         
