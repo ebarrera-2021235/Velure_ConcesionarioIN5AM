@@ -182,13 +182,13 @@
                     <!-- DPI -->
                     <div class="form-group">
                         <label><strong>DPI</strong></label>
-                        <input type="text" name="dpi" maxlength="13" class="form-control">
+                        <input type="text" name="dpi" maxlength="13" minlength="13" pattern="\d{13}" class="form-control">
                     </div>
                     
                     <!-- Telefono -->
                     <div class="form-group">
                         <label><strong>Telefono</strong></label>
-                        <input type="text" name="telefono" maxlength="8" class="form-control">
+                        <input type="text" name="telefono" maxlength="8" minlength="8" pattern="\d{8}" class="form-control">
                     </div>
 
                     <!-- Usuario -->
@@ -201,7 +201,7 @@
                     <div class="form-group">
                         <label><strong>Contraseña</strong></label>
                         <div class="input-group">
-                            <input type="password" name="pass" id="confirmarClave" class="form-control" required>
+                            <input type="password" name="pass" id="txtPass" class="form-control" required>
                             <div class="input-group-append">
                                 <span class="input-group-text" onclick="togglePassword('clave', 'eyeIcon1')" style="cursor:pointer;">
                                     <i id="eyeIcon1" class="bi bi-eye"></i>
@@ -210,17 +210,6 @@
                         </div>
                     </div>
 
-
-
-                    <!-- Agregar Imagen -->
-                    <!-- comment <div class="form-group">
-                        <label><strong>A�adir foto perfil</strong></label>
-                        <input type="file" name="fileImagen">
-                    </div> 
-                    
-                    <div class="card-footer">
-                        <button class="btn btn-outline-primary" name="accion" value="Guardar">Guardar imagen</button>
-                    </div> -->
 
                     <!-- Bot�n -->
                     <div class="mt-4">
@@ -264,13 +253,19 @@
 
         <script>
             // Mostrar/Ocultar contrase�a
-            function togglePassword(inputId, iconId) {
-                const input = document.getElementById(inputId);
-                const icon = document.getElementById(iconId);
-                input.type = (input.type === "password") ? "text" : "password";
-                icon.classList.toggle("bi-eye");
-                icon.classList.toggle("bi-eye-slash");
-            }
+            function togglePassword() {
+                const input = document.getElementById("txtPass");
+                const icon = document.getElementById("eyeIcon");
+                if (input.type === "password") {
+                    input.type = "text";
+                    icon.classList.remove("bi-eye");
+                    icon.classList.add("bi-eye-slash");
+                } else {
+                    input.type = "password";
+                    icon.classList.remove("bi-eye-slash");
+                    icon.classList.add("bi-eye");
+                }
+        }
 
             // Validar formulario de registro
             function validarRegistro() {

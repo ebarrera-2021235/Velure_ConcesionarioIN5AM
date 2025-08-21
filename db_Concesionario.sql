@@ -1,6 +1,6 @@
 -- BASE DE DATOS DE APLICACION
 -- AUTHOR: Edgar Roberto Catalan
--- fecha de modificación: 20/08/25
+-- fecha de modificación: 18/08/25
 
 Drop database if exists DBConcesionarioIN5AM;
 Create database DBConcesionarioIN5AM;
@@ -34,7 +34,6 @@ Create table Usuarios(
     contrasenia varchar(25) not null,
     correoUsuario varchar(50) not null,
     codigoEmpleado int not null,
-    imagen varchar(5200) not null,
     primary key PK_codigoUsuario(codigoUsuario),
     constraint FK_Usuarios_Empleado foreign key (codigoEmpleado)
 		references Empleados (codigoEmpleado)
@@ -150,9 +149,9 @@ Create table DetalleVenta(
 
 select * from empleados;
 select * from usuarios;
--- insert into empleados (nombresEmpleado, DPIEmpleado, estado, telefonoEmpleado, correoEmpleado)
-	-- value('Estuardo Gómez', '1234567890', '1', '12345678', 'egomez@gmail.com');
+insert into empleados (nombresEmpleado, DPIEmpleado, estado, telefonoEmpleado, correoEmpleado)
+	value('Estuardo Gómez', '1234567890', '1', '12345678', 'egomez@gmail.com');
     
--- insert into empleados (nombresEmpleado, DPIEmpleado, estado, telefonoEmpleado, correoEmpleado)
-	-- value('Juan Perez', '0987654321', '1', '87654321', 'jperez@gmail.com');
+insert into empleados (nombresEmpleado, DPIEmpleado, estado, telefonoEmpleado, correoEmpleado)
+	value('Juan Perez', '0987654321', '1', '87654321', 'jperez@gmail.com');
 
