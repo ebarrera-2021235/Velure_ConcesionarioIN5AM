@@ -91,6 +91,8 @@ public class Controlador extends HttpServlet {
                 case "Listar":
                     List listaClientes = clienteDAO.listarCliente();
                     request.setAttribute("clientes", listaClientes);
+                    // Asegúrate de que el formulario esté en modo "agregar" por defecto
+                    request.setAttribute("modo", "agregar");
                     break;
 
                 case "Agregar":
@@ -109,7 +111,12 @@ public class Controlador extends HttpServlet {
                             || correoCliente == null || correoCliente.isEmpty()) {
 
                         request.setAttribute("error", "Todos los campos deben estar llenos.");
-                        request.getRequestDispatcher("Controlador?menu=Clientes&accion=Listar").forward(request, response);
+                        // Para manejar el error, necesitas redirigir a la misma vista de listado
+                        // para que el usuario pueda ver el mensaje y los datos se vuelvan a cargar.
+                        // El JPS de Clientes mostrará el error por el script.
+                        List lista = clienteDAO.listarCliente();
+                        request.setAttribute("clientes", lista);
+                        request.getRequestDispatcher("Clientes.jsp").forward(request, response);
                         return;
                     }
 
@@ -119,34 +126,44 @@ public class Controlador extends HttpServlet {
                             && !correoCliente.endsWith("@yahoo.com"))) {
 
                         request.setAttribute("error", "El correo debe terminar con  @gmail.com, @outlook.com o @yahoo.com");
-                        request.getRequestDispatcher("Controlador?menu=Clientes&accion=Listar").forward(request, response);
+                        List lista = clienteDAO.listarCliente();
+                        request.setAttribute("clientes", lista);
+                        request.getRequestDispatcher("Clientes.jsp").forward(request, response);
                         return;
                     }
 
                     if (telefonoCliente == null || !telefonoCliente.matches("\\d{8}")) {
                         request.setAttribute("error", "El teléfono debe contener exactamente 8 numeros.");
-                        request.getRequestDispatcher("Controlador?menu=Clientes&accion=Listar").forward(request, response);
+                        List lista = clienteDAO.listarCliente();
+                        request.setAttribute("clientes", lista);
+                        request.getRequestDispatcher("Clientes.jsp").forward(request, response);
                         return;
                     }
 
                     if (estado == null || !estado.matches("\\d{1}")) {
                         request.setAttribute("error", "El campo de Estado debe ser un número");
-                        request.getRequestDispatcher("Controlador?menu=Clientes&accion=Listar").forward(request, response);
+                        List lista = clienteDAO.listarCliente();
+                        request.setAttribute("clientes", lista);
+                        request.getRequestDispatcher("Clientes.jsp").forward(request, response);
                         return;
                     }
 
                     if (dpiCliente == null || !dpiCliente.matches("\\d{13}")) {
                         request.setAttribute("error", "El DPI debe contener exactamente 13 digitos.");
-                        request.getRequestDispatcher("Controlador?menu=Clientes&accion=Listar").forward(request, response);
+                        List lista = clienteDAO.listarCliente();
+                        request.setAttribute("clientes", lista);
+                        request.getRequestDispatcher("Clientes.jsp").forward(request, response);
                         return;
                     }
 
                     if (nombresCliente == null || nombresCliente.trim().isEmpty() || !nombresCliente.matches("^[a-zA-Z\\s]+$")) {
                         request.setAttribute("error", "El espacio de Nombres solo puede contener letras y espacios, sin acentos ni caracteres especiales.");
-                        request.getRequestDispatcher("Controlador?menu=Clientes&accion=Listar").forward(request, response);
+                        List lista = clienteDAO.listarCliente();
+                        request.setAttribute("clientes", lista);
+                        request.getRequestDispatcher("Clientes.jsp").forward(request, response);
                         return;
                     }
-
+                    
                     cliente.setNombresCliente(nombresCliente);
                     cliente.setDPICliente(dpiCliente);
                     cliente.setDireccionCliente(direccionCliente);
@@ -162,8 +179,12 @@ public class Controlador extends HttpServlet {
                     codCliente = Integer.parseInt(request.getParameter("codigoCliente"));
                     Cliente cl = clienteDAO.listarCodigoCliente(codCliente);
                     request.setAttribute("cliente", cl);
+                    // Establece el modo a 'editar'
+                    request.setAttribute("modo", "editar");
+                    List listaEditar = clienteDAO.listarCliente();
+                    request.setAttribute("clientes", listaEditar);
                     break;
-
+                
                 case "Actualizar":
                     nombresCliente = request.getParameter("txtNombresCliente");
                     dpiCliente = request.getParameter("txtDPICliente");
@@ -172,6 +193,7 @@ public class Controlador extends HttpServlet {
                     telefonoCliente = request.getParameter("txtTelefonoCliente");
                     correoCliente = request.getParameter("txtCorreoCliente");
 
+                    // Ahora, valida si alguna de las variables es nula o vacía
                     if (nombresCliente == null || nombresCliente.isEmpty()
                             || dpiCliente == null || dpiCliente.isEmpty()
                             || direccionCliente == null || direccionCliente.isEmpty()
@@ -180,7 +202,9 @@ public class Controlador extends HttpServlet {
                             || correoCliente == null || correoCliente.isEmpty()) {
 
                         request.setAttribute("error", "Todos los campos deben estar llenos.");
-                        request.getRequestDispatcher("Controlador?menu=Clientes&accion=Listar").forward(request, response);
+                        List lista = clienteDAO.listarCliente();
+                        request.setAttribute("clientes", lista);
+                        request.getRequestDispatcher("Clientes.jsp").forward(request, response);
                         return;
                     }
 
@@ -190,34 +214,44 @@ public class Controlador extends HttpServlet {
                             && !correoCliente.endsWith("@yahoo.com"))) {
 
                         request.setAttribute("error", "El correo debe terminar con  @gmail.com, @outlook.com o @yahoo.com");
-                        request.getRequestDispatcher("Controlador?menu=Clientes&accion=Listar").forward(request, response);
+                        List lista = clienteDAO.listarCliente();
+                        request.setAttribute("clientes", lista);
+                        request.getRequestDispatcher("Clientes.jsp").forward(request, response);
                         return;
                     }
 
                     if (telefonoCliente == null || !telefonoCliente.matches("\\d{8}")) {
                         request.setAttribute("error", "El teléfono debe contener exactamente 8 numeros.");
-                        request.getRequestDispatcher("Controlador?menu=Clientes&accion=Listar").forward(request, response);
+                        List lista = clienteDAO.listarCliente();
+                        request.setAttribute("clientes", lista);
+                        request.getRequestDispatcher("Clientes.jsp").forward(request, response);
                         return;
                     }
 
                     if (estado == null || !estado.matches("\\d{1}")) {
                         request.setAttribute("error", "El campo de Estado debe ser un número");
-                        request.getRequestDispatcher("Controlador?menu=Clientes&accion=Listar").forward(request, response);
+                        List lista = clienteDAO.listarCliente();
+                        request.setAttribute("clientes", lista);
+                        request.getRequestDispatcher("Clientes.jsp").forward(request, response);
                         return;
                     }
 
                     if (dpiCliente == null || !dpiCliente.matches("\\d{13}")) {
                         request.setAttribute("error", "El DPI debe contener exactamente 13 digitos.");
-                        request.getRequestDispatcher("Controlador?menu=Clientes&accion=Listar").forward(request, response);
+                        List lista = clienteDAO.listarCliente();
+                        request.setAttribute("clientes", lista);
+                        request.getRequestDispatcher("Clientes.jsp").forward(request, response);
                         return;
                     }
 
                     if (nombresCliente == null || nombresCliente.trim().isEmpty() || !nombresCliente.matches("^[a-zA-Z\\s]+$")) {
                         request.setAttribute("error", "El espacio de Nombres solo puede contener letras y espacios, sin acentos ni caracteres especiales.");
-                        request.getRequestDispatcher("Controlador?menu=Clientes&accion=Listar").forward(request, response);
+                        List lista = clienteDAO.listarCliente();
+                        request.setAttribute("clientes", lista);
+                        request.getRequestDispatcher("Clientes.jsp").forward(request, response);
                         return;
                     }
-
+                    
                     cliente.setNombresCliente(request.getParameter("txtNombresCliente"));
                     cliente.setDPICliente(request.getParameter("txtDPICliente"));
                     cliente.setDireccionCliente(request.getParameter("txtDireccionCliente"));
@@ -234,13 +268,20 @@ public class Controlador extends HttpServlet {
                     clienteDAO.eliminar(codCliente);
                     response.sendRedirect("Controlador?menu=Clientes&accion=Listar");
                     return;
+                
+                case "Cancelar":
+                    // El botón de cancelar solo estará visible en modo 'editar'. 
+                    // Al cancelarlo, simplemente redirigimos a 'Listar' para limpiar el formulario y volver al modo 'agregar'.
+                    response.sendRedirect("Controlador?menu=Clientes&accion=Listar");
+                    return;
             }
             request.getRequestDispatcher("Clientes.jsp").forward(request, response);
 
         // --- SERVICIOS ---
         } 
         else if (menu.equals("Empleado")) {
-    switch(accion){
+    switch (accion) {
+
         case "Listar":
             List listaEmpleados = empleadoDAO.listar();
             request.setAttribute("empleados", listaEmpleados);
@@ -252,6 +293,34 @@ public class Controlador extends HttpServlet {
             String telefono = request.getParameter("txtTelefonoEmpleado");
             String est = request.getParameter("txtEstadoEmpleado");
             String correo = request.getParameter("txtCorreoEmpleado");
+
+            // ✅ Validaciones
+            if (DPI == null || !DPI.matches("\\d{13}")) {
+                request.setAttribute("error", "El DPI debe contener exactamente 13 dígitos.");
+                request.getRequestDispatcher("Controlador?menu=Empleado&accion=Listar").forward(request, response);
+                return;
+            }
+
+            if (telefono == null || !telefono.matches("\\d{8}")) {
+                request.setAttribute("error", "El teléfono debe contener exactamente 8 dígitos.");
+                request.getRequestDispatcher("Controlador?menu=Empleado&accion=Listar").forward(request, response);
+                return;
+            }
+
+            if (correo == null || correo.isEmpty() || 
+               !(correo.endsWith("@gmail.com") || correo.endsWith("@outlook.com") || correo.endsWith("@yahoo.com"))) {
+                request.setAttribute("error", "El correo debe terminar en @gmail.com, @outlook.com o @yahoo.com");
+                request.getRequestDispatcher("Controlador?menu=Empleado&accion=Listar").forward(request, response);
+                return;
+            }
+
+            if (est == null || !(est.equals("1") || est.equals("2"))) {
+                request.setAttribute("error", "El estado solo puede ser 1 (Activo) o 2 (Inactivo).");
+                request.getRequestDispatcher("Controlador?menu=Empleado&accion=Listar").forward(request, response);
+                return;
+            }
+
+            // Si pasa las validaciones → guardar
             empleado.setDPIEmpleado(DPI);
             empleado.setNombresEmpleado(nombres);
             empleado.setTelefonoEmpleado(telefono);
@@ -265,7 +334,7 @@ public class Controlador extends HttpServlet {
             codEmpleado = Integer.parseInt(request.getParameter("codigoEmpleado"));
             Empleado e = empleadoDAO.listarCodigoEmpleado(codEmpleado);
             request.setAttribute("empleado", e);
-            request.setAttribute("modo", "editar"); // 🔹 NECESARIO
+            request.setAttribute("modo", "editar");
             request.getRequestDispatcher("Controlador?menu=Empleado&accion=Listar").forward(request, response);
             break;
 
@@ -275,6 +344,34 @@ public class Controlador extends HttpServlet {
             String telefonoEmp = request.getParameter("txtTelefonoEmpleado");
             String estEmp = request.getParameter("txtEstadoEmpleado");
             String correoEmp = request.getParameter("txtCorreoEmpleado");
+
+            // ✅ Validaciones (igual que en Agregar)
+            if (DPIEmp == null || !DPIEmp.matches("\\d{13}")) {
+                request.setAttribute("error", "El DPI debe contener exactamente 13 dígitos.");
+                request.getRequestDispatcher("Controlador?menu=Empleado&accion=Listar").forward(request, response);
+                return;
+            }
+
+            if (telefonoEmp == null || !telefonoEmp.matches("\\d{8}")) {
+                request.setAttribute("error", "El teléfono debe contener exactamente 8 dígitos.");
+                request.getRequestDispatcher("Controlador?menu=Empleado&accion=Listar").forward(request, response);
+                return;
+            }
+
+            if (correoEmp == null || correoEmp.isEmpty() ||
+               !(correoEmp.endsWith("@gmail.com") || correoEmp.endsWith("@outlook.com") || correoEmp.endsWith("@yahoo.com"))) {
+                request.setAttribute("error", "El correo debe terminar en @gmail.com, @outlook.com o @yahoo.com");
+                request.getRequestDispatcher("Controlador?menu=Empleado&accion=Listar").forward(request, response);
+                return;
+            }
+
+            if (estEmp == null || !(estEmp.equals("1") || estEmp.equals("2"))) {
+                request.setAttribute("error", "El estado solo puede ser 1 (Activo) o 2 (Inactivo).");
+                request.getRequestDispatcher("Controlador?menu=Empleado&accion=Listar").forward(request, response);
+                return;
+            }
+
+            // Si pasa las validaciones → actualizar
             empleado.setDPIEmpleado(DPIEmp);
             empleado.setNombresEmpleado(nombreEmp);
             empleado.setTelefonoEmpleado(telefonoEmp);
@@ -299,6 +396,7 @@ public class Controlador extends HttpServlet {
 
     request.getRequestDispatcher("Empleado.jsp").forward(request, response);
 }
+
 
         
         
@@ -555,7 +653,6 @@ public class Controlador extends HttpServlet {
                     request.setAttribute("compras", listaCompras);
                     break;
                 case "Agregar":
-                    
                     Date fecha = java.sql.Date.valueOf(request.getParameter("txtFecha"));
                     Double total = Double.parseDouble(request.getParameter("txtTotal"));
                     String descripcion = request.getParameter("txtDescripcion");
@@ -567,18 +664,19 @@ public class Controlador extends HttpServlet {
                     compra.setDescripcion(descripcion);
                     compra.setEstado(estado);
                     compra.setCodigoEmpleado(codigoEmpleado);
-                     compraDao.agregar(compra);
+                    compraDao.agregar(compra);
                     request.getRequestDispatcher("Controlador?menu=Compras&accion=Listar").forward(request, response);
                     break;
                 case "Editar":
                     codCompra = Integer.parseInt(request.getParameter("codigoCompra"));
                     Compra c = compraDao.buscar(codCompra);
                     request.setAttribute("compra", c);
+                    request.setAttribute("modo", "editar");
                     request.getRequestDispatcher("Controlador?menu=Compras&accion=Listar").forward(request, response);
                     break;
                 case "Actualizar":
                     Date fechaA = java.sql.Date.valueOf(request.getParameter("txtFecha"));
-                    Double totalA = Double.parseDouble(request.getParameter("txtTotal"));
+                    Double totalA = Double.valueOf(request.getParameter("txtTotal"));
                     String descripcionA = request.getParameter("txtDescripcion");
                     String estadoA = request.getParameter("txtEstado");
                     compra.setFecha(fechaA);
@@ -587,6 +685,7 @@ public class Controlador extends HttpServlet {
                     compra.setEstado(estadoA);
                     compra.setCodigoCompra(codCompra);
                     compraDao.actualizar(compra);
+                    request.setAttribute("modo", "agregar");
                     request.getRequestDispatcher("Controlador?menu=Compras&accion=Listar").forward(request, response);
                     break;
                 case "Eliminar":
@@ -594,6 +693,10 @@ public class Controlador extends HttpServlet {
                     compraDao.eliminar(codCompra);
                     request.getRequestDispatcher("Controlador?menu=Compras&accion=Listar").forward(request, response);
                     break;
+                case "Cancelar":
+                    request.setAttribute("modo", "agregar");
+                    request.getRequestDispatcher("Controlador?menu=Compras&accion=Listar").forward(request, response);
+                        break;            
             }
             request.getRequestDispatcher("Compras.jsp").forward(request, response);
         } else if (menu.equals("DetalleCompra")) {
@@ -730,6 +833,10 @@ public class Controlador extends HttpServlet {
                     detalleDaoC.eliminar(codDetalleCompra);
                     request.getRequestDispatcher("Controlador?menu=DetalleCompra&accion=Listar").forward(request, response);
                     return;
+                case "cancelar":
+                    request.setAttribute("modo", "agregar");
+                    request.getRequestDispatcher("Controlador?menu=DetalleCompra&accion=Listar").forward(request, response);
+                    break;
             }
 
             request.getRequestDispatcher("DetalleCompra.jsp").forward(request, response);
@@ -891,6 +998,10 @@ public class Controlador extends HttpServlet {
                     detalleDao.eliminar(codDetalleVenta);
                     request.getRequestDispatcher("Controlador?menu=DetalleVenta&accion=Listar").forward(request, response);
                     return;
+                case "cancelar":
+                    request.setAttribute("modo", "agregar");
+                    request.getRequestDispatcher("Controlador?menu=DetalleVenta&accion=Listar").forward(request, response);
+                    break;
             }
 
             request.getRequestDispatcher("DetalleVenta.jsp").forward(request, response);
