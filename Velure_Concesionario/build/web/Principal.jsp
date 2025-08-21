@@ -357,7 +357,7 @@
                     <a class="dropdown-item" href="Controlador?menu=Compras&accion=Listar" target="contenido" onclick="showIframe()">Compras</a>
                     <a class="dropdown-item" href="#" target="contenido" onclick="showIframe()">Entidad 8</a>
                     <a class="dropdown-item" href="#" target="contenido" onclick="showIframe()">Entidad 9</a>
-                    <a class="dropdown-item" href="#" target="contenido" onclick="showIframe()">Entidad 10</a>
+                    <a class="dropdown-item" href="Controlador?menu=DetalleCompra&accion=Listar" target="contenido" onclick="showIframe()">Detalles de Compra</a>
                     <a class="dropdown-item" href="#" target="contenido" onclick="showIframe()">Entidad 11</a>
                 </div>
             </li>
