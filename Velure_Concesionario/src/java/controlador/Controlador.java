@@ -595,7 +595,6 @@ public class Controlador extends HttpServlet {
                     request.setAttribute("compras", listaCompras);
                     break;
                 case "Agregar":
-                    
                     Date fecha = java.sql.Date.valueOf(request.getParameter("txtFecha"));
                     Double total = Double.parseDouble(request.getParameter("txtTotal"));
                     String descripcion = request.getParameter("txtDescripcion");
@@ -607,18 +606,19 @@ public class Controlador extends HttpServlet {
                     compra.setDescripcion(descripcion);
                     compra.setEstado(estado);
                     compra.setCodigoEmpleado(codigoEmpleado);
-                     compraDao.agregar(compra);
+                    compraDao.agregar(compra);
                     request.getRequestDispatcher("Controlador?menu=Compras&accion=Listar").forward(request, response);
                     break;
                 case "Editar":
                     codCompra = Integer.parseInt(request.getParameter("codigoCompra"));
                     Compra c = compraDao.buscar(codCompra);
                     request.setAttribute("compra", c);
+                    request.setAttribute("modo", "editar");
                     request.getRequestDispatcher("Controlador?menu=Compras&accion=Listar").forward(request, response);
                     break;
                 case "Actualizar":
                     Date fechaA = java.sql.Date.valueOf(request.getParameter("txtFecha"));
-                    Double totalA = Double.parseDouble(request.getParameter("txtTotal"));
+                    Double totalA = Double.valueOf(request.getParameter("txtTotal"));
                     String descripcionA = request.getParameter("txtDescripcion");
                     String estadoA = request.getParameter("txtEstado");
                     compra.setFecha(fechaA);
@@ -627,6 +627,7 @@ public class Controlador extends HttpServlet {
                     compra.setEstado(estadoA);
                     compra.setCodigoCompra(codCompra);
                     compraDao.actualizar(compra);
+                    request.setAttribute("modo", "agregar");
                     request.getRequestDispatcher("Controlador?menu=Compras&accion=Listar").forward(request, response);
                     break;
                 case "Eliminar":
@@ -634,6 +635,10 @@ public class Controlador extends HttpServlet {
                     compraDao.eliminar(codCompra);
                     request.getRequestDispatcher("Controlador?menu=Compras&accion=Listar").forward(request, response);
                     break;
+                case "Cancelar":
+                    request.setAttribute("modo", "agregar");
+                    request.getRequestDispatcher("Controlador?menu=Compras&accion=Listar").forward(request, response);
+                        break;            
             }
             request.getRequestDispatcher("Compras.jsp").forward(request, response);
         } else if (menu.equals("DetalleCompra")) {
