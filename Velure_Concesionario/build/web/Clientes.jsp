@@ -327,8 +327,17 @@
                                     <label><strong>Correo:</strong></label>
                                     <input type="text" value="${cliente.correoCliente}" name="txtCorreoCliente" class="form-control">
                                 </div>
-                                <input type="submit" name="accion" value="Agregar" class="btn-form-minimal btn-add-minimal">
-                                <input type="submit" name="accion" value="Actualizar" class="btn-form-minimal btn-update-minimal">
+                                <div class="d-flex justify-content-between">
+                                    <c:choose>
+                                        <c:when test="${modo eq 'editar'}">
+                                            <input type="submit" name="accion" value="Actualizar" class="btn-form-minimal btn-update-minimal">
+                                            <a class="btn-action-minimal btn-delete-minimal" href="Controlador?menu=Clientes&accion=Cancelar">Cancelar</a>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <input type="submit" name="accion" value="Agregar" class="btn-form-minimal btn-add-minimal">
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -381,24 +390,24 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
 
         <script>
-                                                        function Eliminar(link) {
-                                                            event.preventDefault();
-                                                            Swal.fire({
-                                                                title: '¿Está seguro?',
-                                                                text: "¡No podrá deshacer esta acción!",
-                                                                icon: 'warning', // Cambiado a 'warning' para que el icono se muestre correctamente
-                                                                showCancelButton: true,
-                                                                confirmButtonColor: '#d33',
-                                                                cancelButtonColor: '#3085d6',
-                                                                confirmButtonText: 'Sí, eliminar',
-                                                                cancelButtonText: 'Cancelar'
-                                                            }).then((result) => {
-                                                                if (result.isConfirmed) {
-                                                                    window.location.href = link.href;
-                                                                }
-                                                            });
-                                                            return false;
-                                                        }
+            function Eliminar(link) {
+                event.preventDefault();
+                Swal.fire({
+                    title: '¿Está seguro?',
+                    text: "¡No podrá deshacer esta acción!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Sí, eliminar',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = link.href;
+                    }
+                });
+                return false;
+            }
         </script>
 
         <script>
