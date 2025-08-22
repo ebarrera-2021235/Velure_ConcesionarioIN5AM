@@ -681,6 +681,10 @@ public class Controlador extends HttpServlet {
                 case "Listar":
                     List listaDetalle = detalleDaoC.listar();
                     request.setAttribute("detalleCompras", listaDetalle);
+                    List vehiculoCon = vehiculoDao.listar();
+                    request.setAttribute("vehiculos", vehiculoCon);
+                    List compraCon = compraDao.listarCompra();
+                    request.setAttribute("compras", compraCon);
                     break;
 
                 case "Agregar":
@@ -813,20 +817,17 @@ public class Controlador extends HttpServlet {
 
                     detalleDaoC.actualizar(actualizado);
                     request.setAttribute("modo", "agregar");
-                    request.getRequestDispatcher("Controlador?menu=DetalleCompra&accion=Listar").forward(request,
-                            response);
+                    request.getRequestDispatcher("Controlador?menu=DetalleCompra&accion=Listar").forward(request, response);
                     return;
 
                 case "Eliminar":
                     codDetalleCompra = Integer.parseInt(request.getParameter("codigoDetalleCompra"));
                     detalleDaoC.eliminar(codDetalleCompra);
-                    request.getRequestDispatcher("Controlador?menu=DetalleCompra&accion=Listar").forward(request,
-                            response);
+                    request.getRequestDispatcher("Controlador?menu=DetalleCompra&accion=Listar").forward(request, response);
                     return;
                 case "cancelar":
                     request.setAttribute("modo", "agregar");
-                    request.getRequestDispatcher("Controlador?menu=DetalleCompra&accion=Listar").forward(request,
-                            response);
+                   request.getRequestDispatcher("Controlador?menu=DetalleCompra&accion=Listar").forward(request, response);
                     break;
             }
 
@@ -836,6 +837,10 @@ public class Controlador extends HttpServlet {
                 case "Listar":
                     List listaDetalle = detalleDao.listar();
                     request.setAttribute("detalleVentas", listaDetalle);
+                    List vehiculoCon = vehiculoDao.listar();
+                    request.setAttribute("vehiculos", vehiculoCon);
+                    List ventaCon = ventaDao.listar();
+                    request.setAttribute("ventas", ventaCon);
                     break;
 
                 case "Agregar":
@@ -1026,6 +1031,8 @@ public class Controlador extends HttpServlet {
                     List<Seguro> listaSeguros = seguroDao.listar();
                     request.setAttribute("seguros", listaSeguros);
                     request.getRequestDispatcher("Seguros.jsp").forward(request, response);
+                    List vehiculoCon = vehiculoDao.listar();
+                    request.setAttribute("vehiculos", vehiculoCon);
                     break;
 
                 case "Agregar":

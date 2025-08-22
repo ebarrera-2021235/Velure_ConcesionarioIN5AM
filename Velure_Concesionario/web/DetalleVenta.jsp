@@ -301,45 +301,49 @@
                             <form action="Controlador?menu=DetalleVenta" method="POST">
                                 <div class="form-group">
                                     <label><strong>Cantidad:</strong></label>
-                                    <input type="text" name="txtCantidad" value="${detalleVenta.getCantidad()}" class="form-control">
+                                    <input type="number" name="txtCantidad" value="${detalleVenta.cantidad}" class="form-control" required>
                                 </div>
 
                                 <div class="form-group">
                                     <label><strong>Precio Venta:</strong></label>
-                                    <input type="text" name="txtPrecioVenta" value="${detalleVenta.getPrecioVenta()}" class="form-control">
+                                    <input type="number" step="0.01" name="txtPrecioVenta" value="${detalleVenta.precioVenta}" class="form-control" required>
                                 </div>
 
+                                <!-- ComboBox Código Vehículo -->
                                 <div class="form-group">
                                     <label><strong>Código Vehículo:</strong></label>
-                                    <c:choose>
-                                        <c:when test="${modo eq 'editar'}">
-                                            <!-- Visible pero no editable -->
-                                            <input type="number" value="${detalleVenta.getCodigoVehiculo()}" class="form-control" disabled>
-                                            <!-- Oculto pero se envía al backend -->
-                                            <input type="hidden" name="txtCodigoVehiculo" value="${detalleVenta.getCodigoVehiculo()}">
-                                        </c:when>
-                                        <c:otherwise>
-                                            <input type="number" value="<c:out value='${detalleVenta.getCodigoVehiculo()}' default='0'/>" name="txtCodigoVehiculo" class="form-control" placeholder="0">
-                                        </c:otherwise>
-                                    </c:choose>
+                                    <select name="txtCodigoVehiculo" class="form-control" required
+                                            <c:if test="${detalleVenta != null && detalleVenta.codigoVehiculo != 0}">disabled</c:if>>
+                                        <option value="" disabled <c:if test="${detalleVenta == null}">selected</c:if>>
+                                            Seleccione un vehículo
+                                        </option>
+                                        <c:forEach var="v" items="${vehiculos}">
+                                            <option value="${v.codigoVehiculo}"
+                                                    <c:if test="${detalleVenta != null && detalleVenta.codigoVehiculo == v.codigoVehiculo}">selected</c:if>>
+                                                ${v.codigoVehiculo} - ${v.marca} ${v.modelo}
+                                            </option>
+                                        </c:forEach>
+                                    </select>
                                 </div>
 
+                                <!-- ComboBox Código Venta -->
                                 <div class="form-group">
                                     <label><strong>Código Venta:</strong></label>
-                                    <c:choose>
-                                        <c:when test="${modo eq 'editar'}">
-                                            <input type="number" value="${detalleVenta.getCodigoVenta()}" class="form-control" disabled>
-                                            <input type="hidden" name="txtCodigoVenta" value="${detalleVenta.getCodigoVenta()}">
-                                        </c:when>
-                                        <c:otherwise>
-                                            <input type="number" value="<c:out value='${detalleVenta.getCodigoVenta()}' default='0'/>" name="txtCodigoVenta" class="form-control" placeholder="0">
-                                        </c:otherwise>
-                                    </c:choose>
+                                    <select name="txtCodigoVenta" class="form-control" required
+                                            <c:if test="${detalleVenta != null && detalleVenta.codigoVenta != 0}">disabled</c:if>>
+                                        <option value="" disabled <c:if test="${detalleVenta == null}">selected</c:if>>
+                                            Seleccione una venta
+                                        </option>
+                                        <c:forEach var="venta" items="${ventas}">
+                                            <option value="${venta.codigoVenta}"
+                                                    <c:if test="${detalleVenta != null && detalleVenta.codigoVenta == venta.codigoVenta}">selected</c:if>>
+                                                ${venta.codigoVenta} - ${venta.fecha}
+                                            </option>
+                                        </c:forEach>
+                                    </select>
                                 </div>
 
-
                                 <div class="d-flex justify-content-between">
-
                                     <c:choose>
                                         <c:when test="${modo eq 'editar'}" >
                                             <input type="submit" name="accion" value="Actualizar" class="btn-form-minimal btn-update-minimal">
@@ -364,23 +368,35 @@
                                         <th>Código</th>
                                         <th>Cantidad</th>
                                         <th>Precio Venta</th>
-                                        <th>Código Vehículo</th>
-                                        <th>Código Venta</th>
+                                        <th>Vehículo</th>
+                                        <th>Venta</th>
                                         <th>Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <c:forEach var="detalleVenta" items="${detalleVentas}"> 
                                         <tr> 
-                                            <td>${detalleVenta.getCodigoDetalleVenta()}</td> 
-                                            <td>${detalleVenta.getCantidad()}</td> 
-                                            <td>${detalleVenta.getPrecioVenta()}</td>
-                                            <td>${detalleVenta.getCodigoVehiculo()}</td> 
-                                            <td>${detalleVenta.getCodigoVenta()}</td>
+                                            <td>${detalleVenta.codigoDetalleVenta}</td> 
+                                            <td>${detalleVenta.cantidad}</td> 
+                                            <td>${detalleVenta.precioVenta}</td>
+                                            <td>
+                                                <c:forEach var="v" items="${vehiculos}">
+                                                    <c:if test="${detalleVenta.codigoVehiculo == v.codigoVehiculo}">
+                                                        ${v.codigoVehiculo} - ${v.marca} ${v.modelo}
+                                                    </c:if>
+                                                </c:forEach>
+                                            </td> 
+                                            <td>
+                                                <c:forEach var="venta" items="${ventas}">
+                                                    <c:if test="${detalleVenta.codigoVenta == venta.codigoVenta}">
+                                                        ${venta.codigoVenta} - ${venta.fecha}
+                                                    </c:if>
+                                                </c:forEach>
+                                            </td>
                                             <td>
                                                 <div class="acciones-btns">
-                                                    <a class="btn-action-minimal btn-edit-minimal" href="Controlador?menu=DetalleVenta&accion=Editar&codigoDetalleVenta=${detalleVenta.getCodigoDetalleVenta()}">Editar</a>    
-                                                    <a class="btn-action-minimal btn-delete-minimal" href="Controlador?menu=DetalleVenta&accion=Eliminar&codigoDetalleVenta=${detalleVenta.getCodigoDetalleVenta()}" onclick="confirmarEliminar(event, this);">Eliminar </a>
+                                                    <a class="btn-action-minimal btn-edit-minimal" href="Controlador?menu=DetalleVenta&accion=Editar&codigoDetalleVenta=${detalleVenta.codigoDetalleVenta}">Editar</a>    
+                                                    <a class="btn-action-minimal btn-delete-minimal" href="Controlador?menu=DetalleVenta&accion=Eliminar&codigoDetalleVenta=${detalleVenta.codigoDetalleVenta}" onclick="confirmarEliminar(event, this);">Eliminar</a>
                                                 </div>
                                             </td>
                                         </tr>
@@ -391,47 +407,46 @@
                     </div>
                 </div>
             </div>
+        </div>
 
-            <!-- Scripts Bootstrap -->
-            <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-            <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"></script>
-            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-            <script>
-                                                        // mantener arriba al cargar
-                                                        window.addEventListener('load', function () {
-                                                            window.scrollTo(0, 0);
-                                                        });
+        <!-- Scripts Bootstrap -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+            // mantener arriba al cargar
+            window.addEventListener('load', function () {
+                window.scrollTo(0, 0);
+            });
 
-                                                        function confirmarEliminar(event, link) {
-                                                            event.preventDefault();
-                                                            Swal.fire({
-                                                                title: '¿Está seguro?',
-                                                                text: "¡No podrá deshacer esta acción!",
-                                                                icon: 'warning',
-                                                                showCancelButton: true,
-                                                                confirmButtonColor: '#d33',
-                                                                cancelButtonColor: '#3085d6',
-                                                                confirmButtonText: 'Sí, eliminar',
-                                                                cancelButtonText: 'Cancelar'
-                                                            }).then((result) => {
-                                                                if (result.isConfirmed) {
-                                                                    window.location.href = link.href;
-                                                                }
-                                                            });
-                                                        }
-            </script>
-            <script>
-                var error = "${error}";
-                if (error && error !== "null") {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: error,
-                        confirmButtonText: 'Aceptar'
-                    });
-                }
-            </script>
+            function confirmarEliminar(event, link) {
+                event.preventDefault();
+                Swal.fire({
+                    title: '¿Está seguro?',
+                    text: "¡No podrá deshacer esta acción!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Sí, eliminar',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = link.href;
+                    }
+                });
+            }
+
+            var error = "${error}";
+            if (error && error !== "null") {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: error,
+                    confirmButtonText: 'Aceptar'
+                });
+            }
+        </script>
     </body>
 </html>
-
