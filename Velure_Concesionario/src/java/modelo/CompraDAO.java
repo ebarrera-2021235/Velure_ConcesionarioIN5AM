@@ -22,11 +22,11 @@
                 ps = con.prepareStatement(sql);
                 rs = ps.executeQuery();
                 while (rs.next()) {
-                    comp.setFecha(rs.getDate(1));
-                    comp.setTotal(rs.getDouble(2));
-                    comp.setDescripcion(rs.getString(3));
-                    comp.setEstado(rs.getString(4));
-                    comp.setCodigoEmpleado(rs.getInt(5));
+                    comp.setFecha(rs.getDate(2));
+                    comp.setTotal(rs.getDouble(3));
+                    comp.setDescripcion(rs.getString(4));
+                    comp.setEstado(rs.getString(5));
+                    comp.setCodigoEmpleado(rs.getInt(6));
                 }
             } catch (Exception e) {
             }

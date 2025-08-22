@@ -1,7 +1,7 @@
 <%-- 
     Document   : Registrarse
     Created on : 13/08/2025, 17:42:00
-    Author     : luisf
+    Author     : Estuardo Gomez
 --%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -13,151 +13,17 @@
         <!-- Bootstrap y Iconos -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-
-        <!-- Estilos propios -->
+        <link href="styles/registrar.css" rel="stylesheet">
         <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Orbitron:wght@700&display=swap');
-
-        body {
-            font-family: 'Montserrat', sans-serif;
-            margin: 0;
-            background: linear-gradient(135deg, #24242c, #353738);
-            color: #edeeee;
-            background: url('img/Auto.gif') center/cover no-repeat fixed; 
-        }
-
-        .card {
-            background-color: #1f2021;
-            border-radius: 16px;
-            border-top: 6px solid rgba(13, 71, 161, 0.6);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-            width: 400px;
-            padding: 25px 30px;
-            animation: fadeIn 0.8s ease-in-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .card img {
-            width: 140px;
-            display: block;
-            margin: 0 auto 15px;
-            transition: transform 0.3s ease;
-        }
-
-        .card img:hover { 
-            transform: scale(1.05); 
-        }
-
-        .form-control {
-            height: 42px;
-            border-radius: 12px; 
-            border: 1.8px solid #8c8c8c;
-            padding: 0 12px;
-            font-size: 1rem;
-            transition: box-shadow 0.3s ease;
-            box-sizing: border-box;
-        }
-
-        .form-control:focus {
-            border-color: #0b0b0b;
-            box-shadow: 0 0 8px rgba(13, 71, 161, 0.6);
-            outline: none;
-        }
-
-        .input-group {
-            display: flex;
-            align-items: center;
-        }
-
-        .input-group .form-control {
-            border-radius: 12px 0 0 12px;
-            border-right: none;
-        }
-
-        .input-group-text {
-            background: #1a1a1a;
-            cursor: pointer;
-            padding: 0 12px;
-            display: flex;
-            align-items: center;
-            height: 42px;
-            border-radius: 0 12px 12px 0;
-            border: 1.8px solid #8c8c8c;
-            border-left: none;
-            box-sizing: border-box;
-        }
-
-        .input-group-text i {
-            font-size: 1.3rem;
-            color: #0d0d0d;
-            transition: color 0.3s ease;
-        }
-
-        .input-group-text:hover i {
-            color: #333;
-        }
-
-        .btn-primary {
-            background-color: #0a3d91;
-            border-color: #093572;
-            color: #fff;
-            font-weight: 600;
-            font-size: 1.1rem;
-            border-radius: 12px;
-            padding: 12px 25px;
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
-            cursor: pointer;
-            display: block;
-            width: 250px;
-            margin: 15px auto 0 auto;
-            box-shadow: 0 4px 15px rgba(10, 61, 145, 0.6);
-        }
-
-        .btn-primary:hover {
-            background-color: #08306b;
-            border-color: #06254d;
-            box-shadow: 0 6px 18px rgba(8, 48, 107, 0.8);
-        }
-
-        .btn-danger {
-            background-color: #c82333;
-            border-color: #bd2130;
-            color: #fff;
-            font-weight: 600;
-            font-size: 1.1rem;
-            border-radius: 12px;
-            padding: 12px 25px;
-            cursor: pointer;
-            display: block;
-            width: 250px;
-            margin: 10px auto 0 auto;
-            box-shadow: 0 4px 15px rgba(200, 35, 51, 0.6);
-        }
-
-        .btn-danger:hover {
-            background-color: #a71d2a;
-            border-color: #921826;
-            box-shadow: 0 6px 18px rgba(167, 29, 42, 0.8);
-        }
-
-        @media (max-width: 576px) {
-            .card {
-                width: 95%;
-                padding: 20px;
-            }
-        }
-    </style>
+        </style>
     </head>
     <body>
         <div class="d-flex justify-content-center align-items-center vh-100">
             <div class="card p-4" style="width: 100%; max-width: 400px;">
                 <form action="RegistrarUsuario" method="POST" onsubmit="return validarRegistro()">
                     <div class="text-center">
-                        <img src="img/Velure.png" height="120px" alt="Logo Suplex Cars">
+                        <img src="img/V.png" height="120px" alt="Logo Suplex Cars">
                         <h4 class="mt-3 text-uppercase font-weight-bold">Registro</h4>
                         <p class="text-muted small">Unete a Velure</p>
                     </div>

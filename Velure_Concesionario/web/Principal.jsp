@@ -1,3 +1,8 @@
+    <%-- Document : Clientes 
+    Created on : 
+    13/08/2025, 22:41:42 
+    Author : ANTONY TUN --%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="es">
@@ -8,321 +13,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"/>
     <!-- Google Fonts Montserrat -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
-<style>
-    body { 
-        background-color: white; 
-        padding-top: 100px; /* Aumenté padding para el header más grande */
-        font-family: 'Montserrat', Arial, sans-serif;
-        margin: 0;
-    }
-    iframe { 
-        width: 100%; 
-        height: calc(100vh - 120px); /* Ajuste para el header más grande */
-        border: none; 
-        display: block;
-    }
-    header { 
-        background-color: #000000; 
-        min-height: 120px; /* Header más grande (era 80px) */
-        padding: 0 20px; 
-        display: flex; 
-        align-items: center; 
-        justify-content: space-between; 
-        position: fixed; 
-        top: 0; 
-        width: 100%; 
-        z-index: 1030; 
-        font-family: 'Montserrat', Arial, sans-serif;
-    }
-    /* Enlaces del menú - BLANCAS por defecto con hover AZUL */
-    header a, .dropdown-menu a { 
-        color: #ffffff !important; /* BLANCO por defecto */
-        font-family: 'Montserrat', Arial, sans-serif;
-        transition: color 0.3s ease;
-    }
-    /* Hover AZUL para todos los enlaces */
-    header a:hover, .dropdown-menu a:hover { 
-        color: #007bff !important; /* AZUL en hover */
-        text-decoration: none;
-    }
-    .logo-center { 
-        position: absolute; 
-        left: 50%; 
-        transform: translateX(-50%); 
-        z-index: 2;
-    }
-    .logo-center img { 
-        height: 180px; /* Logo más grande (era 150px) */
-        width: 180px; 
-    }
-    .navbar-toggler {
-        border: none;
-        background: transparent;
-        outline: none;
-        margin-right: 5px;
-    }
-    .navbar-toggler-icon {
-        display: inline-block;
-        width: 25px;
-        height: 22px;
-        position: relative;
-    }
-    .navbar-toggler-icon span {
-        display: block;
-        position: absolute;
-        height: 4px;
-        width: 100%;
-        background: #fff;
-        border-radius: 2px;
-        opacity: 1;
-        left: 0;
-        transition: all 0.3s ease-in-out;
-    }
-    .navbar-toggler-icon span:nth-child(1) { top: 0; }
-    .navbar-toggler-icon span:nth-child(2) { top: 9px; }
-    .navbar-toggler-icon span:nth-child(3) { top: 18px; }
-    #menuEntidades {
-        position: relative;
-        z-index: 1;
-    }
-    #menuEntidades .navbar-nav {
-        flex-direction: row;
-        gap: 20px;
-        font-family: 'Montserrat', Arial, sans-serif;
-    }
-    #menuEntidades .nav-link {
-        font-size: 1.1rem;
-        padding: 8px 16px;
-        font-family: 'Montserrat', Arial, sans-serif;
-    }
-    .dropdown-menu {
-        font-family: 'Montserrat', Arial, sans-serif;
-        background-color: #1a1a1a; /* Fondo oscuro para el dropdown */
-    }
-    /* Asegurar que el dropdown también tenga el comportamiento correcto */
-    .dropdown-menu a {
-        color: #ffffff !important;
-    }
-    .dropdown-menu a:hover {
-        background-color: #333;
-        color: #007bff !important;
-    }
-    
-    /* Texto del dropdown de usuario - BLANCO sin hover */
-    .dropdown-menu div {
-        color: #ffffff !important;
-    }
-    
-    /* Botón Salir - BLANCO sin hover */
-    .dropdown-menu button {
-        color: #ffffff !important;
-    }
-    .dropdown-menu button:hover {
-        color: #ffffff !important;
-        background-color: #333;
-    }
-    /* Estilo especial para el botón de usuario */
-    .btn-outline-light {
-        color: #ffffff !important;
-        border-color: #ffffff;
-    }
-    .btn-outline-light:hover {
-        background-color: #007bff;
-        border-color: #007bff;
-        color: #ffffff !important;
-    }
-
-    /* Estilos para el contenido principal que se mostrará por defecto */
-    .main-content {
-        background-color: #000;
-        color: white;
-        background-image: url('img/Backlog.png');
-        background-size: cover;
-        background-position: center;
-        background-attachment: fixed;
-        min-height: calc(100vh - 120px);
-    }
-
-    /* Botones principales */
-    .buttons {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 20px;
-        margin: 20px 0;
-        padding: 30px 20px;
-        background-color: rgba(0, 0, 0, 0.7); /* Fondo negro transparente */
-        backdrop-filter: blur(5px); /* Efecto de desenfoque opcional */
-        -webkit-backdrop-filter: blur(5px); /* Para Safari */
-    }
-
-    .buttons a {
-        background-color: #053c77;
-        color: white;
-        padding: 15px 30px;
-        border-radius: 25px;
-        text-decoration: none;
-        font-weight: bold;
-        transition: background-color 0.3s;
-        text-align: center;
-        font-family: 'Montserrat', Arial, sans-serif;
-    }
-
-    .buttons a:hover {
-        background-color: #007bff;
-        color: white;
-        text-decoration: none;
-    }
-
-    .info-section {
-        background-color: rgba(17, 17, 17, 0.8);
-        padding: 40px 20px;
-    }
-
-    .info-card {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        margin-bottom: 40px;
-        max-width: 1200px;
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    .info-card.reverse {
-        flex-direction: row-reverse;
-    }
-
-    .info-card img {
-        width: 100%;
-        max-width: 500px;
-        border-radius: 15px;
-        margin: 10px auto;
-        display: block;
-    }
-
-    .info-card img.img4 {
-        max-width: 350px;
-    }
-
-    .info-text {
-        flex: 1;
-        color: white;
-        padding: 20px;
-    }
-
-    .info-text h2 {
-        color: #007bff;
-        margin-bottom: 15px;
-        font-family: 'Montserrat', Arial, sans-serif;
-    }
-
-    .info-text p {
-        font-size: 16px;
-        line-height: 1.6;
-        font-family: 'Montserrat', Arial, sans-serif;
-    }
-
-    #empresa .info-text h2 {
-        font-size: 28px;
-        color: #007bff;
-    }
-
-    #empresa .info-text p {
-        font-style: italic;
-        font-size: 18px;
-        color: #ccc;
-    }
-
-    .gallery-section {
-        background-color: #000;
-        padding: 40px 20px;
-        text-align: center;
-    }
-
-    .gallery-section h2 {
-        color: #007bff;
-        margin-bottom: 30px;
-        font-size: 28px;
-        font-family: 'Montserrat', Arial, sans-serif;
-    }
-
-    .gallery-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 20px;
-        justify-items: center;
-        max-width: 1200px;
-        margin: 0 auto;
-    }
-
-    .gallery-grid img {
-        width: 100%;
-        max-width: 350px;
-        height: 230px;
-        object-fit: cover;
-        border-radius: 10px;
-        transition: transform 0.3s ease;
-    }
-
-    .gallery-grid img:hover {
-        transform: scale(1.05);
-    }
-
-    .main-footer {
-        background-color: #000;
-        padding: 20px;
-        border-top: 1px solid #222;
-        text-align: center;
-    }
-
-    .main-footer .footer-logo {
-        height: 80px;
-        max-width: 100%;
-        margin-bottom: 15px;
-    }
-
-    .main-footer p {
-        color: #ccc;
-        font-size: 14px;
-        margin: 5px 0;
-        font-family: 'Montserrat', Arial, sans-serif;
-    }
-
-    .main-footer a {
-        color: #007bff;
-        text-decoration: none;
-        margin: 0 10px;
-        font-size: 14px;
-    }
-
-    .main-footer a:hover {
-        text-decoration: underline;
-    }
-
-    @media (max-width: 768px) {
-        .gallery-grid {
-            grid-template-columns: repeat(1, 1fr);
-        }
-        .info-card {
-            flex-direction: column;
-        }
-        .info-card.reverse {
-            flex-direction: column;
-        }
-    }
-
-    /* Ocultar contenido principal cuando se carga iframe */
-    .content-wrapper.iframe-active .main-content {
-        display: none;
-    }
-    .content-wrapper.iframe-active iframe {
-        display: block;
-    }
-    .content-wrapper:not(.iframe-active) iframe {
-        display: none;
-    }
-</style>
+    <link href="styles/principal.css" rel="stylesheet">
 </head>
 <body>
 <header>
@@ -346,30 +37,26 @@
             </li>
             <!-- Menú desplegable de entidades -->
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="entidadesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Entidades</a>
+                <a class="nav-link dropdown-toggle" href="#" id="entidadesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Gestion</a>
                 <div class="dropdown-menu" aria-labelledby="entidadesDropdown">
-                    <a class="dropdown-item" href="Controlador?menu=Producto" target="contenido" onclick="showIframe()">Productos</a>
                     <a class="dropdown-item" href="Controlador?menu=Empleado&accion=Listar" target="contenido" onclick="showIframe()">Empleados</a>
-                    <a class="dropdown-item" href="Controlador?menu=Clientes" target="contenido" onclick="showIframe()">Clientes</a>
-                    <a class="dropdown-item" href="Controlador?menu=NuevaVenta" target="contenido" onclick="showIframe()">Nueva Venta</a>
+                    <a class="dropdown-item" href="Controlador?menu=Clientes&accion=Listar" target="contenido" onclick="showIframe()">Clientes</a>
+                    <a class="dropdown-item" href="Controlador?menu=Venta&accion=Listar" target="contenido" onclick="showIframe()">Venta</a>
                     <a class="dropdown-item" href="Controlador?menu=Vehiculo&accion=Listar" target="contenido" onclick="showIframe()">Vehiculos</a>
                     <a class="dropdown-item" href="Controlador?menu=Proveedor&accion=Listar" target="contenido" onclick="showIframe()">Proveedores</a>
                     <a class="dropdown-item" href="Controlador?menu=Compras&accion=Listar" target="contenido" onclick="showIframe()">Compras</a>
-                    <a class="dropdown-item" href="#" target="contenido" onclick="showIframe()">Entidad 8</a>
-                    <a class="dropdown-item" href="#" target="contenido" onclick="showIframe()">Entidad 9</a>
-                    <a class="dropdown-item" href="#" target="contenido" onclick="showIframe()">Entidad 10</a>
-                    <a class="dropdown-item" href="#" target="contenido" onclick="showIframe()">Entidad 11</a>
+                    <a class="dropdown-item" href="Controlador?menu=Servicios&accion=Listar" target="contenido" onclick="showIframe()">Servicios </a>
+                    <a class="dropdown-item" href="Controlador?menu=Seguro&accion=Listar" target="contenido" onclick="showIframe()">Seguros</a>
+                    <a class="dropdown-item" href="Controlador?menu=DetalleCompra&accion=Listar" target="contenido" onclick="showIframe()">Detalles de Compras</a>
+                    <a class="dropdown-item" href="Controlador?menu=DetalleVenta&accion=Listar" target="contenido" onclick="showIframe()">Detalles de Ventas</a>
                 </div>
             </li>
-            <!-- Otro enlace -->
-            <li class="nav-item">
-                <a class="nav-link" href="#" target="contenido" onclick="showIframe()">Otro</a>
-            </li>
+            
         </ul>
     </div>
     <!-- Logo centrado y más grande -->
     <a class="logo-center" href="#" onclick="showHome()">
-        <img src="img/Velure.png" alt="Logo">
+        <img src="img/V.png" alt="Logo">
     </a>
     <!-- Usuario a la derecha -->
     <div class="dropdown">
@@ -393,7 +80,7 @@
     <!-- Contenido principal (Home) -->
     <div class="main-content" id="mainContent">
         <div class="buttons">
-            <a href="#" onclick="scrollToSection('galeria')">CATÁLOGO</a>
+            <a href="Catalogo.jsp" target="contenido" onclick="showIframe()">CATÁLOGO</a>
             <a href="#" onclick="scrollToSection('galeria')">GALERÍA</a>
             <a href="#" onclick="scrollToSection('empresa')">CONOCE VELURE</a>
         </div>
@@ -453,7 +140,7 @@ Queremos ser reconocidos no solo por la calidad de nuestra oferta automotriz, si
 
         <section id="empresa" class="info-section">
             <div class="info-card">
-                <img src="img/Velure.png" alt="Logo Velure" />
+                <img src="img/V.png" alt="Logo Velure" />
                 <div class="info-text">
                     <h2>VELURE</h2>
                     <p>"Suavidad, poder, presencia."</p>
@@ -463,7 +150,7 @@ Queremos ser reconocidos no solo por la calidad de nuestra oferta automotriz, si
         </section>
 
         <footer class="main-footer">
-            <img src="img/Velure.png" alt="Velure Logo" class="footer-logo" />
+            <img src="img/V.png" alt="Velure Logo" class="footer-logo" />
             <p>Copyright © 2025 Automobili Velure.</p>
             <p>
                 <a href="#">Velure</a> | 
