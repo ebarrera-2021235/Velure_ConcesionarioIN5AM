@@ -1040,46 +1040,51 @@ public class Controlador extends HttpServlet {
                             request.getRequestDispatcher("Controlador?menu=Seguro&accion=Listar").forward(request, response);
                             return;
                         }
-                        if (costoStrS == null || costoStrS.trim().isEmpty() || !costoStrS.matches("^\\d+(\\.\\d+)?$")) {
-                            request.setAttribute("error", "El campo Costo solo puede contener números válidos.");
+                        
+                       if (costoStrS == null || costoStrS.trim().isEmpty() || !costoStrS.matches("^\\d+(\\.\\d+)?$")) {
+                           request.setAttribute("error", "El campo Costo solo puede contener números válidos.");
+                           request.getRequestDispatcher("Controlador?menu=Seguro&accion=Listar").forward(request, response);
+                           return;
+                       }
+                            
+                       // CONVERSIÓN DE DATOS
+                       Date fechaInicioS = java.sql.Date.valueOf(fechaInicioStrS);
+                       Date fechaFinS = java.sql.Date.valueOf(fechaFinStrS);
+                       double costoS = Double.parseDouble(costoStrS);
+                       int codigoSeguro = Integer.parseInt(codigoSeguroStr);
+                            
+                      // VALIDACIÓN DE FECHAS
+                     if (fechaFinS.before(fechaInicioS)) {
+                            request.setAttribute("error", "La Fecha de Fin no puede ser anterior a la Fecha de Inicio.");
                             request.getRequestDispatcher("Controlador?menu=Seguro&accion=Listar").forward(request, response);
                             return;
                         }
 
-                        // CONVERSIÓN DE DATOS
-                        Date fechaInicioS = java.sql.Date.valueOf(fechaInicioStrS);
-                        Date fechaFinS = java.sql.Date.valueOf(fechaFinStrS);
-                        double costoS = Double.parseDouble(costoStrS);
-                        int codigoSeguro = Integer.parseInt(codigoSeguroStr);
+                     // SETEO DEL OBJETO
+                       seguro.setCodigoSeguro(codigoSeguro);
+                       seguro.setDescripcion(descripcionS);
+                       seguro.setFechaInicio(fechaInicioS);
+                       seguro.setFechaFin(fechaFinS);
+                       seguro.setCosto(costoS);
 
-                        // SETEO DEL OBJETO
-                        seguro.setCodigoSeguro(codigoSeguro);
-                        seguro.setTipoCobertura(tipoCoberturaS);
-                        seguro.setDescripcion(descripcionS);
-                        seguro.setFechaInicio(fechaInicioS);
-                        seguro.setFechaFin(fechaFinS);
-                        seguro.setCosto(costoS);
+                    // ACTUALIZAR EN LA BASE DE DATOS
+                       seguroDao.actualizar(seguro);
 
-                        // ACTUALIZAR EN LA BASE DE DATOS
-                        seguroDao.actualizar(seguro);
+                    // REDIRECCIÓN PARA RECARGAR LISTA
+                       request.setAttribute("modo", "agregar");
+                       request.getRequestDispatcher("Controlador?menu=Seguro&accion=Listar").forward(request, response);
+                       break;
 
-                        // REDIRECCIÓN PARA RECARGAR LISTA
+                case "Eliminar":
+                        codSeguro = Integer.parseInt(request.getParameter("codigoSeguro")); // Se obtiene el código del seguro
+                        seguroDao.eliminar(codSeguro); // Se llama al SeguroDAO para eliminarlo de la base de datos
+                        request.getRequestDispatcher("Controlador?menu=Seguro&accion=Listar").forward(request, response);
+                        break;    
+                
+                case "Cancelar":
                         request.setAttribute("modo", "agregar");
                         request.getRequestDispatcher("Controlador?menu=Seguro&accion=Listar").forward(request, response);
                         break;
-
-
-
-                case "Eliminar":
-                    codSeguro = Integer.parseInt(request.getParameter("codigoSeguro")); // Se obtiene el código del seguro
-                    seguroDao.eliminar(codSeguro); // Se llama al SeguroDAO para eliminarlo de la base de datos
-                    request.getRequestDispatcher("Controlador?menu=Seguro&accion=Listar").forward(request, response);
-                    break;    
-                
-                case "Cancelar":
-                    request.setAttribute("modo", "agregar");
-                    request.getRequestDispatcher("Controlador?menu=Seguro&accion=Listar").forward(request, response);
-                    break;
                         
             }       
             request.getRequestDispatcher("Seguros.jsp").forward(request, response);
