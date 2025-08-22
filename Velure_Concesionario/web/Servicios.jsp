@@ -1,79 +1,43 @@
-<%-- 
-    Document   : Principal
-    Created on : 15/07/2025, 10:37:41
-    Author     : informatica
---%>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html" pageEncoding="UTF-8"%>
-
-
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>Servicios</title>
-
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Detalles De Compras</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"/>
     <!-- Google Fonts Montserrat -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
-
-    <!-- SweetAlert2 -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
     <style>
-        /* Estilos generales de la página */
-        body {
-            font-family: 'Montserrat', Arial, sans-serif;
-            margin: 0;
-            min-height: 100vh;
-        }
-
-        /* Zona superior de la página con imagen de fondo */
+        body { font-family: 'Montserrat', Arial, sans-serif; margin: 0; min-height: 100vh; }
         .zona-superior {
+            background: url('img/P.jpg') no-repeat center -250px fixed;
+            background-size: cover;
             position: relative;
-            min-height: 350px;
+            min-height: 400px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background: url('img/Servicios.jpg') no-repeat center center fixed;
-            background-size: cover;
         }
-
-        /* Overlay oscuro para que el texto sea legible sobre la imagen */
         .zona-superior::after {
             content: "";
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.55);
+            background: rgba(0,0,0,0.55);
             z-index: 0;
         }
-
-        /* Estilos para títulos y descripción en la zona superior */
-        .titulo-servicios, .descripcion-velure {
+        .descripcion-velure, .titulo-detalleCompra {
             position: relative;
             z-index: 1;
             text-align: center;
             color: #fff;
             text-shadow: 2px 2px 8px #000;
         }
-        .titulo-servicios {
-            font-size: 2.8rem;
-            font-weight: 700;
-            margin: 18px 0 38px 0;
-            letter-spacing: 2px;
-        }
-        .descripcion-velure {
-            padding-top: 40px;
-            font-size: 2rem;
-            font-weight: 700;
-            max-width: 90%;
-        }
-
-        /* Sección con descripción de servicios */
-        .descripcion-servicios {
+        .descripcion-velure { padding-top: 40px; font-size: 2rem; font-weight: 700; }
+        .titulo-detalleCompra { font-size: 2.8rem; font-weight: 700; margin-top: 18px; margin-bottom: 38px; letter-spacing: 2px; }
+        .descripcion-detalleCompra {
             max-width: 900px;
             margin: 70px auto 0 auto;
             padding: 40px 30px 30px 30px;
@@ -82,354 +46,222 @@
             box-shadow: 0 8px 32px rgba(0,0,0,0.10);
             color: #222;
         }
-        .titulo-equipo {
-            font-size: 2.3rem;
-            font-weight: 700;
-            text-align: center;
-            margin-bottom: 22px;
-            color: #1a1a1a;
-            letter-spacing: 1px;
-        }
-
-        /* Zona CRUD para el formulario y la tabla */
+        .titulo-UnaMeta { font-size: 2.3rem; font-weight: 700; text-align: center; margin-bottom: 22px; color: #1a1a1a; letter-spacing: 1px; }
         .zona-crud {
             background: #fff;
             border-radius: 24px;
             box-shadow: 0 8px 32px rgba(0,0,0,0.18);
             max-width: 1200px;
-            margin: 40px auto 40px auto;
+            margin: 70px auto 40px auto;
             padding: 40px 30px;
         }
-        .crud-container {
-            display: flex;
-            flex-direction: row;
-            gap: 30px;
-        }
-
-        /* Estilo de la tarjeta del formulario */
-        .card-form {
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-            border: none;
-            transition: all 0.3s ease;
-        }
-        .card-form:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-        }
-        .card-form .card-body {
-            padding: 20px;
-        }
-
-        /* Botones del formulario */
-        .btn-form {
-            padding: 8px 16px;
-            font-size: 0.9rem;
-            border-radius: 4px;
-            font-weight: 400;
-            transition: background-color 0.2s ease;
-            border: 2px solid;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 4px;
-            cursor: pointer;
-            background-color: #fff;
-            color: inherit;
-            margin-right: 10px;
-        }
-        .btn-agregar {
-            border-color: #007bff;
-            color: #007bff;
-        }
-        .btn-agregar:hover {
-            background-color: #007bff;
-            color: #fff;
-        }
-        .btn-actualizar {
-            border-color: #28a745;
-            color: #28a745;
-        }
-        .btn-actualizar:hover {
-            background-color: #28a745;
-            color: #fff;
-        }
-
-        /* Estilos de la tabla */
-        .table-responsive {
-            overflow-x: auto;
-        }
-        .table-cards {
-            border: none;
-            background: transparent;
-        }
-        .table-cards .thead-cards th {
-            background: #000000;
-            color: white;
-            padding: 16px 12px;
-            font-weight: 600;
-            text-align: center;
-            border: none;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            font-size: 0.9rem;
-        }
-        .table-cards tbody tr {
-            background: white;
-            margin-bottom: 8px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
-        }
-        .table-cards tbody tr:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-        }
-        .table-cards tbody td {
-            border: none;
-            padding: 15px 12px;
-            vertical-align: middle;
-        }
-
-        /* Botones de acciones dentro de la tabla */
-        .acciones-btns {
-            display: flex;
-            gap: 8px;
-            justify-content: center;
-        }
-        .btn-editar {
-            background: #fff;
-            color: #007bff;
-            border: 1px solid #007bff;
-            padding: 5px 10px;
-            border-radius: 4px;
-            text-decoration: none;
-        }
-        .btn-editar:hover {
-            background: #007bff;
-            color: #fff;
-        }
-        .btn-eliminar {
-            background: #fff;
-            color: #dc3545;
-            border: 1px solid #dc3545;
-            padding: 5px 10px;
-            border-radius: 4px;
-            text-decoration: none;
-        }
-        .btn-eliminar:hover {
-            background: #dc3545;
-            color: #fff;
-        }
-
-        .modal-body {
-            text-align: center;
-        }
-
-        /* Ajuste de la vista para móviles */
+        .crud-container { display: flex; flex-direction: row; gap: 30px; }
+        .card-form { background: white; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); border: none; transition: all 0.3s ease; }
+        .card-form:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
+        .card-form .card-body { padding: 20px; }
+        .btn-form-minimal { padding: 8px 16px; font-size: 0.9rem; border-radius: 4px; font-weight: 400; transition: background-color 0.2s ease; border: 1px solid; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 4px; cursor: pointer; }
+        .btn-add-minimal { background: #fff; color: #17a2b8; border-color: #17a2b8; }
+        .btn-add-minimal:hover { background: #17a2b8; color: white; }
+        .btn-update-minimal { background: #fff; color: #28a745; border-color: #28a745; }
+        .btn-update-minimal:hover { background: #28a745; color: white; }
+        .table-cards { border: none; background: transparent; }
+        .table-cards .thead-cards th { background: #000000; color: white; padding: 16px 12px; font-weight: 600; text-align: center; border: none; text-transform: uppercase; letter-spacing: 0.5px; font-size: 0.9rem; }
+        .table-cards tbody tr { background: white; margin-bottom: 8px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); transition: all 0.3s ease; }
+        .table-cards tbody tr:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
+        .table-cards tbody td { border: none; padding: 15px 12px; vertical-align: middle; }
+        .table-cards tbody tr td:first-child { border-radius: 8px 0 0 8px; }
+        .table-cards tbody tr td:last-child { border-radius: 0 8px 8px 0; }
+        .btn-action-minimal { padding: 5px 10px; font-size: 0.8rem; border-radius: 4px; font-weight: 400; transition: background-color 0.2s ease; border: 1px solid; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; }
+        .btn-edit-minimal { background: #fff; color: #007bff; border-color: #007bff; }
+        .btn-edit-minimal:hover { background: #007bff; color: white; text-decoration: none; }
+        .btn-delete-minimal { background: #fff; color: #dc3545; border-color: #dc3545; }
+        .btn-delete-minimal:hover { background: #dc3545; color: white; text-decoration: none; }
+        .acciones-btns { display: flex; gap: 8px; justify-content: center; }
+        html { scroll-behavior: smooth; }
         @media (max-width: 991px) {
-            .crud-container {
-                flex-direction: column;
-                gap: 20px;
-            }
+            .zona-crud { padding: 20px 5px; }
+            .crud-container { flex-direction: column; gap: 20px; }
+            .titulo-detalleCompra { font-size: 2rem; }
+            .descripcion-detalleCompra { padding: 20px 5px 15px 5px; }
+            .titulo-UnaMeta { font-size: 1.5rem; }
+            .table-responsive { font-size: 0.85rem; }
+            .btn-action-minimal { padding: 4px 8px; font-size: 0.75rem; }
+            .btn-form-minimal { padding: 6px 12px; font-size: 0.8rem; }
         }
     </style>
 </head>
 <body>
-
-<!-- Zona superior con título y descripción -->
-<div class="zona-superior">
-    <div class="descripcion-velure">
-        Velure es <span style="color:#FFD700;">Velocidad</span> y <span style="color:#FFD700;">Lujosidad</span><br>
-        <span style="font-size:1.2rem; font-weight:400;">El mejor lugar para encontrar tu auto deportivo soñado.</span>
+    <div class="zona-superior">
+        <div class="descripcion-velure">
+            Velure es <span style="color:#FFD700;">Velocidad</span> y <span style="color:#FFD700;">Lujosidad</span><br>
+            <span style="font-size:1.2rem; font-weight:400;">El mejor lugar para encontrar tu auto deportivo soñado.</span>
+        </div>
+        <div class="titulo-detalleCompra">DETALLES DE COMPRAS</div>
     </div>
-    <div class="titulo-servicios">
-        SERVICIOS
+    
+    <div class="descripcion-detalleCompra">
+        <div class="titulo-UnaMeta">Una Meta, Varias Ventas</div>
+        <p>En el corazón de nuestra estrategia, cada Detalle de Compra es una pieza fundamental...</p>
+        <p>Cada compra es más que un simple intercambio; es una oportunidad para fortalecer nuestras relaciones comerciales...</p>
+        <p>El éxito de nuestra empresa no es un evento fortuito, sino el resultado de un proceso continuo de excelencia operativa...</p>
+        <p>Cada venta no es un fin en sí mismo, sino una semilla que plantamos para cosechar el futuro más próspero.</p>
     </div>
-</div>
 
-<!-- Sección con la descripción larga de servicios -->
-<div class="descripcion-servicios">
-    <div class="titulo-equipo">Servicios, excelencia y control</div>
-    <p>
-        Nuestra plataforma de servicios permite gestionar de manera integral todas las operaciones...
-        <!-- Explicación: Esto es un texto informativo que describe la funcionalidad de la aplicación -->
-    </p>
-</div>
+    <!-- CRUD -->
+    <div class="zona-crud" id="zona-crud">
+        <div class="crud-container">
+            <div style="flex:1;">
+                <div class="card">
+                    <div class="card-body">
+                        <form action="Controlador?menu=DetalleCompra" method="POST">
+                            <div class="form-group">
+                                <label><strong>Precio Unitario:</strong></label>
+                                <input type="text" value="${detalleCompra.getPrecioUnitario()}" name="txtPrecioUnitario" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label><strong>Cantidad:</strong></label>
+                                <input type="text" value="${detalleCompra.getCantidad()}" name="txtCantidad" class="form-control">
+                            </div>
 
-<!-- Zona CRUD -->
-<div class="zona-crud">
-    <div class="crud-container">
+                            <!-- ComboBox Código Vehículo -->
+                            <div class="form-group">
+                                <label><strong>Código Vehículo:</strong></label>
+                                <c:choose>
+                                    <c:when test="${modo eq 'editar'}">
+                                        <select name="txtCodigoVehiculo" class="form-control" disabled>
+                                            <c:forEach var="v" items="${vehiculos}">
+                                                <option value="${v.codigoVehiculo}" 
+                                                    <c:if test="${detalleCompra != null && detalleCompra.codigoVehiculo == v.codigoVehiculo}">selected</c:if>>
+                                                    ${v.codigoVehiculo}
+                                                </option>
+                                            </c:forEach>
+                                        </select>
+                                        <input type="hidden" name="txtCodigoVehiculo" value="${detalleCompra.getCodigoVehiculo()}">
+                                    </c:when>
+                                    <c:otherwise>
+                                        <select name="txtCodigoVehiculo" class="form-control" required>
+                                            <option value="" disabled selected>Seleccione un vehículo</option>
+                                            <c:forEach var="v" items="${vehiculos}">
+                                                <option value="${v.codigoVehiculo}">${v.codigoVehiculo}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </c:otherwise>
+                                </c:choose>
+                            </div>
 
-        <!-- FORMULARIO PARA AGREGAR/ACTUALIZAR SERVICIOS -->
-        <div class="card card-form col-md-4">
-            <div class="card-body">
-                <form action="Controlador?menu=Servicios" method="POST" id="formServicio">
-                    <!-- Campo oculto para almacenar el id del servicio (necesario para actualizar) -->
-                    <input type="hidden" name="codigoServicio" value="${servicio != null ? servicio.codigoServicio : ''}">
+                            <!-- ComboBox Código Compra -->
+                            <div class="form-group">
+                                <label><strong>Código Compra:</strong></label>
+                                <c:choose>
+                                    <c:when test="${modo eq 'editar'}">
+                                        <select name="txtCodigoCompra" class="form-control" disabled>
+                                            <c:forEach var="c" items="${compras}">
+                                                <option value="${c.codigoCompra}" 
+                                                    <c:if test="${detalleCompra != null && detalleCompra.codigoCompra == c.codigoCompra}">selected</c:if>>
+                                                    ${c.codigoCompra}
+                                                </option>
+                                            </c:forEach>
+                                        </select>
+                                        <input type="hidden" name="txtCodigoCompra" value="${detalleCompra.getCodigoCompra()}">
+                                    </c:when>
+                                    <c:otherwise>
+                                        <select name="txtCodigoCompra" class="form-control" required>
+                                            <option value="" disabled selected>Seleccione una compra</option>
+                                            <c:forEach var="c" items="${compras}">
+                                                <option value="${c.codigoCompra}">${c.codigoCompra}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </c:otherwise>
+                                </c:choose>
+                            </div>
 
-                    <!-- Campos del formulario -->
-                    <div class="form-group">
-                        <label>Nombre del Servicio:</label>
-                        <input type="text" name="txtNombreServicio" class="form-control"
-                               value="${servicio != null ? servicio.nombreServicio : ''}">
+                            <div class="d-flex justify-content-between">
+                                <c:choose>
+                                    <c:when test="${modo eq 'editar'}">
+                                        <input type="submit" name="accion" value="Actualizar" class="btn-form-minimal btn-update-minimal">
+                                        <a class="btn-action-minimal btn-delete-minimal" href="Controlador?menu=DetalleCompra&accion=Cancelar">Cancelar</a>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <input type="submit" name="accion" value="Agregar" class="btn-form-minimal btn-add-minimal">
+                                    </c:otherwise>
+                                </c:choose>
+                            </div>
+                        </form>
                     </div>
-                    <div class="form-group">
-                        <label>Descripción:</label>
-                        <input type="text" name="txtDescripcion" class="form-control"
-                               value="${servicio != null ? servicio.descripcion : ''}">
-                    </div>
-                    <div class="form-group">
-                        <label>Tipo:</label>
-                        <input type="text" name="txtTipo" class="form-control"
-                               value="${servicio != null ? servicio.tipo : ''}">
-                    </div>
-                    <div class="form-group">
-                        <label>Fecha:</label>
-                        <input type="date" name="txtFechaServicio" class="form-control"
-                               value="${servicio != null ? servicio.fechaServicio : ''}">
-                    </div>
-                    <div class="form-group">
-                        <label>Código Vehículo:</label>
-                        <input type="number" name="txtCodigoVehiculo" class="form-control"
-                               value="${servicio != null ? servicio.codigoVehiculo : ''}"
-                               ${servicio != null ? 'readonly' : ''}>
-                    </div>
+                </div>
+            </div>
 
-                    <!-- Botones de acción -->
-                    <!-- Botones de acción -->
-                    <input type="submit" name="accion" value="Agregar" 
-                           class="btn btn-form btn-agregar" id="btnAgregar" onclick="return validarCampos();">
-
-                    <input type="submit" name="accion" value="Actualizar" 
-                           class="btn btn-form btn-actualizar" id="btnActualizar" style="display:none;" onclick="return validarCampos();">
-
-                    <!-- Botón cancelar -->
-                    <button type="button" class="btn btn-form btn-cancelar" id="btnCancelar" style="display:none;" onclick="cancelarEdicion();">
-                        Cancelar
-                    </button>
-
-                </form>
+            <div style="flex:1;">
+                <div class="tabla-empleados">
+                    <div class="table-responsive">
+                        <table class="table table-cards">
+                            <thead class="thead-cards">
+                                <tr>
+                                    <th>Código</th>
+                                    <th>Precio Unitario</th>
+                                    <th>Cantidad</th>
+                                    <th>Código Vehículo</th>
+                                    <th>Código Compra</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach var="detalleCompra" items="${detalleCompras}">
+                                    <tr>
+                                        <td>${detalleCompra.getCodigoDetalleCompra()}</td>
+                                        <td>${detalleCompra.getPrecioUnitario()}</td>
+                                        <td>${detalleCompra.getCantidad()}</td>
+                                        <td>${detalleCompra.getCodigoVehiculo()}</td>
+                                        <td>${detalleCompra.getCodigoCompra()}</td>
+                                        <td>
+                                            <div class="acciones-btns">
+                                                <a class="btn-action-minimal btn-edit-minimal" href="Controlador?menu=DetalleCompra&accion=Editar&codigoDetalleCompra=${detalleCompra.getCodigoDetalleCompra()}">Editar</a>    
+                                                <a class="btn-action-minimal btn-delete-minimal" href="Controlador?menu=DetalleCompra&accion=Eliminar&codigoDetalleCompra=${detalleCompra.getCodigoDetalleCompra()}" onclick="confirmarEliminar(event, this);">Eliminar</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
-
-
-        <!-- TABLA PARA MOSTRAR LOS SERVICIOS -->
-        <div class="col-md-8 table-responsive">
-            <table class="table table-cards">
-                <thead class="thead-cards">
-                    <tr>
-                        <th>CODIGO</th>
-                        <th>NOMBRE</th>
-                        <th>DESCRIPCION</th>
-                        <th>TIPO</th>
-                        <th>FECHA</th>
-                        <th>COD VEHICULO</th>
-                        <th>ACCIONES</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Recorre la lista de servicios enviada desde el controlador -->
-                    <c:forEach var="s" items="${servicios}">
-                        <tr>
-                            <td>${s.codigoServicio}</td>
-                            <td>${s.nombreServicio}</td>
-                            <td>${s.descripcion}</td>
-                            <td>${s.tipo}</td>
-                            <td>${s.fechaServicio}</td>
-                            <td>${s.codigoVehiculo}</td>
-                            <td class="acciones-btns">
-                                <!-- Botón para editar -->
-                                <a href="Controlador?menu=Servicios&accion=Editar&codigoServicio=${s.codigoServicio}" class="btn-editar">Editar</a>
-                                <!-- Botón para eliminar con alerta personalizada -->
-                                <a href="Controlador?menu=Servicios&accion=Eliminar&codigoServicio=${s.codigoServicio}" class="btn-eliminar" onclick="return confirmarEliminar(this);">Eliminar</a>
-                            </td>
-                        </tr>
-                    </c:forEach>
-                </tbody>
-            </table>
-        </div>
-
     </div>
-</div>
-<script>
-    // Cuando el controlador envía un servicio (al hacer clic en Editar), ocultamos Agregar y mostramos Actualizar + Cancelar
-    window.onload = function () {
-        let servicioEnEdicion = "${servicio != null ? servicio.codigoServicio : ''}";
-        if (servicioEnEdicion !== "") {
-            document.getElementById("btnAgregar").style.display = "none";
-            document.getElementById("btnActualizar").style.display = "inline-block";
-            document.getElementById("btnCancelar").style.display = "inline-block";
-        }
-    };
 
-    // Función para cancelar edición
-    function cancelarEdicion() {
-    // Limpia el formulario
-    document.getElementById("formServicio").reset();
+    <!-- Scripts Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        window.addEventListener('load', function () { window.scrollTo(0, 0); });
 
-    // Limpia manualmente todos los campos (porque JSP los rellena al renderizar)
-    document.querySelector("input[name='codigoServicio']").value = "";
-    document.querySelector("input[name='txtNombreServicio']").value = "";
-    document.querySelector("input[name='txtDescripcion']").value = "";
-    document.querySelector("input[name='txtTipo']").value = "";
-    document.querySelector("input[name='txtFechaServicio']").value = "";
-    document.querySelector("input[name='txtCodigoVehiculo']").value = "";
-
-    // Mostrar/ocultar botones
-    document.getElementById("btnAgregar").style.display = "inline-block";
-    document.getElementById("btnActualizar").style.display = "none";
-    document.getElementById("btnCancelar").style.display = "none";
-}
-
-</script>
-
-<!-- Scripts de interacción -->
-<script>
-    // Función para mostrar alerta de confirmación antes de eliminar
-    function confirmarEliminar(link) {
-        event.preventDefault(); // Evita que el enlace navegue inmediatamente
-        Swal.fire({
-            title: '¿Está seguro?',
-            text: "¡No podrá deshacer esta acción!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Sí, eliminar',
-            cancelButtonText: 'Cancelar'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                window.location.href = link.href; // Si confirma, se redirige al controlador para eliminar
-            }
-        });
-        return false;
-    }
-
-    // Función para validar que ningún campo del formulario esté vacío
-    function validarCampos() {
-        //declaracions JS
-        var nombre = document.getElementsByName('txtNombreServicio')[0].value.trim();
-        var descripcion = document.getElementsByName('txtDescripcion')[0].value.trim();
-        var tipo = document.getElementsByName('txtTipo')[0].value.trim();
-        var fecha = document.getElementsByName('txtFechaServicio')[0].value.trim();
-        var codigoVehiculo = document.getElementsByName('txtCodigoVehiculo')[0].value.trim();
-
-        if (!nombre || !descripcion || !tipo || !fecha || !codigoVehiculo) {
+        function confirmarEliminar(event, link) {
+            event.preventDefault();
             Swal.fire({
-                title: '¡Campos incompletos!',
-                text: 'Todos los campos son obligatorios.',
+                title: '¿Está seguro?',
+                text: "¡No podrá deshacer esta acción!",
                 icon: 'warning',
-                confirmButtonColor: '#3085d6',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) { window.location.href = link.href; }
+            });
+        }
+
+        var error = "${error}";
+        if (error && error !== "null") {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: error,
                 confirmButtonText: 'Aceptar'
             });
-            return false; // Cancela el envío del formulario
         }
-        return true; // Todos los campos completados, se puede enviar
-    }
-</script>
-
+    </script>
 </body>
 </html>

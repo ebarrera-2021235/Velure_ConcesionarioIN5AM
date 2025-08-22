@@ -4,11 +4,12 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Seguro</title>
+    <title>Vehículos</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"/>
     <!-- Google Fonts Montserrat -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         body {
             font-family: 'Montserrat', Arial, sans-serif;
@@ -32,7 +33,7 @@
             background: rgba(0,0,0,0.55);
             z-index: 0;
         }
-        .descripcion-velure, .titulo-seguros {
+        .descripcion-velure, .titulo-vehiculos {
             position: relative;
             z-index: 1;
             text-align: center;
@@ -44,14 +45,14 @@
             font-size: 2rem;
             font-weight: 700;
         }
-        .titulo-seguros {
+        .titulo-vehiculos {
             font-size: 2.8rem;
             font-weight: 700;
             margin-top: 18px;
             margin-bottom: 38px;
             letter-spacing: 2px;
         }
-        .descripcion-seguros {
+        .descripcion-vehiculos {
             max-width: 900px;
             margin: 70px auto 0 auto;
             padding: 40px 30px 30px 30px;
@@ -72,7 +73,7 @@
             background: #fff;
             border-radius: 24px;
             box-shadow: 0 8px 32px rgba(0,0,0,0.18);
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 70px auto 40px auto;
             padding: 40px 30px;
         }
@@ -81,7 +82,7 @@
             flex-direction: row;
             gap: 30px;
         }
-        .tabla-seguros {
+        .tabla-vehiculos {
             background: transparent;
             box-shadow: none;
             border-radius: 0;
@@ -89,7 +90,7 @@
             min-width: 0;
             padding: 0;
         }
-
+        
         /* FORMULARIO CARDS STYLE */
         .card-form {
             background: white;
@@ -105,7 +106,7 @@
         .card-form .card-body {
             padding: 20px;
         }
-
+        
         /* Botones del formulario con el mismo estilo */
         .btn-form-minimal {
             padding: 8px 16px;
@@ -139,7 +140,17 @@
             background: #28a745;
             color: white;
         }
-
+        .btn-cancel-minimal {
+            background: #fff;
+            color: #dc3545;
+            border-color: #dc3545;
+        }
+        .btn-cancel-minimal:hover {
+            background: #dc3545;
+            color: white;
+            text-decoration: none;
+        }
+        
         /* TABLA CARDS STYLE */
         .table-cards {
             border: none;
@@ -178,7 +189,7 @@
         .table-cards tbody tr td:last-child {
             border-radius: 0 8px 8px 0;
         }
-
+        
         /* Botones minimalistas */
         .btn-action-minimal {
             padding: 5px 10px;
@@ -217,12 +228,12 @@
             gap: 8px;
             justify-content: center;
         }
-
+        
         /* Animación suave para el scroll */
         html {
             scroll-behavior: smooth;
         }
-
+        
         @media (max-width: 991px) {
             .zona-crud {
                 padding: 20px 5px;
@@ -231,10 +242,10 @@
                 flex-direction: column;
                 gap: 20px;
             }
-            .titulo-seguros {
+            .titulo-vehiculos {
                 font-size: 2rem;
             }
-            .descripcion-seguros{
+            .descripcion-vehiculos {
                 padding: 20px 5px 15px 5px;
             }
             .titulo-equipo {
@@ -260,141 +271,152 @@
             Velure es <span style="color:#FFD700;">Velocidad</span> y <span style="color:#FFD700;">Lujosidad</span><br>
             <span style="font-size:1.2rem; font-weight:400;">El mejor lugar para encontrar tu auto deportivo soñado.</span>
         </div>
-        <div class="titulo-seguros">Seguros</div>
+        <div class="titulo-vehiculos">
+            VEHÍCULOS
+        </div>
+    </div>
+    <div class="descripcion-vehiculos">
+        <div class="titulo-equipo">
+            Nuestra Colección, Nuestro Orgullo
+        </div>
+        <p>
+            Explora nuestra amplia variedad de vehículos. Cada unidad está seleccionada cuidadosamente para ofrecer la mejor experiencia en rendimiento y lujo.
+        </p>
+        <p>
+            Desde autos deportivos hasta SUVs, nuestra flota combina potencia, estilo y tecnología de vanguardia para satisfacer a los conductores más exigentes.
+        </p>
+        <p>
+            En Velure no solo vendemos vehículos, también creamos experiencias inolvidables. Cada auto en nuestro inventario pasa por rigurosos estándares de calidad para garantizar la máxima satisfacción y confianza de nuestros clientes.
+        </p>
+        <p>
+            Porque en Velure no solo construimos relaciones, también construimos sueños sobre ruedas, y cada uno de nuestros vehículos es pieza clave para que estos se hagan realidad.
+        </p>
     </div>
     
-    <div class="descripcion-seguros">
-        <div class="titulo-equipo">Nuestros Seguros, Tu Tranquilidad</div>
-        <p>En Velure, sabemos que proteger tu vehículo es tan importante como disfrutarlo. Por eso ofrecemos seguros confiables, adaptados a tus necesidades, con coberturas completas desde Básica hasta Riesgo sin franquicia.</p>
-        <p>Nuestros seguros están diseñados para brindarte tranquilidad y confianza, respaldando tu inversión y cuidando lo que más valoras. Cada póliza se gestiona con transparencia y claridad, para que entiendas exactamente los beneficios de tu cobertura.</p>
-        <p>Contamos con un equipo de expertos que evalúa cada caso de manera personalizada, asegurando soluciones rápidas y efectivas ante cualquier eventualidad. Nuestro soporte y atención están disponibles cuando los necesitas.</p>
-        <p>Porque en Velure no solo ofrecemos seguros, también construimos seguridad, confianza y tranquilidad para cada cliente que confía en nosotros, protegiendo tu vehículo y tu bienestar en todo momento.</p>
-        <p>Además, ponemos a tu disposición herramientas digitales fáciles de usar. Queremos que tu experiencia con Velure sea siempre sencilla, segura y confiable, acompañándote en cada paso para cuidar lo que más valoras.</p>
-    </div>
-
+    <!-- Mensaje de error si existe -->
+    <c:if test="${not empty mensaje}">
+        <div class="alert alert-danger text-center" style="max-width: 1400px; margin: 20px auto;">${mensaje}</div>
+    </c:if>
+    
+    <!-- Ancla invisible para el área CRUD -->
     <div class="zona-crud" id="zona-crud">
         <div class="crud-container">
-            <div style="flex:1;">
-                <div class="card">
+            <div style="flex:1.2;">
+                <div class="card-form">
                     <div class="card-body">
-                        <form action="Controlador?menu=Seguro" method="POST">
+                        <form action="Controlador?menu=Vehiculo" method="POST">
                             <div class="form-group">
-                                <label><strong>Tipo de Cobertura:</strong></label>
-                                <select name="txttipoCobertura" class="form-control" required>
-                                    <option value="" disabled <c:if test="${seguro == null}">selected</c:if>>Seleccione tipo de cobertura</option>
-                                    <option value="Básica" <c:if test="${seguro != null && seguro.tipoCobertura == 'Básica'}">selected</c:if>>Básica</option>
-                                    <option value="Limitada" <c:if test="${seguro != null && seguro.tipoCobertura == 'Limitada'}">selected</c:if>>Limitada</option>
-                                    <option value="Amplia" <c:if test="${seguro != null && seguro.tipoCobertura == 'Amplia'}">selected</c:if>>Amplia</option>
-                                    <option value="Riesgo y franquicia" <c:if test="${seguro != null && seguro.tipoCobertura == 'Riesgo y franquicia'}">selected</c:if>>Riesgo y franquicia</option>
-                                    <option value="Riesgo sin franquicia" <c:if test="${seguro != null && seguro.tipoCobertura == 'Riesgo sin franquicia'}">selected</c:if>>Riesgo sin franquicia</option>
-                                </select>
+                                <label><strong>Modelo:</strong></label>
+                                <input type="text" value="${vehiculo.getModelo()}" name="txtModelo" class="form-control" required>
                             </div>
                             <div class="form-group">
                                 <label><strong>Descripción:</strong></label>
-                                <input type="text" value="${seguro.descripcion}" name="txtdescripcion" class="form-control" required>
+                                <input type="text" value="${vehiculo.getDescripcion()}" name="txtDescripcion" class="form-control" required>
                             </div>
                             <div class="form-group">
-                                <label><strong>Fecha Inicio:</strong></label>
-                                <input type="date" value="${seguro.fechaInicio}" name="txtfechaInicio" class="form-control" required>
+                                <label><strong>Marca:</strong></label>
+                                <input type="text" value="${vehiculo.getMarca()}" name="txtMarca" class="form-control" required>
                             </div>
                             <div class="form-group">
-                                <label><strong>Fecha Fin:</strong></label>
-                                <input type="date" value="${seguro.fechaFin}" name="txtfechaFin" class="form-control" required>
+                                <label><strong>Color:</strong></label>
+                                <input type="text" value="${vehiculo.getColor()}" name="txtColor" class="form-control" required>
                             </div>
                             <div class="form-group">
-                                <label><strong>Costo:</strong></label>
-                                <input type="number" step="0.01" value="${seguro.costo}" name="txtcosto" class="form-control" required>
+                                <label><strong>Stock:</strong></label>
+                                <input type="number" value="${vehiculo.getStock()}" name="txtStock" class="form-control" required min="0">
                             </div>
-                            
-                            <!-- Combobox Código Vehículo -->
                             <div class="form-group">
-                                <label><strong>Código Vehículo:</strong></label>
-                                <select name="txtcodigoVehiculo" class="form-control" required
-                                        <c:if test="${seguro != null && seguro.codigoVehiculo != 0}">disabled</c:if>>
-                                    <option value="" disabled <c:if test="${seguro == null}">selected</c:if>>
-                                        Seleccione un vehículo
+                                <label><strong>Precio:</strong></label>
+                                <input type="number" value="${vehiculo.getPrecio()}" step="0.01" name="txtPrecio" class="form-control" required min="0">
+                            </div>
+                            <div class="form-group">
+                                <label><strong>Año:</strong></label>
+                                <input type="text" value="${vehiculo.getAnio()}" name="txtAnio" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label><strong>Proveedor:</strong></label>
+                                <select name="txtCodigoProveedor" class="form-control" required
+                                        <c:if test="${modo eq 'editar'}">disabled</c:if>>
+                                    <option value="" disabled <c:if test="${vehiculo == null || vehiculo.codigoProveedor == 0}">selected</c:if>>
+                                        Seleccione un proveedor
                                     </option>
-                                    <c:forEach var="v" items="${vehiculos}">
-                                        <option value="${v.codigoVehiculo}"
-                                                <c:if test="${seguro != null && seguro.codigoVehiculo == v.codigoVehiculo}">selected</c:if>>
-                                            ${v.codigoVehiculo} - ${v.marca} ${v.modelo}
+                                    <c:forEach var="p" items="${proveedores}">
+                                        <option value="${p.codigoProveedor}"
+                                                <c:if test="${vehiculo != null && vehiculo.codigoProveedor == p.codigoProveedor}">selected</c:if>>
+                                            ${p.codigoProveedor} - ${p.nombreProveedor}
                                         </option>
                                     </c:forEach>
                                 </select>
                             </div>
                             
-                            <input type="hidden" name="txtcodigoSeguro" value="${seguro.codigoSeguro}">
                             <div class="d-flex justify-content-between">
                                 <c:choose>
                                     <c:when test="${modo eq 'editar'}">
                                         <input type="submit" name="accion" value="Actualizar" class="btn-form-minimal btn-update-minimal">
-                                        <a class="btn-action-minimal btn-delete-minimal" href="Controlador?menu=Seguro&accion=Cancelar">Cancelar</a>
+                                        <a class="btn-form-minimal btn-cancel-minimal" href="Controlador?menu=Vehiculo&accion=Cancelar">Cancelar</a>
                                     </c:when>
                                     <c:otherwise>
                                         <input type="submit" name="accion" value="Agregar" class="btn-form-minimal btn-add-minimal">
                                     </c:otherwise>
                                 </c:choose>
-                            </div>  
-                        </form> 
-                    </div>  
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
-
-            <div style="flex:1;">
-                <div class="tabla-seguros">
+            <div style="flex:1.8;">
+                <div class="tabla-vehiculos">
                     <div class="table-responsive">
                         <table class="table table-cards">
                             <thead class="thead-cards">
                                 <tr>
-                                    <th>CODIGO</th>
-                                    <th>TIPO DE COBERTURA</th>
-                                    <th>DESCRIPCION</th>
-                                    <th>FECHA INICIO</th>
-                                    <th>FECHA FIN</th>
-                                    <th>COSTO</th>
-                                    <th>VEHICULO</th>
+                                    <th>CÓDIGO</th>
+                                    <th>MODELO</th>
+                                    <th>DESCRIPCIÓN</th>
+                                    <th>MARCA</th>
+                                    <th>COLOR</th>
+                                    <th>STOCK</th>
+                                    <th>PRECIO</th>
+                                    <th>AÑO</th>
+                                    <th>COD.PROVEEDOR</th>
                                     <th>ACCIONES</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <c:forEach var="seguro" items="${seguros}">
+                                <c:forEach var="v" items="${vehiculos}">
                                     <tr>
-                                        <td>${seguro.codigoSeguro}</td>
-                                        <td>${seguro.tipoCobertura}</td>
-                                        <td>${seguro.descripcion}</td>
-                                        <td>${seguro.fechaInicio}</td>
-                                        <td>${seguro.fechaFin}</td>
-                                        <td>${seguro.costo}</td>
-                                        <td>
-                                            <c:forEach var="v" items="${vehiculos}">
-                                                <c:if test="${seguro.codigoVehiculo == v.codigoVehiculo}">
-                                                    ${v.codigoVehiculo} - ${v.marca} ${v.modelo}
-                                                </c:if>
-                                            </c:forEach>
-                                        </td>
+                                        <td>${v.getCodigoVehiculo()}</td>
+                                        <td>${v.getModelo()}</td>
+                                        <td>${v.getDescripcion()}</td>
+                                        <td>${v.getMarca()}</td>
+                                        <td>${v.getColor()}</td>
+                                        <td>${v.getStock()}</td>
+                                        <td>${v.getPrecio()}</td>
+                                        <td>${v.getAnio()}</td>
+                                        <td>${v.getCodigoProveedor()}</td>
                                         <td>
                                             <div class="acciones-btns">
-                                                <a class="btn-action-minimal btn-edit-minimal" href="Controlador?menu=Seguro&accion=Editar&codigoSeguro=${seguro.codigoSeguro}">Editar</a>
-                                                <a class="btn-action-minimal btn-delete-minimal" href="Controlador?menu=Seguro&accion=Eliminar&codigoSeguro=${seguro.codigoSeguro}" onclick="confirmarEliminar(event, this);">Eliminar</a>
+                                                <a class="btn-action-minimal btn-edit-minimal" href="Controlador?menu=Vehiculo&accion=Editar&codigoVehiculo=${v.getCodigoVehiculo()}">Editar</a>
+                                                <a class="btn-action-minimal btn-delete-minimal" href="Controlador?menu=Vehiculo&accion=Eliminar&codigoVehiculo=${v.getCodigoVehiculo()}" onclick="return confirmarEliminar(this);">Eliminar</a>
                                             </div>
                                         </td>
                                     </tr>
                                 </c:forEach>
-                            </tbody>    
+                            </tbody>
                         </table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
+    
     <!-- Scripts Bootstrap -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
     <script>
-        function confirmarEliminar(event, link) {
+        function confirmarEliminar(link) {
             event.preventDefault();
             Swal.fire({
                 title: '¿Está seguro?',
@@ -410,17 +432,13 @@
                     window.location.href = link.href;
                 }
             });
+            return false;
         }
 
-        var error = "${error}";
-        if (error && error !== "null") {
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: error,
-                confirmButtonText: 'Aceptar'
-            });
-        }
+        // Solo mantener la página arriba al entrar
+        window.addEventListener('load', function() {
+            window.scrollTo(0, 0);
+        });
     </script>
 </body>
-</html>
+</html> 

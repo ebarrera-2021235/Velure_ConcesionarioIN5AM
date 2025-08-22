@@ -346,31 +346,26 @@
             </li>
             <!-- Menú desplegable de entidades -->
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="entidadesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Entidades</a>
+                <a class="nav-link dropdown-toggle" href="#" id="entidadesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Gestion</a>
                 <div class="dropdown-menu" aria-labelledby="entidadesDropdown">
-                    <a class="dropdown-item" href="Controlador?menu=Producto" target="contenido" onclick="showIframe()">Productos</a>
                     <a class="dropdown-item" href="Controlador?menu=Empleado&accion=Listar" target="contenido" onclick="showIframe()">Empleados</a>
                     <a class="dropdown-item" href="Controlador?menu=Clientes&accion=Listar" target="contenido" onclick="showIframe()">Clientes</a>
                     <a class="dropdown-item" href="Controlador?menu=Venta&accion=Listar" target="contenido" onclick="showIframe()">Venta</a>
                     <a class="dropdown-item" href="Controlador?menu=Vehiculo&accion=Listar" target="contenido" onclick="showIframe()">Vehiculos</a>
                     <a class="dropdown-item" href="Controlador?menu=Proveedor&accion=Listar" target="contenido" onclick="showIframe()">Proveedores</a>
                     <a class="dropdown-item" href="Controlador?menu=Compras&accion=Listar" target="contenido" onclick="showIframe()">Compras</a>
-                    <a class="dropdown-item" href="Controlador?menu=Servicio&accion=Listar" target="contenido" onclick="showIframe()">Servicios </a>
+                    <a class="dropdown-item" href="Controlador?menu=Servicios&accion=Listar" target="contenido" onclick="showIframe()">Servicios </a>
                     <a class="dropdown-item" href="Controlador?menu=Seguro&accion=Listar" target="contenido" onclick="showIframe()">Seguros</a>
-                    <a class="dropdown-item" href="#" target="contenido" onclick="showIframe()">Entidad 9</a>
                     <a class="dropdown-item" href="Controlador?menu=DetalleCompra&accion=Listar" target="contenido" onclick="showIframe()">Detalles de Compras</a>
                     <a class="dropdown-item" href="Controlador?menu=DetalleVenta&accion=Listar" target="contenido" onclick="showIframe()">Detalles de Ventas</a>
                 </div>
             </li>
-            <!-- Otro enlace -->
-            <li class="nav-item">
-                <a class="nav-link" href="#" target="contenido" onclick="showIframe()">Otro</a>
-            </li>
+            
         </ul>
     </div>
     <!-- Logo centrado y más grande -->
     <a class="logo-center" href="#" onclick="showHome()">
-        <img src="img/Velure.png" alt="Logo">
+        <img src="img/V.png" alt="Logo">
     </a>
     <!-- Usuario a la derecha -->
     <div class="dropdown">
@@ -454,7 +449,7 @@ Queremos ser reconocidos no solo por la calidad de nuestra oferta automotriz, si
 
         <section id="empresa" class="info-section">
             <div class="info-card">
-                <img src="img/Velure.png" alt="Logo Velure" />
+                <img src="img/V.png" alt="Logo Velure" />
                 <div class="info-text">
                     <h2>VELURE</h2>
                     <p>"Suavidad, poder, presencia."</p>
@@ -464,7 +459,7 @@ Queremos ser reconocidos no solo por la calidad de nuestra oferta automotriz, si
         </section>
 
         <footer class="main-footer">
-            <img src="img/Velure.png" alt="Velure Logo" class="footer-logo" />
+            <img src="img/V.png" alt="Velure Logo" class="footer-logo" />
             <p>Copyright © 2025 Automobili Velure.</p>
             <p>
                 <a href="#">Velure</a> | 
