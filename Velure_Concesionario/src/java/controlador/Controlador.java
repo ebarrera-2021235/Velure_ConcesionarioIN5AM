@@ -25,6 +25,8 @@ import modelo.Servicio;
 import modelo.ServicioDAO;
 import modelo.Servicios;
 import modelo.ServiciosDAO;
+import modelo.Vehiculo;
+import modelo.VehiculoDAO;
 import modelo.Venta;
 import modelo.VentaDAO;
 
@@ -33,7 +35,10 @@ import modelo.VentaDAO;
  * @author informatica
  */
 public class Controlador extends HttpServlet {
-
+    // OBJETOS PARA VEHICULO
+    Vehiculo vehiculo = new Vehiculo();
+    VehiculoDAO vehiculoDao = new VehiculoDAO();
+    int codVehiculo;
     // Objetos para Empleado
     Empleado empleado = new Empleado();
     EmpleadoDAO empleadoDAO = new EmpleadoDAO();
