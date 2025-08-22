@@ -4,9 +4,7 @@
 <html>
 <head>
     <title>Proveedores</title>
-    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"/>
-    <!-- Google Fonts Montserrat -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -39,29 +37,33 @@
         }
 
         .descripcion-velure,
-        .titulo-proveedor {
+        .titulo-principal { /* Cambié el nombre para evitar conflictos */
             position: relative;
             z-index: 1;
             text-align: center;
             color: #fff;
             text-shadow: 2px 2px 8px #000;
         }
-
+        
+        /* Esta es la clase que quieres que sea blanca */
         .descripcion-velure {
             padding-top: 40px;
             font-size: 2rem;
             font-weight: 700;
         }
 
-        .titulo-proveedor {
+        /* Esta es la clase del título principal */
+        .titulo-principal {
             font-size: 2.8rem;
             font-weight: 700;
             margin-top: 18px;
             margin-bottom: 38px;
             letter-spacing: 2px;
+            color: #fff; /* Aquí se asegura que el color sea blanco */
+            text-shadow: 2px 2px 8px #000000;
         }
 
-        /* --- Descripción compras --- */
+        /* --- Descripción Proveedor --- */
         .descripcion-proveedor {
             max-width: 900px;
             margin: 70px auto 0 auto;
@@ -72,7 +74,8 @@
             color: #222;
         }
 
-        .titulo-equipo {
+        /* Título de la descripción del proveedor */
+        .titulo-descripcion-proveedor {
             font-size: 2.3rem;
             font-weight: 700;
             text-align: center;
@@ -262,7 +265,7 @@
                 flex-direction: column; 
                 gap: 20px; 
             }
-            .titulo-equipo { 
+            .titulo-descripcion-proveedor { 
                 font-size: 1.5rem; 
             }
             .table-responsive { 
@@ -280,53 +283,44 @@
     </style>
 </head>
 <body>
-     <!-- Encabezado con imagen de fondo -->
-    <div class="zona-superior">
+      <div class="zona-superior">
         <div class="descripcion-velure">
             Velure es <span style="color:#FFD700;">Velocidad</span> y <span style="color:#FFD700;">Lujosidad</span><br>
             <span style="font-size:1.2rem; font-weight:400;">El mejor lugar para encontrar tu auto deportivo soñado.</span>
         </div>
-        <div class="titulo-proveedor">Proveedores</div>
+        <div class="titulo-principal">PROVEEDORES</div> 
     </div>
-     
-     <!-- Sección descriptiva de los proveedores -->
+    
     <div class="descripcion-proveedor">
-        <div class="titulo-proveedor">Nuestros Proveedores, Nuestra Garantía</div>
+        <div class="titulo-descripcion-proveedor">Nuestros Proveedores, Nuestra Garantía</div>
         <p>En Velure Motors, entendemos que cada vehículo que entregamos es el resultado de una cadena de suministros meticulosamente seleccionada. Nuestros proveedores son el corazón de nuestro concesionario, proporcionando los mejores autos y repuestos de la industria.</p>
         <p>Trabajamos con los fabricantes más prestigiosos y con talleres especializados que nos permiten ofrecer vehículos de alta calidad, tecnología avanzada y la mejor experiencia para nuestros clientes.</p>
         <p>La confianza y compromiso de nuestros proveedores nos permite mantener una flota de vehículos en excelente estado, garantizando seguridad, durabilidad y un servicio postventa que se extiende más allá de la compra.</p>
         <p>En Velure Motors, sabemos que un buen vehículo empieza con un buen proveedor. Por eso, seleccionamos con cuidado a cada uno de nuestros socios estratégicos, quienes comparten nuestra visión de calidad y excelencia.</p>
     </div>
 
-      <!-- Área CRUD de proveedores -->
     <div class="zona-crud" id="zona-crud">
         <div class="crud-container">
-            <!-- Formulario de registro/edición -->
             <div style="flex:1;">
                 <div class="card-form">
                     <div class="card-body">
                         <form action="Controlador?menu=Proveedor" method="POST">
-                            <!-- Campo Nombre -->
                             <div class="form-group">
                                 <label><strong>Nombre:</strong></label>
                                 <input type="text" value="${proveedor.nombreProveedor}" name="txtNombreProveedor" class="form-control" required>
                             </div>
-                            <!-- Campo Teléfono -->
                             <div class="form-group">
                                 <label><strong>Teléfono:</strong></label>
                                 <input type="tel" value="${proveedor.telefonoProveedor}" name="txtTelefonoProveedor" class="form-control" required>
                             </div>
-                            <!-- Campo Dirección -->
                             <div class="form-group">
                                 <label><strong>Dirección:</strong></label>
                                 <input type="text" value="${proveedor.direccionProveedor}" name="txtDireccionProveedor" class="form-control" required>
                             </div>
-                            <!-- Campo Correo -->
                             <div class="form-group">
                                 <label><strong>Correo:</strong></label>
                                 <input type="email" value="${proveedor.correoProveedor}" name="txtCorreoProveedor" class="form-control" required>
                             </div>
-                            <!-- Botones Agregar y Actualizar -->
                             <div class="d-flex justify-content-between">
                                 <c:choose>
                                     <c:when test="${modo eq 'editar'}">
@@ -342,7 +336,6 @@
                     </div>
                 </div>
             </div>
-             <!-- Tabla de proveedores -->
             <div style="flex:1;">
                 <div class="tabla-proveedor">
                     <div class="table-responsive">
@@ -381,13 +374,10 @@
         </div>
     </div>
 
-    <!-- Scripts Bootstrap y Confirmación -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"></script>
-     <!-- SweetAlert2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <!-- Script de confirmación antes de eliminar -->
     <script>
         function confirmarEliminar(link) {
             event.preventDefault();
@@ -420,7 +410,6 @@
                     confirmButtonText: 'Aceptar'
                 });
             }
-</script>
-
+    </script>
 </body>
 </html>

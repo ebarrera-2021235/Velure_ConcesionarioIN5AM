@@ -10,7 +10,7 @@
     <!-- Google Fonts Montserrat -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
     <style>
-        /* --- Estilos generales --- */
+        /* Estilos CSS (sin cambios) */
         body {
             font-family: 'Montserrat', Arial, sans-serif;
             margin: 0;
@@ -257,12 +257,27 @@
 
         /* --- Media Queries --- */
         @media (max-width: 991px) {
-            .zona-crud { padding: 20px 5px; }
-            .crud-container { flex-direction: column; gap: 20px; }
-            .titulo-equipo { font-size: 1.5rem; }
-            .table-responsive { font-size: 0.85rem; }
-            .btn-action-minimal { padding: 4px 8px; font-size: 0.75rem; }
-            .btn-form-minimal { padding: 6px 12px; font-size: 0.8rem; }
+            .zona-crud { 
+                padding: 20px 5px; 
+            }
+            .crud-container {
+                flex-direction: column; 
+                gap: 20px; 
+            }
+            .titulo-equipo { 
+                font-size: 1.5rem; 
+            }
+            .table-responsive { 
+                font-size: 0.85rem; 
+            }
+            .btn-action-minimal {
+                padding: 4px 8px; 
+                font-size: 0.75rem;
+            }
+            .btn-form-minimal { 
+                padding: 6px 12px; 
+                font-size: 0.8rem; 
+            }
         }
     </style>
 </head>
@@ -320,9 +335,18 @@
                                        name="txtCodigoEmpleado" class="form-control" required
                                        <c:if test="${compra != null}">readonly</c:if>>
                             </div>
+
+                            <!-- Cambiar botones según si es 'editar' o no -->
                             <div class="d-flex justify-content-between">
-                                <input type="submit" name="accion" value="Agregar" class="btn-form-minimal btn-add-minimal"> 
-                                <input type="submit" name="accion" value="Actualizar" class="btn-form-minimal btn-update-minimal">
+                                <c:choose>
+                                    <c:when test="${modo eq 'editar'}">
+                                        <input type="submit" name="accion" value="Actualizar" class="btn-form-minimal btn-update-minimal">
+                                        <a class="btn-action-minimal btn-delete-minimal" href="Controlador?menu=Compras&accion=Cancelar">Cancelar</a>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <input type="submit" name="accion" value="Agregar" class="btn-form-minimal btn-add-minimal">
+                                    </c:otherwise>
+                                </c:choose>
                             </div>
                         </form>
                     </div>
@@ -396,33 +420,7 @@
             return false;
         }
 
-        // Validación de Descripción (solo letras)
-        document.getElementById("formCompras").addEventListener("submit", function(event) {
-            let descripcion = document.querySelector("[name='txtDescripcion']").value;
-            let regex = /^[A-Za-z\sáéíóúÁÉÍÓÚñÑ]+$/;
-
-            if (!regex.test(descripcion)) {
-                event.preventDefault();
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error en Descripción',
-                    text: 'Solo se permiten letras en el campo de descripción'
-                });
-            }
-        });
-
-        // Deshabilitar botón "Agregar" si estamos editando
-        const params = new URLSearchParams(window.location.search);
-        const accion = params.get("accion");
-
-        if (accion === "Editar") {
-            const btnAgregar = document.querySelector("input[type='submit'][value='Agregar']");
-            if (btnAgregar) {
-                btnAgregar.disabled = true;
-                btnAgregar.style.opacity = "0.6";
-                btnAgregar.style.cursor = "not-allowed";
-            }
-        }
+        
     </script>
 </body>
 </html>
