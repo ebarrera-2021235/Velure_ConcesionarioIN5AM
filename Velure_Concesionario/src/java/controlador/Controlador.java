@@ -85,15 +85,12 @@ public class Controlador extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         String menu = request.getParameter("menu");
         String accion = request.getParameter("accion");
-
         if (menu == null || menu.isEmpty() || accion == null || accion.isEmpty()) {
             request.getRequestDispatcher("Principal.jsp").forward(request, response);
             return;
         }
-
         // --- PRINCIPAL ---
         if ("Principal".equals(menu)) {
             request.getRequestDispatcher("Principal.jsp").forward(request, response);
@@ -1160,6 +1157,10 @@ public class Controlador extends HttpServlet {
                 case "Listar":
                     List listaVentas = ventaDao.listar();
                     request.setAttribute("ventas", listaVentas);
+                    List clientesCon = clienteDAO.listarCliente();
+                    request.setAttribute("clientes", clientesCon);
+                    List empleadosCon = empleadoDAO.listar();
+                    request.setAttribute("empleados", empleadosCon);
                     break;
                 case "Agregar":
                     Date fecha = java.sql.Date.valueOf(request.getParameter("txtFecha"));

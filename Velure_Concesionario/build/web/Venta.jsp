@@ -61,27 +61,34 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label><strong>Código Cliente:</strong></label>
-                                <c:choose>
-                                    <c:when test="${modo eq 'editar'}">
-                                        <input type="number" value="${venta.getCodigoCliente()}" name="txtCodigoCliente" class="form-control" placeholder="0" disabled>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <input type="number" value="${venta.getCodigoCliente()}" name="txtCodigoCliente" class="form-control" placeholder="0">
-                                    </c:otherwise>
-                                </c:choose>
+                                <label><strong>Cliente:</strong></label>
+                                <select name="txtCodigoCliente" class="form-control" required
+                                        <c:if test="${modo eq 'editar'}">disabled</c:if>>
+                                    <option value="" disabled <c:if test="${venta == null || venta.codigoCliente == 0}">selected</c:if>>
+                                        Seleccione un cliente
+                                    </option>
+                                    <c:forEach var="c" items="${clientes}">
+                                        <option value="${c.codigoCliente}"
+                                                <c:if test="${venta != null && venta.codigoCliente == c.codigoCliente}">selected</c:if>>
+                                            ${c.codigoCliente} - ${c.nombresCliente}
+                                        </option>
+                                    </c:forEach>
+                                </select>
                             </div>
                             <div class="form-group">
-                                <label><strong>Código Empleado:</strong></label>
-                                <c:choose>
-                                    <c:when test="${modo eq 'editar'}">
-                                        <input type="number" value="${venta.getCodigoEmpleado()}" name="txtCodigoEmpleado" class="form-control" placeholder="0" disabled>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <input type="number" value="${venta.getCodigoEmpleado()}" name="txtCodigoEmpleado" class="form-control" placeholder="0">
-                                    </c:otherwise>
-                                </c:choose>
-                                
+                                <label><strong>Empleado:</strong></label>
+                                <select name="txtCodigoEmpleado" class="form-control" required
+                                        <c:if test="${modo eq 'editar'}">disabled</c:if>>
+                                    <option value="" disabled <c:if test="${venta == null || venta.codigoEmpleado == 0}">selected</c:if>>
+                                        Seleccione un empleado
+                                    </option>
+                                    <c:forEach var="e" items="${empleados}">
+                                        <option value="${e.codigoEmpleado}"
+                                                <c:if test="${venta != null && venta.codigoEmpleado == e.codigoEmpleado}">selected</c:if>>
+                                            ${e.codigoEmpleado} - ${e.nombresEmpleado}
+                                        </option>
+                                    </c:forEach>
+                                </select>
                             </div>
                             <div class="d-flex justify-content-between">
                                 <c:choose>
@@ -194,4 +201,3 @@
     </script>
 </body>
 </html>
-
