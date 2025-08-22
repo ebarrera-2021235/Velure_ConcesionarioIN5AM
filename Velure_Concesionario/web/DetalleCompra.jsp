@@ -215,6 +215,13 @@
             gap: 8px;
             justify-content: center;
         }
+        
+        /* Estilo para campos readonly que parecen disabled */
+        .readonly-field {
+            background-color: #e9ecef !important;
+            cursor: not-allowed;
+        }
+        
         html { scroll-behavior: smooth; }
         @media (max-width: 991px) {
             .zona-crud { padding: 20px 5px; }
@@ -261,45 +268,67 @@
                                 <input type="text" value="${detalleCompra.cantidad}" name="txtCantidad" class="form-control" required>
                             </div>
 
-                            <!-- ComboBox Código Vehículo -->
+                            <!-- ComboBox Código Vehículo - SOLUCIONADO -->
                             <div class="form-group">
                                 <label><strong>Código Vehículo:</strong></label>
-                                <select name="txtCodigoVehiculo" class="form-control" required
-                                        <c:if test="${detalleCompra != null && detalleCompra.codigoVehiculo != 0}">disabled</c:if>>
-                                    <option value="" disabled <c:if test="${detalleCompra == null}">selected</c:if>>
-                                        Seleccione un vehículo
-                                    </option>
-                                    <c:forEach var="v" items="${vehiculos}">
-                                        <option value="${v.codigoVehiculo}"
-                                                <c:if test="${detalleCompra != null && detalleCompra.codigoVehiculo == v.codigoVehiculo}">selected</c:if>>
-                                            ${v.codigoVehiculo} - ${v.modelo}
-                                        </option>
-                                    </c:forEach>
-                                </select>
+                                <c:choose>
+                                    <c:when test="${detalleCompra != null && modo == 'editar'}">
+                                        <!-- Modo edición: mostrar valor actual readonly y campo hidden -->
+                                        <c:forEach var="v" items="${vehiculos}">
+                                            <c:if test="${detalleCompra.codigoVehiculo == v.codigoVehiculo}">
+                                                <input type="text" class="form-control readonly-field" 
+                                                       value="${v.codigoVehiculo} - ${v.modelo}" readonly>
+                                            </c:if>
+                                        </c:forEach>
+                                        <input type="hidden" name="txtCodigoVehiculo" value="${detalleCompra.codigoVehiculo}">
+                                    </c:when>
+                                    <c:otherwise>
+                                        <!-- Modo creación: combobox normal -->
+                                        <select name="txtCodigoVehiculo" class="form-control" required>
+                                            <option value="" disabled selected>Seleccione un vehículo</option>
+                                            <c:forEach var="v" items="${vehiculos}">
+                                                <option value="${v.codigoVehiculo}">
+                                                    ${v.codigoVehiculo} - ${v.modelo}
+                                                </option>
+                                            </c:forEach>
+                                        </select>
+                                    </c:otherwise>
+                                </c:choose>
                             </div>
 
-                            <!-- ComboBox Código Compra -->
+                            <!-- ComboBox Código Compra - SOLUCIONADO -->
                             <div class="form-group">
                                 <label><strong>Código Compra:</strong></label>
-                                <select name="txtCodigoCompra" class="form-control" required
-                                        <c:if test="${detalleCompra != null && detalleCompra.codigoCompra != 0}">disabled</c:if>>
-                                    <option value="" disabled <c:if test="${detalleCompra == null}">selected</c:if>>
-                                        Seleccione una compra
-                                    </option>
-                                    <c:forEach var="c" items="${compras}">
-                                        <option value="${c.codigoCompra}"
-                                                <c:if test="${detalleCompra != null && detalleCompra.codigoCompra == c.codigoCompra}">selected</c:if>>
-                                            ${c.codigoCompra} - ${c.descripcion}
-                                        </option>
-                                    </c:forEach>
-                                </select>
+                                <c:choose>
+                                    <c:when test="${detalleCompra != null && modo == 'editar'}">
+                                        <!-- Modo edición: mostrar valor actual readonly y campo hidden -->
+                                        <c:forEach var="c" items="${compras}">
+                                            <c:if test="${detalleCompra.codigoCompra == c.codigoCompra}">
+                                                <input type="text" class="form-control readonly-field" 
+                                                       value="${c.codigoCompra} - ${c.descripcion}" readonly>
+                                            </c:if>
+                                        </c:forEach>
+                                        <input type="hidden" name="txtCodigoCompra" value="${detalleCompra.codigoCompra}">
+                                    </c:when>
+                                    <c:otherwise>
+                                        <!-- Modo creación: combobox normal -->
+                                        <select name="txtCodigoCompra" class="form-control" required>
+                                            <option value="" disabled selected>Seleccione una compra</option>
+                                            <c:forEach var="c" items="${compras}">
+                                                <option value="${c.codigoCompra}">
+                                                    ${c.codigoCompra} - ${c.descripcion}
+                                                </option>
+                                            </c:forEach>
+                                        </select>
+                                    </c:otherwise>
+                                </c:choose>
                             </div>
 
                             <div class="d-flex justify-content-between">
                                 <c:choose>
                                     <c:when test="${modo eq 'editar'}" >
                                         <input type="submit" name="accion" value="Actualizar" class="btn-form-minimal btn-update-minimal">
-                                        <a class="btn-action-minimal btn-delete-minimal" href="Controlador?menu=DetalleCompra&accion=Cancelar">Cancelar</a>
+                                        <a class="btn-action-minimal btn-delete-minimal" href="Controlador?menu=DetalleCompra&accion=cancelar">Cancelar</a>
                                     </c:when>
                                     <c:otherwise>
                                         <input type="submit" name="accion" value="Agregar" class="btn-form-minimal btn-add-minimal">

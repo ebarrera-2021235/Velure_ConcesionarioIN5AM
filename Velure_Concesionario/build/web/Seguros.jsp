@@ -4,7 +4,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Seguro</title>
+    <title>Seguros</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"/>
     <!-- Google Fonts Montserrat -->
@@ -260,7 +260,7 @@
             Velure es <span style="color:#FFD700;">Velocidad</span> y <span style="color:#FFD700;">Lujosidad</span><br>
             <span style="font-size:1.2rem; font-weight:400;">El mejor lugar para encontrar tu auto deportivo soñado.</span>
         </div>
-        <div class="titulo-seguros">Seguros</div>
+        <div class="titulo-seguros">SEGUROS</div>
     </div>
     
     <div class="descripcion-seguros">
@@ -280,7 +280,7 @@
                         <form action="Controlador?menu=Seguro" method="POST">
                             <div class="form-group">
                                 <label><strong>Tipo de Cobertura:</strong></label>
-                                <select name="txttipoCobertura" class="form-control" required>
+                                <select name="txtTipoCobertura" class="form-control" required>
                                     <option value="" disabled <c:if test="${seguro == null}">selected</c:if>>Seleccione tipo de cobertura</option>
                                     <option value="Básica" <c:if test="${seguro != null && seguro.tipoCobertura == 'Básica'}">selected</c:if>>Básica</option>
                                     <option value="Limitada" <c:if test="${seguro != null && seguro.tipoCobertura == 'Limitada'}">selected</c:if>>Limitada</option>
@@ -291,25 +291,25 @@
                             </div>
                             <div class="form-group">
                                 <label><strong>Descripción:</strong></label>
-                                <input type="text" value="${seguro.descripcion}" name="txtdescripcion" class="form-control" required>
+                                <input type="text" value="${seguro.descripcion}" name="txtDescripcion" class="form-control" required>
                             </div>
                             <div class="form-group">
                                 <label><strong>Fecha Inicio:</strong></label>
-                                <input type="date" value="${seguro.fechaInicio}" name="txtfechaInicio" class="form-control" required>
+                                <input type="date" value="${seguro.fechaInicio}" name="txtFechaInicio" class="form-control" required>
                             </div>
                             <div class="form-group">
                                 <label><strong>Fecha Fin:</strong></label>
-                                <input type="date" value="${seguro.fechaFin}" name="txtfechaFin" class="form-control" required>
+                                <input type="date" value="${seguro.fechaFin}" name="txtFechaFin" class="form-control" required>
                             </div>
                             <div class="form-group">
                                 <label><strong>Costo:</strong></label>
-                                <input type="number" step="0.01" value="${seguro.costo}" name="txtcosto" class="form-control" required>
+                                <input type="number" step="0.01" value="${seguro.costo}" name="txtCosto" class="form-control" required>
                             </div>
                             
-                            <!-- Combobox Código Vehículo -->
+                            <!-- ComboBox Código Vehículo aplicando tu patrón -->
                             <div class="form-group">
                                 <label><strong>Código Vehículo:</strong></label>
-                                <select name="txtcodigoVehiculo" class="form-control" required
+                                <select name="txtCodigoVehiculo" class="form-control" required
                                         <c:if test="${seguro != null && seguro.codigoVehiculo != 0}">disabled</c:if>>
                                     <option value="" disabled <c:if test="${seguro == null}">selected</c:if>>
                                         Seleccione un vehículo
@@ -323,10 +323,11 @@
                                 </select>
                             </div>
                             
-                            <input type="hidden" name="txtcodigoSeguro" value="${seguro.codigoSeguro}">
                             <div class="d-flex justify-content-between">
                                 <c:choose>
-                                    <c:when test="${modo eq 'editar'}">
+                                    <c:when test="${seguro != null}">
+                                        <!-- Campo hidden para enviar el código del seguro al actualizar -->
+                                        <input type="hidden" name="codigoSeguro" value="${seguro.codigoSeguro}">
                                         <input type="submit" name="accion" value="Actualizar" class="btn-form-minimal btn-update-minimal">
                                         <a class="btn-action-minimal btn-delete-minimal" href="Controlador?menu=Seguro&accion=Cancelar">Cancelar</a>
                                     </c:when>
