@@ -21,6 +21,7 @@ import modelo.Proveedor;
 import modelo.ProveedorDAO;
 import modelo.Seguro;
 import modelo.SeguroDAO;
+import modelo.Servicio;
 import modelo.Servicios;
 import modelo.ServiciosDAO;
 
@@ -411,121 +412,66 @@ public class Controlador extends HttpServlet {
 
                 // LISTAR 
                 case "Listar":
-                    // Llama al DAO para obtener todos los servicios
-                    List<Servicios> listaServicios = servicioDAO.listar();
-                    // Guarda la lista en la petición para enviarla al JSP
+                    List listaServicios = servicioDAO.listar();
                     request.setAttribute("servicios", listaServicios);
                     break;
 
                 //  AGREGAR 
                 case "Agregar":
-                    try {
-                        // Obtiene los valores ingresados en el formulario
-                        String nombre = request.getParameter("txtNombreServicio");
-                        String descripcion = request.getParameter("txtDescripcion");
-                        String tipo = request.getParameter("txtTipo");
-                        String fechaStr = request.getParameter("txtFechaServicio");
-                        String codVehiculoStr = request.getParameter("txtCodigoVehiculo");
-
-                        // Convierte los valores a los tipos correctos
-                        Date fecha = null;
-                        int codVehiculo = 0;
-
-                        if (fechaStr != null && !fechaStr.isEmpty()) {
-                            fecha = Date.valueOf(fechaStr);
-                        }
-                        if (codVehiculoStr != null && !codVehiculoStr.isEmpty()) {
-                            codVehiculo = Integer.parseInt(codVehiculoStr);
-                        }
-
-                        // Setea los valores en el objeto servicio
-                        servicio.setNombreServicio(nombre);
-                        servicio.setDescripcion(descripcion);
-                        servicio.setTipo(tipo);
-                        servicio.setFechaServicio(fecha);
-                        servicio.setCodigoVehiculo(codVehiculo);
-
-                        // Llama al DAO para agregar el servicio
-                        servicioDAO.agregar(servicio);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        // Gaurda un mensaje de error si ocurre algún problema
-                        request.setAttribute("error", "Ocurrió un error al agregar el servicio.");
-                    }
+                    String nombreServicio = request.getParameter("txtNombreServicio");
+                    String descripcion = request.getParameter("txtDescripcion");
+                    String tipo = request.getParameter("txtTipo");
+                    Date fechaServicio = java.sql.Date.valueOf(request.getParameter("txtFechaServicio"));
+                    int codigoVehiculo = Integer.parseInt(request.getParameter("txtCodigoVehiculo"));
+                    
+                    servicio.setNombreServicio(nombreServicio);
+                    servicio.setDescripcion(descripcion);
+                    servicio.setTipo(tipo);
+                    servicio.setFechaServicio(fechaServicio);
+                    servicio.setCodigoVehiculo(codigoVehiculo);
+                    servicioDAO.agregar(servicio);
+                    request.getRequestDispatcher("Controlador?menu=Servicios&accion=Listar").forward(request, response);
                     break;
 
                 //  EDITAR
                 case "Editar":
-                    try {
-                        // Obtiene el código del servicio seleccionado
-                        codServicio = Integer.parseInt(request.getParameter("codigoServicio"));
-                        // Obtiene el servicio de la base de datos
-                        Servicios serv = servicioDAO.listarCodigoServicio(codServicio);
-                        // Guardo el servicio en la petición para cargar el formulario
-                        request.setAttribute("servicio", serv);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        request.setAttribute("error", "Ocurrió un error al cargar el servicio para editar.");
-                    }
+                    codServicio = Integer.parseInt(request.getParameter("codigoServicio"));
+                    Servicio s = servicioDAO.obtenerPorCodigo(codServicio);
+                    request.setAttribute("servicio", s);
+                    request.setAttribute("modoEdicion", true); // bandera para JSP
+                    request.getRequestDispatcher("Controlador?menu=Servicios&accion=Listar").forward(request, response);
                     break;
 
                 //  ACTUALIZAR 
                 case "Actualizar":
-                    try {
-                        // Obtiene el código del servicio a actualizar
-                        codServicio = Integer.parseInt(request.getParameter("txtCodigoServicio"));
-                        servicio.setCodigoServicio(codServicio);
-
-                        // Obtiene los valores del formulario
-                        servicio.setNombreServicio(request.getParameter("txtNombreServicio"));
-                        servicio.setDescripcion(request.getParameter("txtDescripcion"));
-                        servicio.setTipo(request.getParameter("txtTipo"));
-
-                        String fechaStr = request.getParameter("txtFechaServicio");
-                        String codVehiculoStr = request.getParameter("txtCodigoVehiculo");
-
-                        Date fecha = null;
-                        int codVehiculo = 0;
-
-                        if (fechaStr != null && !fechaStr.isEmpty()) {
-                            fecha = Date.valueOf(fechaStr);
-                        }
-                        if (codVehiculoStr != null && !codVehiculoStr.isEmpty()) {
-                            codVehiculo = Integer.parseInt(codVehiculoStr);
-                        }
-
-                        servicio.setFechaServicio(fecha);
-                        servicio.setCodigoVehiculo(codVehiculo);
-
-                        // LLama al DAO para actualizar el servicio
-                        servicioDAO.actualizar(servicio);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        request.setAttribute("error", "Ocurrió un error al actualizar el servicio.");
-                    }
+                    String nombreSer = request.getParameter("txtNombreServicio");
+                    String descripcionSer = request.getParameter("txtDescripcion");
+                    String tipoSer = request.getParameter("txtTipo");
+                    Date fechaSer = java.sql.Date.valueOf(request.getParameter("txtFechaServicio"));
+                    servicio.setNombreServicio(nombreSer);
+                    servicio.setDescripcion(descripcionSer);
+                    servicio.setTipo(tipoSer);
+                    servicio.setFechaServicio(fechaSer);
+                    servicio.setCodigoServicio(codServicio);
+                    servicioDAO.actualizar(servicio);
+                    request.getRequestDispatcher("Controlador?menu=Servicios&accion=Listar").forward(request, response);
                     break;
 
                 // ELIMINAR 
                 case "Eliminar":
-                    try {
-                        // Obtiene el código del servicio a eliminar
-                        codServicio = Integer.parseInt(request.getParameter("codigoServicio"));
-                        // Llama al DAO para eliminar el servicio
-                        servicioDAO.eliminar(codServicio);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        request.setAttribute("error", "Ocurrió un error al eliminar el servicio.");
-                    }
+                    codServicio = Integer.parseInt(request.getParameter("codigoServicio"));
+                    servicioDAO.eliminar(codServicio);
+                    request.getRequestDispatcher("Controlador?menu=Servicios&accion=Listar").forward(request, response);
                     break;
+                case "Cancelar":
+                    // Limpio el objeto servicio
+                    servicio = new Servicio();  
+                    request.setAttribute("servicio", null); 
+                    request.setAttribute("modoEdicion", false);
+                    request.getRequestDispatcher("Controlador?menu=Servicios&accion=Listar").forward(request, response);
+                return;
 
-                default:
-                    break;
             }
-
-            // Después de cualquier acción, se obtiene la lista actualizada
-            List<Servicios> listaServicios = servicioDAO.listar();
-            request.setAttribute("servicios", listaServicios);
-            // Redirige al JSP para mostrar la información
             request.getRequestDispatcher("Servicios.jsp").forward(request, response);
 
         // --- OTRAS VISTAS ---
