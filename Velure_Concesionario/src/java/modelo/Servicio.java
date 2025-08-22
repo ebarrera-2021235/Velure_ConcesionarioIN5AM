@@ -2,7 +2,7 @@ package modelo;
 
 import java.sql.Date;
 
-public class Servicios{
+public class Servicio{
     private int codigoServicio;
     private String nombreServicio;
     private String descripcion;
@@ -10,10 +10,10 @@ public class Servicios{
     private Date fechaServicio;
     private int codigoVehiculo;
 
-    public Servicios() {
+    public Servicio() {
     }
 
-    public Servicios(int codigoServicio, String nombreServicio, String descripcion, String tipo, Date fechaServicio, int codigoVehiculo) {
+    public Servicio(int codigoServicio, String nombreServicio, String descripcion, String tipo, Date fechaServicio, int codigoVehiculo) {
         this.codigoServicio = codigoServicio;
         this.nombreServicio = nombreServicio;
         this.descripcion = descripcion;

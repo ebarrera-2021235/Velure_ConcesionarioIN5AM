@@ -22,6 +22,7 @@ import modelo.ProveedorDAO;
 import modelo.Seguro;
 import modelo.SeguroDAO;
 import modelo.Servicio;
+import modelo.ServicioDAO;
 import modelo.Servicios;
 import modelo.ServiciosDAO;
 
@@ -42,8 +43,8 @@ public class Controlador extends HttpServlet {
     int codCliente;
 
     // Objetos para Servicios
-    Servicios servicio = new Servicios();
-    ServiciosDAO servicioDAO = new ServiciosDAO();
+    Servicio servicio = new Servicio();
+    ServicioDAO servicioDAO = new ServicioDAO();
     int codServicio;
     
     // Objetos para Proveedor
@@ -68,7 +69,7 @@ public class Controlador extends HttpServlet {
     
     // Seguros
     Seguro seguro = new Seguro();
-    SeguroDAO seguroDao = new SeguroDAO();
+    SegurosDAO seguroDao = new SegurosDAO();
     int codSeguro;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -465,7 +466,7 @@ public class Controlador extends HttpServlet {
                     break;
                 case "Cancelar":
                     // Limpio el objeto servicio
-                    servicio = new Servicio();  
+                    servicio = new Servicios();  
                     request.setAttribute("servicio", null); 
                     request.setAttribute("modoEdicion", false);
                     request.getRequestDispatcher("Controlador?menu=Servicios&accion=Listar").forward(request, response);
