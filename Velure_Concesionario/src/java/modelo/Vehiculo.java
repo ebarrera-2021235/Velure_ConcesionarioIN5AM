@@ -1,13 +1,18 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package modelo;
 
-/**
- *
- * @author USUARIO
- */
+
 public class Vehiculo {
-    
+    private int codigoVehiculo;
+        private String modelo;
+        private String descripcion;
+        private String marca;
+        private String color;
+        private int stock;
+        private Double precio;
+        private String anio;
+        private int codigoProveedor;
+        
+        public Vehiculo() {
+        }
 }
