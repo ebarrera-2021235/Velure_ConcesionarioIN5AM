@@ -1,7 +1,7 @@
 <%-- 
     Document   : Registrarse
     Created on : 13/08/2025, 17:42:00
-    Author     : luisf
+    Author     : Estuardo Gomez
 --%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -13,19 +13,16 @@
         <!-- Bootstrap y Iconos -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-
-        <!-- Estilos propios -->
+        <link href="styles/styleSheet.css" rel="stylesheet">
         <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Orbitron:wght@700&display=swap');
-
         body {
             font-family: 'Montserrat', sans-serif;
             margin: 0;
             background: linear-gradient(135deg, #24242c, #353738);
             color: #edeeee;
-            background: url('img/Auto.gif') center/cover no-repeat fixed; 
+            background: url("img/Auto.gif")center/cover no-repeat fixed; 
         }
-
         .card {
             background-color: #1f2021;
             border-radius: 16px;
@@ -150,14 +147,14 @@
                 padding: 20px;
             }
         }
-    </style>
+        </style>
     </head>
     <body>
         <div class="d-flex justify-content-center align-items-center vh-100">
             <div class="card p-4" style="width: 100%; max-width: 400px;">
                 <form action="RegistrarUsuario" method="POST" onsubmit="return validarRegistro()">
                     <div class="text-center">
-                        <img src="img/Velure.png" height="120px" alt="Logo Suplex Cars">
+                        <img src="img/V.png" height="120px" alt="Logo Suplex Cars">
                         <h4 class="mt-3 text-uppercase font-weight-bold">Registro</h4>
                         <p class="text-muted small">Unete a Velure</p>
                     </div>
