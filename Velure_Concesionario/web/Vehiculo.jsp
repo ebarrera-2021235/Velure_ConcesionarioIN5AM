@@ -15,7 +15,7 @@
     <!-- Google Fonts Montserrat -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link href="styles/styleSheet.css" rel="stylesheet">
+    <link href="styles/vh.css" rel="stylesheet">
 </head>
 <body>
     <div class="zona-superior">

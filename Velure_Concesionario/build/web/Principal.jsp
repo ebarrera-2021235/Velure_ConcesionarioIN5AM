@@ -13,8 +13,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"/>
     <!-- Google Fonts Montserrat -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
-    <link href="styles/styleSheet.css" rel="stylesheet">
-
+    <link href="styles/principal.css" rel="stylesheet">
 </head>
 <body>
 <header>

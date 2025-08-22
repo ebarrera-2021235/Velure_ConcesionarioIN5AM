@@ -17,7 +17,7 @@
             <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
             <!-- SweetAlert2 -->
             <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-            <link href="styles/styleSheet.css" rel="stylesheet">
+            <link href="styles/empleados.css" rel="stylesheet">
 
 
 
