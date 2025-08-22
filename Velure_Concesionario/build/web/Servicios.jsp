@@ -96,7 +96,7 @@
             background: #fff;
             border-radius: 24px;
             box-shadow: 0 8px 32px rgba(0,0,0,0.18);
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 40px auto 40px auto;
             padding: 40px 30px;
         }
@@ -156,6 +156,14 @@
             background-color: #28a745;
             color: #fff;
         }
+        .btn-cancelar {
+            border-color: #dc3545;
+            color: #dc3545;
+        }
+        .btn-cancelar:hover {
+            background-color: #dc3545;
+            color: #fff;
+        }
 
         /* Estilos de la tabla */
         .table-responsive {
@@ -168,13 +176,13 @@
         .table-cards .thead-cards th {
             background: #000000;
             color: white;
-            padding: 16px 12px;
+            padding: 14px 8px;
             font-weight: 600;
             text-align: center;
             border: none;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
         }
         .table-cards tbody tr {
             background: white;
@@ -189,8 +197,9 @@
         }
         .table-cards tbody td {
             border: none;
-            padding: 15px 12px;
+            padding: 12px 8px;
             vertical-align: middle;
+            font-size: 0.9rem;
         }
 
         /* Botones de acciones dentro de la tabla */
@@ -254,8 +263,12 @@
 <div class="descripcion-servicios">
     <div class="titulo-equipo">Servicios, excelencia y control</div>
     <p>
-        Nuestra plataforma de servicios permite gestionar de manera integral todas las operaciones...
-        <!-- Explicación: Esto es un texto informativo que describe la funcionalidad de la aplicación -->
+        En nuestro concesionario, entendemos que un vehículo no es solo un medio de transporte, sino una inversión que refleja visión, confianza y estilo de vida.
+        Ofrecemos un servicio integral, orientado a la excelencia y la eficiencia, donde cada detalle es cuidadosamente supervisado por profesionales expertos.
+        Nuestros procesos son transparentes y confiables, garantizando que cada adquisición se convierta en una decisión segura y rentable.
+        Creemos en generar relaciones duraderas con nuestros clientes, aportando soluciones que se adapten tanto al ámbito empresarial como personal.
+        Cada vehículo que entregamos simboliza el esfuerzo, la pasión y la dedicación de quienes buscan lo mejor para sí mismos, sus familias y sus proyectos.
+        Porque más que vender automóviles, nos comprometemos a acompañarlo en cada etapa de su camino hacia el éxito.
     </p>
 </div>
 
@@ -264,7 +277,7 @@
     <div class="crud-container">
 
         <!-- FORMULARIO PARA AGREGAR/ACTUALIZAR SERVICIOS -->
-        <div class="card card-form col-md-4">
+        <div class="card card-form col-md-5">
             <div class="card-body">
                 <form action="Controlador?menu=Servicios" method="POST" id="formServicio">
                     <!-- Campo oculto para almacenar el id del servicio (necesario para actualizar) -->
@@ -291,11 +304,22 @@
                         <input type="date" name="txtFechaServicio" class="form-control"
                                value="${servicio != null ? servicio.fechaServicio : ''}">
                     </div>
+                    
+                    <!-- Combobox para Código Vehículo -->
                     <div class="form-group">
-                        <label>Código Vehículo:</label>
-                        <input type="number" name="txtCodigoVehiculo" class="form-control"
-                               value="${servicio != null ? servicio.codigoVehiculo : ''}"
-                               ${servicio != null ? 'readonly' : ''}>
+                        <label><strong>Codigo Vehiculo:</strong></label>
+                        <select name="txtCodigoVehiculo" class="form-control" required 
+                                <c:if test="${servicio != null && servicio.codigoVehiculo != 0}">disabled</c:if>>
+                            <option value="" disabled <c:if test="${servicio == null}">selected</c:if>>
+                                Seleccione un vehiculo
+                            </option>
+                            <c:forEach var="v" items="${vehiculos}">
+                                <option value="${v.codigoVehiculo}" 
+                                        <c:if test="${servicio != null && servicio.codigoVehiculo == v.codigoVehiculo}">selected</c:if>>
+                                    ${v.codigoVehiculo}
+                                </option>
+                            </c:forEach>
+                        </select>
                     </div>
 
                     <!-- Botones de acción -->
@@ -317,7 +341,7 @@
 
 
         <!-- TABLA PARA MOSTRAR LOS SERVICIOS -->
-        <div class="col-md-8 table-responsive">
+        <div class="col-md-7 table-responsive">
             <table class="table table-cards">
                 <thead class="thead-cards">
                     <tr>
@@ -376,7 +400,7 @@
     document.querySelector("input[name='txtDescripcion']").value = "";
     document.querySelector("input[name='txtTipo']").value = "";
     document.querySelector("input[name='txtFechaServicio']").value = "";
-    document.querySelector("input[name='txtCodigoVehiculo']").value = "";
+    document.querySelector("select[name='txtCodigoVehiculo']").selectedIndex = 0;
 
     // Mostrar/ocultar botones
     document.getElementById("btnAgregar").style.display = "inline-block";

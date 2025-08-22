@@ -433,6 +433,8 @@ public class Controlador extends HttpServlet {
                 case "Listar":
                     List listaServicios = servicioDAO.listar();
                     request.setAttribute("servicios", listaServicios);
+                    List vehiculoCon = vehiculoDao.listar();
+                    request.setAttribute("vehiculos", vehiculoCon);
                     break;
 
                 // AGREGAR
