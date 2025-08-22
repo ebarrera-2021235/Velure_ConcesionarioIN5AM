@@ -1287,7 +1287,6 @@ public class Controlador extends HttpServlet {
                     break;
             }
 
-            // Al final, forward hacia la JSP solo si quieres mostrar la vista inicial
             request.getRequestDispatcher("Vehiculo.jsp").forward(request, response);
         }
     }
