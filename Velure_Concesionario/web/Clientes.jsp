@@ -22,7 +22,7 @@
                 min-height: 100vh;
             }
             .zona-superior {
-                background: url('img/hos.jpg') no-repeat center center fixed;
+                background: url('img/em.jpg') no-repeat center center fixed;
                 background-size: cover;
                 position: relative;
                 min-height: 450px;
