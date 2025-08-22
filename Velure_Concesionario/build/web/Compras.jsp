@@ -329,11 +329,19 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label><strong>Código Empleado:</strong></label>
-                                <input type="number" step="1" min="0"
-                                       value="${compra != null ? compra.getCodigoEmpleado() : ''}"
-                                       name="txtCodigoEmpleado" class="form-control" required
-                                       <c:if test="${compra != null}">readonly</c:if>>
+                                <label><strong>Empleado:</strong></label>
+                                <select name="txtCodigoEmpleado" class="form-control" required
+                                        <c:if test="${compra != null}">disabled</c:if>>
+                                    <option value="" disabled <c:if test="${compra == null || compra.codigoEmpleado == 0}">selected</c:if>>
+                                        Seleccione un empleado
+                                    </option>
+                                    <c:forEach var="e" items="${empleados}">
+                                        <option value="${e.codigoEmpleado}"
+                                                <c:if test="${compra != null && compra.codigoEmpleado == e.codigoEmpleado}">selected</c:if>>
+                                            ${e.codigoEmpleado} - ${e.nombresEmpleado}
+                                        </option>
+                                    </c:forEach>
+                                </select>
                             </div>
 
                             <!-- Cambiar botones según si es 'editar' o no -->

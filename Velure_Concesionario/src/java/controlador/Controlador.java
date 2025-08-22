@@ -624,6 +624,8 @@ public class Controlador extends HttpServlet {
                 case "Listar":
                     List listaCompras = compraDao.listarCompra();
                     request.setAttribute("compras", listaCompras);
+                    List empleadosCon = empleadoDAO.listar();
+                    request.setAttribute("empleados", empleadosCon);
                     break;
                 case "Agregar":
                     Date fecha = java.sql.Date.valueOf(request.getParameter("txtFecha"));
