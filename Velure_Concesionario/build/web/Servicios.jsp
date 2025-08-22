@@ -6,30 +6,31 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html" pageEncoding="UTF-8"%>
+
+
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <title>Servicios</title>
 
-    <!-- Bootstrap CSS: para estilos y diseño responsive -->
+    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"/>
-    <!-- Google Fonts Montserrat: fuente elegante para títulos y textos -->
+    <!-- Google Fonts Montserrat -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
 
-    <!-- SweetAlert2: librería para alertas bonitas y personalizables -->
+    <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <!-- ESTILOS CSS -->
     <style>
-        /* Configuración base del body */
+        /* Estilos generales de la página */
         body {
             font-family: 'Montserrat', Arial, sans-serif;
             margin: 0;
             min-height: 100vh;
         }
 
-        /* Zona superior con imagen de fondo y overlay oscuro */
+        /* Zona superior de la página con imagen de fondo */
         .zona-superior {
             position: relative;
             min-height: 350px;
@@ -40,37 +41,41 @@
             background: url('img/Servicios.jpg') no-repeat center center fixed;
             background-size: cover;
         }
-        /* Capa oscura encima de la imagen para dar contraste al texto */
+
+        /* Overlay oscuro para que el texto sea legible sobre la imagen */
         .zona-superior::after {
             content: "";
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
             background: rgba(0, 0, 0, 0.55);
+            z-index: 0;
         }
 
-        /* Títulos y descripción en la zona superior */
+        /* Estilos para títulos y descripción en la zona superior */
         .titulo-servicios, .descripcion-velure {
             position: relative;
-            z-index: 1; /* Para que esté sobre el overlay */
+            z-index: 1;
             text-align: center;
             color: #fff;
-            text-shadow: 2px 2px 8px #000; /* Sombra para mejor lectura */
+            text-shadow: 2px 2px 8px #000;
         }
         .titulo-servicios {
             font-size: 2.8rem;
             font-weight: 700;
             margin: 18px 0 38px 0;
+            letter-spacing: 2px;
         }
         .descripcion-velure {
             padding-top: 40px;
-            font-size: 1.2rem;
-            font-weight: 400;
+            font-size: 2rem;
+            font-weight: 700;
+            max-width: 90%;
         }
 
-        /* Bloque con descripción de los servicios */
+        /* Sección con descripción de servicios */
         .descripcion-servicios {
             max-width: 900px;
-            margin: 70px auto 0 auto; /* centrado horizontal y margen superior */
+            margin: 70px auto 0 auto;
             padding: 40px 30px 30px 30px;
             background: #fff;
             border-radius: 24px;
@@ -82,9 +87,11 @@
             font-weight: 700;
             text-align: center;
             margin-bottom: 22px;
+            color: #1a1a1a;
+            letter-spacing: 1px;
         }
 
-        /* Zona CRUD: formulario y tabla */
+        /* Zona CRUD para el formulario y la tabla */
         .zona-crud {
             background: #fff;
             border-radius: 24px;
@@ -99,25 +106,34 @@
             gap: 30px;
         }
 
-        /* Formulario dentro de tarjeta */
+        /* Estilo de la tarjeta del formulario */
         .card-form {
             background: white;
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.08);
             border: none;
+            transition: all 0.3s ease;
+        }
+        .card-form:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
         }
         .card-form .card-body {
             padding: 20px;
         }
 
-        /* Botones de formulario */
+        /* Botones del formulario */
         .btn-form {
             padding: 8px 16px;
             font-size: 0.9rem;
             border-radius: 4px;
             font-weight: 400;
+            transition: background-color 0.2s ease;
             border: 2px solid;
+            text-decoration: none;
             display: inline-flex;
+            align-items: center;
+            justify-content: center;
             gap: 4px;
             cursor: pointer;
             background-color: #fff;
@@ -141,36 +157,43 @@
             color: #fff;
         }
 
-        /* Tabla de servicios */
+        /* Estilos de la tabla */
         .table-responsive {
-            overflow-x: auto; /* Permite scroll horizontal en pantallas pequeñas */
+            overflow-x: auto;
         }
         .table-cards {
             border: none;
             background: transparent;
         }
         .table-cards .thead-cards th {
-            background: #000;
+            background: #000000;
             color: white;
             padding: 16px 12px;
             font-weight: 600;
             text-align: center;
             border: none;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.9rem;
         }
         .table-cards tbody tr {
             background: white;
             margin-bottom: 8px;
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+        .table-cards tbody tr:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
         }
         .table-cards tbody td {
             border: none;
             padding: 15px 12px;
             vertical-align: middle;
-            text-align: center;
         }
 
-        /* Botones de acción en la tabla */
+        /* Botones de acciones dentro de la tabla */
         .acciones-btns {
             display: flex;
             gap: 8px;
@@ -201,12 +224,11 @@
             color: #fff;
         }
 
-        /* Modal cuerpo centrado */
         .modal-body {
             text-align: center;
         }
 
-        /* Adaptación responsive para pantallas pequeñas */
+        /* Ajuste de la vista para móviles */
         @media (max-width: 991px) {
             .crud-container {
                 flex-direction: column;
@@ -217,7 +239,7 @@
 </head>
 <body>
 
-<!-- Zona superior con imagen y título -->
+<!-- Zona superior con título y descripción -->
 <div class="zona-superior">
     <div class="descripcion-velure">
         Velure es <span style="color:#FFD700;">Velocidad</span> y <span style="color:#FFD700;">Lujosidad</span><br>
@@ -228,11 +250,12 @@
     </div>
 </div>
 
-<!-- Descripción de los servicios -->
+<!-- Sección con la descripción larga de servicios -->
 <div class="descripcion-servicios">
     <div class="titulo-equipo">Servicios, excelencia y control</div>
     <p>
-        Nuestra plataforma de servicios está diseñada para gestionar de manera integral todas las operaciones relacionadas con los vehículos de nuestra empresa. Desde el registro y seguimiento de mantenimientos, hasta la planificación de servicios especializados, ofrecemos una solución eficiente que garantiza la calidad, la trazabilidad y la optimización de los recursos. Nuestro sistema facilita la gestión diaria, mejora la experiencia de los clientes y asegura que cada vehículo reciba la atención adecuada en el momento preciso, fortaleciendo la confianza y la excelencia operativa de nuestra compañía.
+        Nuestra plataforma de servicios permite gestionar de manera integral todas las operaciones...
+        <!-- Explicación: Esto es un texto informativo que describe la funcionalidad de la aplicación -->
     </p>
 </div>
 
@@ -240,13 +263,12 @@
 <div class="zona-crud">
     <div class="crud-container">
 
-        <!-- FORMULARIO -->
+        <!-- FORMULARIO PARA AGREGAR/ACTUALIZAR SERVICIOS -->
         <div class="card card-form col-md-4">
             <div class="card-body">
-                <!-- Formulario para agregar o actualizar servicios -->
-                <form action="Controlador?menu=Servicios" method="POST" onsubmit="return validarFormulario();">
-                    <!-- Campo oculto para el código del servicio (solo para editar) -->
-                    <input type="hidden" name="txtCodigoServicio" value="${servicio != null ? servicio.codigoServicio : ''}">
+                <form action="Controlador?menu=Servicios" method="POST" id="formServicio">
+                    <!-- Campo oculto para almacenar el id del servicio (necesario para actualizar) -->
+                    <input type="hidden" name="codigoServicio" value="${servicio != null ? servicio.codigoServicio : ''}">
 
                     <!-- Campos del formulario -->
                     <div class="form-group">
@@ -254,26 +276,21 @@
                         <input type="text" name="txtNombreServicio" class="form-control"
                                value="${servicio != null ? servicio.nombreServicio : ''}">
                     </div>
-
                     <div class="form-group">
                         <label>Descripción:</label>
                         <input type="text" name="txtDescripcion" class="form-control"
                                value="${servicio != null ? servicio.descripcion : ''}">
                     </div>
-
                     <div class="form-group">
                         <label>Tipo:</label>
                         <input type="text" name="txtTipo" class="form-control"
                                value="${servicio != null ? servicio.tipo : ''}">
                     </div>
-
                     <div class="form-group">
                         <label>Fecha:</label>
                         <input type="date" name="txtFechaServicio" class="form-control"
                                value="${servicio != null ? servicio.fechaServicio : ''}">
                     </div>
-
-                    <!-- Código del vehículo: bloqueado si estamos editando -->
                     <div class="form-group">
                         <label>Código Vehículo:</label>
                         <input type="number" name="txtCodigoVehiculo" class="form-control"
@@ -281,16 +298,25 @@
                                ${servicio != null ? 'readonly' : ''}>
                     </div>
 
-                    <!-- Botones: Agregar se deshabilita si estamos editando -->
-                    <input type="submit" name="accion" value="Agregar" class="btn btn-form btn-agregar"
-                           <!-- Con esto desabilitamos el boton de agregar cuando presionemos editar-->
-                           ${servicio != null ? 'disabled' : ''}
-                    <input type="submit" name="accion" value="Actualizar" class="btn btn-form btn-actualizar">
+                    <!-- Botones de acción -->
+                    <!-- Botones de acción -->
+                    <input type="submit" name="accion" value="Agregar" 
+                           class="btn btn-form btn-agregar" id="btnAgregar" onclick="return validarCampos();">
+
+                    <input type="submit" name="accion" value="Actualizar" 
+                           class="btn btn-form btn-actualizar" id="btnActualizar" style="display:none;" onclick="return validarCampos();">
+
+                    <!-- Botón cancelar -->
+                    <button type="button" class="btn btn-form btn-cancelar" id="btnCancelar" style="display:none;" onclick="cancelarEdicion();">
+                        Cancelar
+                    </button>
+
                 </form>
             </div>
         </div>
 
-        <!-- TABLA DE SERVICIOS -->
+
+        <!-- TABLA PARA MOSTRAR LOS SERVICIOS -->
         <div class="col-md-8 table-responsive">
             <table class="table table-cards">
                 <thead class="thead-cards">
@@ -305,7 +331,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Recorrer lista de servicios -->
+                    <!-- Recorre la lista de servicios enviada desde el controlador -->
                     <c:forEach var="s" items="${servicios}">
                         <tr>
                             <td>${s.codigoServicio}</td>
@@ -315,9 +341,9 @@
                             <td>${s.fechaServicio}</td>
                             <td>${s.codigoVehiculo}</td>
                             <td class="acciones-btns">
-                                <!-- Botón Editar -->
+                                <!-- Botón para editar -->
                                 <a href="Controlador?menu=Servicios&accion=Editar&codigoServicio=${s.codigoServicio}" class="btn-editar">Editar</a>
-                                <!-- Botón Eliminar con alerta de confirmación -->
+                                <!-- Botón para eliminar con alerta personalizada -->
                                 <a href="Controlador?menu=Servicios&accion=Eliminar&codigoServicio=${s.codigoServicio}" class="btn-eliminar" onclick="return confirmarEliminar(this);">Eliminar</a>
                             </td>
                         </tr>
@@ -328,50 +354,81 @@
 
     </div>
 </div>
-
 <script>
-// Confirmación de eliminación 
-function confirmarEliminar(link) {
-    // Evita acción por defecto del link
-    event.preventDefault(); 
-    Swal.fire({
-        title: '¿Está seguro?',
-        text: "¡No podrá deshacer esta acción!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#d33',
-        cancelButtonColor: '#3085d6',
-        confirmButtonText: 'Sí, eliminar',
-        cancelButtonText: 'Cancelar'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            // Redirige a eliminar
-            window.location.href = link.href; 
+    // Cuando el controlador envía un servicio (al hacer clic en Editar), ocultamos Agregar y mostramos Actualizar + Cancelar
+    window.onload = function () {
+        let servicioEnEdicion = "${servicio != null ? servicio.codigoServicio : ''}";
+        if (servicioEnEdicion !== "") {
+            document.getElementById("btnAgregar").style.display = "none";
+            document.getElementById("btnActualizar").style.display = "inline-block";
+            document.getElementById("btnCancelar").style.display = "inline-block";
         }
-    });
-    return false;
+    };
+
+    // Función para cancelar edición
+    function cancelarEdicion() {
+    // Limpia el formulario
+    document.getElementById("formServicio").reset();
+
+    // Limpia manualmente todos los campos (porque JSP los rellena al renderizar)
+    document.querySelector("input[name='codigoServicio']").value = "";
+    document.querySelector("input[name='txtNombreServicio']").value = "";
+    document.querySelector("input[name='txtDescripcion']").value = "";
+    document.querySelector("input[name='txtTipo']").value = "";
+    document.querySelector("input[name='txtFechaServicio']").value = "";
+    document.querySelector("input[name='txtCodigoVehiculo']").value = "";
+
+    // Mostrar/ocultar botones
+    document.getElementById("btnAgregar").style.display = "inline-block";
+    document.getElementById("btnActualizar").style.display = "none";
+    document.getElementById("btnCancelar").style.display = "none";
 }
 
-// Validación antes de enviar el formulario: campos vacíos
-function validarFormulario() {
-    var nombre = document.getElementsByName('txtNombreServicio')[0].value.trim();
-    var descripcion = document.getElementsByName('txtDescripcion')[0].value.trim();
-    var tipo = document.getElementsByName('txtTipo')[0].value.trim();
-    var fecha = document.getElementsByName('txtFechaServicio')[0].value.trim();
-    var codigoVehiculo = document.getElementsByName('txtCodigoVehiculo')[0].value.trim();
+</script>
 
-    if(nombre === "" || descripcion === "" || tipo === "" || fecha === "" || codigoVehiculo === "") {
+<!-- Scripts de interacción -->
+<script>
+    // Función para mostrar alerta de confirmación antes de eliminar
+    function confirmarEliminar(link) {
+        event.preventDefault(); // Evita que el enlace navegue inmediatamente
         Swal.fire({
-            icon: 'error',
-            title: 'Campos vacíos',
-            text: 'Por favor completa todos los campos antes de agregar.'
+            title: '¿Está seguro?',
+            text: "¡No podrá deshacer esta acción!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = link.href; // Si confirma, se redirige al controlador para eliminar
+            }
         });
-        // Detiene el envío del formulario
-        return false; 
+        return false;
     }
-    // Permite enviar formulario si todo está completo
-    return true; 
-}
+
+    // Función para validar que ningún campo del formulario esté vacío
+    function validarCampos() {
+        //declaracions JS
+        var nombre = document.getElementsByName('txtNombreServicio')[0].value.trim();
+        var descripcion = document.getElementsByName('txtDescripcion')[0].value.trim();
+        var tipo = document.getElementsByName('txtTipo')[0].value.trim();
+        var fecha = document.getElementsByName('txtFechaServicio')[0].value.trim();
+        var codigoVehiculo = document.getElementsByName('txtCodigoVehiculo')[0].value.trim();
+
+        if (!nombre || !descripcion || !tipo || !fecha || !codigoVehiculo) {
+            Swal.fire({
+                title: '¡Campos incompletos!',
+                text: 'Todos los campos son obligatorios.',
+                icon: 'warning',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'Aceptar'
+            });
+            return false; // Cancela el envío del formulario
+        }
+        return true; // Todos los campos completados, se puede enviar
+    }
 </script>
 
 </body>
