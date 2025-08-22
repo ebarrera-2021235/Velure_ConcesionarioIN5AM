@@ -25,6 +25,8 @@ import modelo.Servicio;
 import modelo.ServicioDAO;
 import modelo.Servicios;
 import modelo.ServiciosDAO;
+import modelo.Venta;
+import modelo.VentaDAO;
 
 /**
  *
@@ -71,6 +73,11 @@ public class Controlador extends HttpServlet {
     Seguro seguro = new Seguro();
     SeguroDAO seguroDao = new SeguroDAO();
     int codSeguro;
+    //Ventas
+    Venta venta = new Venta();
+    VentaDAO ventaDao = new VentaDAO();
+    int codVenta;
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -1088,6 +1095,61 @@ public class Controlador extends HttpServlet {
                         
             }       
             request.getRequestDispatcher("Seguros.jsp").forward(request, response);
+        }else if (menu.equals("Venta")) {
+            switch(accion){
+                case "Listar":
+                    List listaVentas = ventaDao.listar();
+                    request.setAttribute("ventas", listaVentas);
+                    break;
+                case "Agregar":
+                    Date fecha = java.sql.Date.valueOf(request.getParameter("txtFecha"));
+                    Double total = Double.parseDouble(request.getParameter("txtTotal"));
+                    String descripcion = request.getParameter("txtDescripcion");
+                    String tipoDePago = request.getParameter("txtTipoDePago");
+                    int codigoCliente = Integer.parseInt(request.getParameter("txtCodigoCliente"));
+                    int codigoEmpleado = Integer.parseInt(request.getParameter("txtCodigoEmpleado"));
+                    venta.setFecha(fecha);
+                    venta.setTotal(total);
+                    venta.setDescripcion(descripcion);
+                    venta.setTipoDePago(tipoDePago);
+                    venta.setCodigoCliente(codigoCliente);
+                    venta.setCodigoEmpleado(codigoEmpleado);
+                    ventaDao.agregar(venta);
+                    request.getRequestDispatcher("Controlador?menu=Venta&accion=Listar").forward(request, response);
+                    break;
+                case "Editar":
+                    codVenta = Integer.parseInt(request.getParameter("codigoVenta"));
+                    Venta v = ventaDao.listarCodigoVenta(codVenta);
+                    request.setAttribute("venta", v);
+                    request.setAttribute("modo", "editar");
+                    request.getRequestDispatcher("Controlador?menu=Venta&accion=Listar").forward(request, response);
+                    break;
+                    
+                case "Actualizar":
+                    Date fechaVen = java.sql.Date.valueOf(request.getParameter("txtFecha"));
+                    Double totalVen = Double.parseDouble(request.getParameter("txtTotal"));
+                    String descripcionVen = request.getParameter("txtDescripcion");
+                    String tipoDePagoVen = request.getParameter("txtTipoDePago");
+                    venta.setFecha(fechaVen);
+                    venta.setTotal(totalVen);
+                    venta.setDescripcion(descripcionVen);
+                    venta.setTipoDePago(tipoDePagoVen);
+                    venta.setCodigoVenta(codVenta);
+                    ventaDao.actualizar(venta);
+                    request.setAttribute("modo", "agregar");
+                    request.getRequestDispatcher("Controlador?menu=Venta&accion=Listar").forward(request, response);
+                    break;
+                case "Eliminar":
+                    codVenta = Integer.parseInt(request.getParameter("codigoVenta"));
+                    ventaDao.eliminar(codVenta);
+                    request.getRequestDispatcher("Controlador?menu=Venta&accion=Listar").forward(request, response);
+                    break;
+                case "Cancelar":
+                    request.setAttribute("modo", "agregar");
+                    request.getRequestDispatcher("Controlador?menu=Venta&accion=Listar").forward(request, response);
+                    break;
+            }
+            request.getRequestDispatcher("Venta.jsp").forward(request, response);
         }
     }
 
