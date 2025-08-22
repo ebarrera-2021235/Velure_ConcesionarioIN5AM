@@ -4,7 +4,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Detalles De Compras</title>
+    <title>Servicios</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"/>
     <!-- Google Fonts Montserrat -->
@@ -28,7 +28,7 @@
             background: rgba(0,0,0,0.55);
             z-index: 0;
         }
-        .descripcion-velure, .titulo-detalleCompra {
+        .descripcion-velure, .titulo-servicio {
             position: relative;
             z-index: 1;
             text-align: center;
@@ -36,8 +36,8 @@
             text-shadow: 2px 2px 8px #000;
         }
         .descripcion-velure { padding-top: 40px; font-size: 2rem; font-weight: 700; }
-        .titulo-detalleCompra { font-size: 2.8rem; font-weight: 700; margin-top: 18px; margin-bottom: 38px; letter-spacing: 2px; }
-        .descripcion-detalleCompra {
+        .titulo-servicio { font-size: 2.8rem; font-weight: 700; margin-top: 18px; margin-bottom: 38px; letter-spacing: 2px; }
+        .descripcion-servicio {
             max-width: 900px;
             margin: 70px auto 0 auto;
             padding: 40px 30px 30px 30px;
@@ -81,8 +81,8 @@
         @media (max-width: 991px) {
             .zona-crud { padding: 20px 5px; }
             .crud-container { flex-direction: column; gap: 20px; }
-            .titulo-detalleCompra { font-size: 2rem; }
-            .descripcion-detalleCompra { padding: 20px 5px 15px 5px; }
+            .titulo-servicio { font-size: 2rem; }
+            .descripcion-servicio { padding: 20px 5px 15px 5px; }
             .titulo-UnaMeta { font-size: 1.5rem; }
             .table-responsive { font-size: 0.85rem; }
             .btn-action-minimal { padding: 4px 8px; font-size: 0.75rem; }
@@ -96,15 +96,15 @@
             Velure es <span style="color:#FFD700;">Velocidad</span> y <span style="color:#FFD700;">Lujosidad</span><br>
             <span style="font-size:1.2rem; font-weight:400;">El mejor lugar para encontrar tu auto deportivo soñado.</span>
         </div>
-        <div class="titulo-detalleCompra">DETALLES DE COMPRAS</div>
+        <div class="titulo-servicio">SERVICIOS</div>
     </div>
     
-    <div class="descripcion-detalleCompra">
-        <div class="titulo-UnaMeta">Una Meta, Varias Ventas</div>
-        <p>En el corazón de nuestra estrategia, cada Detalle de Compra es una pieza fundamental...</p>
-        <p>Cada compra es más que un simple intercambio; es una oportunidad para fortalecer nuestras relaciones comerciales...</p>
+    <div class="descripcion-servicio">
+        <div class="titulo-UnaMeta">Una Meta, Varios Servicios</div>
+        <p>En el corazón de nuestra estrategia, cada Servicio es una pieza fundamental...</p>
+        <p>Cada servicio es más que un simple mantenimiento; es una oportunidad para fortalecer nuestras relaciones comerciales...</p>
         <p>El éxito de nuestra empresa no es un evento fortuito, sino el resultado de un proceso continuo de excelencia operativa...</p>
-        <p>Cada venta no es un fin en sí mismo, sino una semilla que plantamos para cosechar el futuro más próspero.</p>
+        <p>Cada servicio no es un fin en sí mismo, sino una semilla que plantamos para cosechar el futuro más próspero.</p>
     </div>
 
     <!-- CRUD -->
@@ -113,30 +113,38 @@
             <div style="flex:1;">
                 <div class="card">
                     <div class="card-body">
-                        <form action="Controlador?menu=DetalleCompra" method="POST">
+                        <form action="Controlador?menu=Servicios" method="POST">
                             <div class="form-group">
-                                <label><strong>Precio Unitario:</strong></label>
-                                <input type="text" value="${detalleCompra.getPrecioUnitario()}" name="txtPrecioUnitario" class="form-control">
+                                <label><strong>Nombre Servicio:</strong></label>
+                                <input type="text" value="${servicio.getNombreServicio()}" name="txtNombreServicio" class="form-control" required>
                             </div>
                             <div class="form-group">
-                                <label><strong>Cantidad:</strong></label>
-                                <input type="text" value="${detalleCompra.getCantidad()}" name="txtCantidad" class="form-control">
+                                <label><strong>Descripción:</strong></label>
+                                <textarea name="txtDescripcion" class="form-control" rows="3" required>${servicio.getDescripcion()}</textarea>
+                            </div>
+                            <div class="form-group">
+                                <label><strong>Tipo:</strong></label>
+                                <input type="text" value="${servicio.getTipo()}" name="txtTipo" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label><strong>Fecha Servicio:</strong></label>
+                                <input type="date" value="${servicio.getFechaServicio()}" name="txtFechaServicio" class="form-control" required>
                             </div>
 
                             <!-- ComboBox Código Vehículo -->
                             <div class="form-group">
                                 <label><strong>Código Vehículo:</strong></label>
                                 <c:choose>
-                                    <c:when test="${modo eq 'editar'}">
+                                    <c:when test="${modoEdicion}">
                                         <select name="txtCodigoVehiculo" class="form-control" disabled>
                                             <c:forEach var="v" items="${vehiculos}">
                                                 <option value="${v.codigoVehiculo}" 
-                                                    <c:if test="${detalleCompra != null && detalleCompra.codigoVehiculo == v.codigoVehiculo}">selected</c:if>>
+                                                    <c:if test="${servicio != null && servicio.codigoVehiculo == v.codigoVehiculo}">selected</c:if>>
                                                     ${v.codigoVehiculo}
                                                 </option>
                                             </c:forEach>
                                         </select>
-                                        <input type="hidden" name="txtCodigoVehiculo" value="${detalleCompra.getCodigoVehiculo()}">
+                                        <input type="hidden" name="txtCodigoVehiculo" value="${servicio.getCodigoVehiculo()}">
                                     </c:when>
                                     <c:otherwise>
                                         <select name="txtCodigoVehiculo" class="form-control" required>
@@ -149,37 +157,11 @@
                                 </c:choose>
                             </div>
 
-                            <!-- ComboBox Código Compra -->
-                            <div class="form-group">
-                                <label><strong>Código Compra:</strong></label>
-                                <c:choose>
-                                    <c:when test="${modo eq 'editar'}">
-                                        <select name="txtCodigoCompra" class="form-control" disabled>
-                                            <c:forEach var="c" items="${compras}">
-                                                <option value="${c.codigoCompra}" 
-                                                    <c:if test="${detalleCompra != null && detalleCompra.codigoCompra == c.codigoCompra}">selected</c:if>>
-                                                    ${c.codigoCompra}
-                                                </option>
-                                            </c:forEach>
-                                        </select>
-                                        <input type="hidden" name="txtCodigoCompra" value="${detalleCompra.getCodigoCompra()}">
-                                    </c:when>
-                                    <c:otherwise>
-                                        <select name="txtCodigoCompra" class="form-control" required>
-                                            <option value="" disabled selected>Seleccione una compra</option>
-                                            <c:forEach var="c" items="${compras}">
-                                                <option value="${c.codigoCompra}">${c.codigoCompra}</option>
-                                            </c:forEach>
-                                        </select>
-                                    </c:otherwise>
-                                </c:choose>
-                            </div>
-
                             <div class="d-flex justify-content-between">
                                 <c:choose>
-                                    <c:when test="${modo eq 'editar'}">
+                                    <c:when test="${modoEdicion}">
                                         <input type="submit" name="accion" value="Actualizar" class="btn-form-minimal btn-update-minimal">
-                                        <a class="btn-action-minimal btn-delete-minimal" href="Controlador?menu=DetalleCompra&accion=Cancelar">Cancelar</a>
+                                        <a class="btn-action-minimal btn-delete-minimal" href="Controlador?menu=Servicios&accion=Cancelar">Cancelar</a>
                                     </c:when>
                                     <c:otherwise>
                                         <input type="submit" name="accion" value="Agregar" class="btn-form-minimal btn-add-minimal">
@@ -198,25 +180,27 @@
                             <thead class="thead-cards">
                                 <tr>
                                     <th>Código</th>
-                                    <th>Precio Unitario</th>
-                                    <th>Cantidad</th>
+                                    <th>Nombre Servicio</th>
+                                    <th>Descripción</th>
+                                    <th>Tipo</th>
+                                    <th>Fecha Servicio</th>
                                     <th>Código Vehículo</th>
-                                    <th>Código Compra</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <c:forEach var="detalleCompra" items="${detalleCompras}">
+                                <c:forEach var="servicio" items="${servicios}">
                                     <tr>
-                                        <td>${detalleCompra.getCodigoDetalleCompra()}</td>
-                                        <td>${detalleCompra.getPrecioUnitario()}</td>
-                                        <td>${detalleCompra.getCantidad()}</td>
-                                        <td>${detalleCompra.getCodigoVehiculo()}</td>
-                                        <td>${detalleCompra.getCodigoCompra()}</td>
+                                        <td>${servicio.getCodigoServicio()}</td>
+                                        <td>${servicio.getNombreServicio()}</td>
+                                        <td>${servicio.getDescripcion()}</td>
+                                        <td>${servicio.getTipo()}</td>
+                                        <td>${servicio.getFechaServicio()}</td>
+                                        <td>${servicio.getCodigoVehiculo()}</td>
                                         <td>
                                             <div class="acciones-btns">
-                                                <a class="btn-action-minimal btn-edit-minimal" href="Controlador?menu=DetalleCompra&accion=Editar&codigoDetalleCompra=${detalleCompra.getCodigoDetalleCompra()}">Editar</a>    
-                                                <a class="btn-action-minimal btn-delete-minimal" href="Controlador?menu=DetalleCompra&accion=Eliminar&codigoDetalleCompra=${detalleCompra.getCodigoDetalleCompra()}" onclick="confirmarEliminar(event, this);">Eliminar</a>
+                                                <a class="btn-action-minimal btn-edit-minimal" href="Controlador?menu=Servicios&accion=Editar&codigoServicio=${servicio.getCodigoServicio()}">Editar</a>    
+                                                <a class="btn-action-minimal btn-delete-minimal" href="Controlador?menu=Servicios&accion=Eliminar&codigoServicio=${servicio.getCodigoServicio()}" onclick="confirmarEliminar(event, this);">Eliminar</a>
                                             </div>
                                         </td>
                                     </tr>

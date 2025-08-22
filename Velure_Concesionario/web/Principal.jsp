@@ -389,7 +389,7 @@
     <!-- Contenido principal (Home) -->
     <div class="main-content" id="mainContent">
         <div class="buttons">
-            <a href="#" onclick="scrollToSection('galeria')">CATÁLOGO</a>
+            <a href="Catalogo.jsp" target="contenido" onclick="showIframe()">CATÁLOGO</a>
             <a href="#" onclick="scrollToSection('galeria')">GALERÍA</a>
             <a href="#" onclick="scrollToSection('empresa')">CONOCE VELURE</a>
         </div>

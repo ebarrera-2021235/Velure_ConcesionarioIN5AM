@@ -435,6 +435,8 @@ public class Controlador extends HttpServlet {
                     request.setAttribute("servicios", listaServicios);
                     List vehiculoCon = vehiculoDao.listar();
                     request.setAttribute("vehiculos", vehiculoCon);
+                    List compraCon = compraDao.listarCompra();
+                    request.setAttribute("compras", compraCon);
                     break;
 
                 // AGREGAR
