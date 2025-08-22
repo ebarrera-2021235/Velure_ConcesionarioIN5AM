@@ -38,7 +38,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background: url('img/Servicios.jpg') no-repeat center center fixed;
+            background: url('img/em.jpg') no-repeat center center fixed;
             background-size: cover;
         }
 

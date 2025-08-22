@@ -346,9 +346,8 @@
             </li>
             <!-- Menú desplegable de entidades -->
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="entidadesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Entidades</a>
+                <a class="nav-link dropdown-toggle" href="#" id="entidadesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Gestion</a>
                 <div class="dropdown-menu" aria-labelledby="entidadesDropdown">
-                    <a class="dropdown-item" href="Controlador?menu=Producto" target="contenido" onclick="showIframe()">Productos</a>
                     <a class="dropdown-item" href="Controlador?menu=Empleado&accion=Listar" target="contenido" onclick="showIframe()">Empleados</a>
                     <a class="dropdown-item" href="Controlador?menu=Clientes&accion=Listar" target="contenido" onclick="showIframe()">Clientes</a>
                     <a class="dropdown-item" href="Controlador?menu=Venta&accion=Listar" target="contenido" onclick="showIframe()">Venta</a>
@@ -357,15 +356,11 @@
                     <a class="dropdown-item" href="Controlador?menu=Compras&accion=Listar" target="contenido" onclick="showIframe()">Compras</a>
                     <a class="dropdown-item" href="Controlador?menu=Servicios&accion=Listar" target="contenido" onclick="showIframe()">Servicios </a>
                     <a class="dropdown-item" href="Controlador?menu=Seguro&accion=Listar" target="contenido" onclick="showIframe()">Seguros</a>
-                    <a class="dropdown-item" href="#" target="contenido" onclick="showIframe()">Entidad 9</a>
                     <a class="dropdown-item" href="Controlador?menu=DetalleCompra&accion=Listar" target="contenido" onclick="showIframe()">Detalles de Compras</a>
                     <a class="dropdown-item" href="Controlador?menu=DetalleVenta&accion=Listar" target="contenido" onclick="showIframe()">Detalles de Ventas</a>
                 </div>
             </li>
-            <!-- Otro enlace -->
-            <li class="nav-item">
-                <a class="nav-link" href="#" target="contenido" onclick="showIframe()">Otro</a>
-            </li>
+            
         </ul>
     </div>
     <!-- Logo centrado y más grande -->
