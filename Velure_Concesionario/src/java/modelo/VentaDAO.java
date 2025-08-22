@@ -47,5 +47,73 @@ public class VentaDAO {
             e.printStackTrace();
         }
         return listaVenta;
-    } 
+    }
+ //AGREGAR
+    public int agregar(Venta ven){
+        String sql = "insert into Ventas (fecha, total, descripcion, tipoDePago, codigoCliente, codigoEmpleado) values(?,?,?,?,?,?)";
+        try{
+            con = cn.Conexion();
+            ps = con.prepareStatement(sql);
+            ps.setDate(1, ven.getFecha());
+            ps.setDouble(2, ven.getTotal());
+            ps.setString(3, ven.getDescripcion());
+            ps.setString(4, ven.getTipoDePago());
+            ps.setInt(5, ven.getCodigoCliente());
+            ps.setInt(6, ven.getCodigoEmpleado());
+            ps.executeUpdate();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return resp;
+    }
+ //BUSCAR POR CÓDIGO
+    public Venta listarCodigoVenta(int id){
+        //Instanciar un objeto de tipo Empleado
+        Venta ven = new Venta();
+        String sql = "select * from ventas where codigoVenta ="+id;
+        try{
+            con = cn.Conexion();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                ven.setFecha(rs.getDate(2));
+                ven.setTotal(rs.getDouble(3));
+                ven.setDescripcion(rs.getString(4));
+                ven.setTipoDePago(rs.getString(5));
+                ven.setCodigoCliente(rs.getInt(6));
+                ven.setCodigoEmpleado(rs.getInt(7));
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return ven;
+    }
+ //ACTUALIZAR
+    public int actualizar(Venta ven){
+        String sql = "Update Ventas set fecha = ?, total = ?, descripcion = ?, tipoDePago = ? where codigoVenta = ?";
+        try{
+            con = cn.Conexion();
+            ps = con.prepareStatement(sql);
+            ps.setDate(1, ven.getFecha());
+            ps.setDouble(2, ven.getTotal());
+            ps.setString(3, ven.getDescripcion());
+            ps.setString(4, ven.getTipoDePago());
+            ps.setInt(5, ven.getCodigoVenta());
+            ps.executeUpdate();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return resp; 
+    }
+ //ELIMINAR
+    public void eliminar(int id){
+        String sql = "Delete from Ventas where codigoVenta ="+id;
+        try{
+            con = cn.Conexion();
+            ps = con.prepareStatement(sql);
+            ps.executeUpdate();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
 }
