@@ -53,36 +53,36 @@ public class Controlador extends HttpServlet {
     Servicio servicio = new Servicio();
     ServicioDAO servicioDAO = new ServicioDAO();
     int codServicio;
-    
+
     // Objetos para Proveedor
     Proveedor proveedor = new Proveedor();
     ProveedorDAO proveedorDao = new ProveedorDAO();
     int codProveedor;
-    
-    //Objetos para Compra
+
+    // Objetos para Compra
     Compra compra = new Compra();
     CompraDAO compraDao = new CompraDAO();
     int codCompra;
-    
-    //Objetos para DetalleCompra
+
+    // Objetos para DetalleCompra
     DetalleCompra detalleCompra = new DetalleCompra();
     DetalleCompraDAO detalleDaoC = new DetalleCompraDAO();
     int codDetalleCompra;
-    
-    //Objeto para DetalleVenta
+
+    // Objeto para DetalleVenta
     DetalleVenta detalleVenta = new DetalleVenta();
     DetalleVentaDAO detalleDao = new DetalleVentaDAO();
     int codDetalleVenta;
-    
+
     // Seguros
     Seguro seguro = new Seguro();
     SeguroDAO seguroDao = new SeguroDAO();
     int codSeguro;
-    //Ventas
+    // Ventas
     Venta venta = new Venta();
     VentaDAO ventaDao = new VentaDAO();
     int codVenta;
-    
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -98,7 +98,7 @@ public class Controlador extends HttpServlet {
         if ("Principal".equals(menu)) {
             request.getRequestDispatcher("Principal.jsp").forward(request, response);
 
-        // --- CLIENTES ---
+            // --- CLIENTES ---
         } else if ("Clientes".equals(menu)) {
             switch (accion) {
                 case "Listar":
@@ -135,10 +135,11 @@ public class Controlador extends HttpServlet {
 
                     if (correoCliente == null || correoCliente.isEmpty()
                             || (!correoCliente.endsWith("@gmail.com")
-                            && !correoCliente.endsWith("@outlook.com")
-                            && !correoCliente.endsWith("@yahoo.com"))) {
+                                    && !correoCliente.endsWith("@outlook.com")
+                                    && !correoCliente.endsWith("@yahoo.com"))) {
 
-                        request.setAttribute("error", "El correo debe terminar con  @gmail.com, @outlook.com o @yahoo.com");
+                        request.setAttribute("error",
+                                "El correo debe terminar con  @gmail.com, @outlook.com o @yahoo.com");
                         List lista = clienteDAO.listarCliente();
                         request.setAttribute("clientes", lista);
                         request.getRequestDispatcher("Clientes.jsp").forward(request, response);
@@ -169,14 +170,16 @@ public class Controlador extends HttpServlet {
                         return;
                     }
 
-                    if (nombresCliente == null || nombresCliente.trim().isEmpty() || !nombresCliente.matches("^[a-zA-Z\\s]+$")) {
-                        request.setAttribute("error", "El espacio de Nombres solo puede contener letras y espacios, sin acentos ni caracteres especiales.");
+                    if (nombresCliente == null || nombresCliente.trim().isEmpty()
+                            || !nombresCliente.matches("^[a-zA-Z\\s]+$")) {
+                        request.setAttribute("error",
+                                "El espacio de Nombres solo puede contener letras y espacios, sin acentos ni caracteres especiales.");
                         List lista = clienteDAO.listarCliente();
                         request.setAttribute("clientes", lista);
                         request.getRequestDispatcher("Clientes.jsp").forward(request, response);
                         return;
                     }
-                    
+
                     cliente.setNombresCliente(nombresCliente);
                     cliente.setDPICliente(dpiCliente);
                     cliente.setDireccionCliente(direccionCliente);
@@ -197,7 +200,7 @@ public class Controlador extends HttpServlet {
                     List listaEditar = clienteDAO.listarCliente();
                     request.setAttribute("clientes", listaEditar);
                     break;
-                
+
                 case "Actualizar":
                     nombresCliente = request.getParameter("txtNombresCliente");
                     dpiCliente = request.getParameter("txtDPICliente");
@@ -223,10 +226,11 @@ public class Controlador extends HttpServlet {
 
                     if (correoCliente == null || correoCliente.isEmpty()
                             || (!correoCliente.endsWith("@gmail.com")
-                            && !correoCliente.endsWith("@outlook.com")
-                            && !correoCliente.endsWith("@yahoo.com"))) {
+                                    && !correoCliente.endsWith("@outlook.com")
+                                    && !correoCliente.endsWith("@yahoo.com"))) {
 
-                        request.setAttribute("error", "El correo debe terminar con  @gmail.com, @outlook.com o @yahoo.com");
+                        request.setAttribute("error",
+                                "El correo debe terminar con  @gmail.com, @outlook.com o @yahoo.com");
                         List lista = clienteDAO.listarCliente();
                         request.setAttribute("clientes", lista);
                         request.getRequestDispatcher("Clientes.jsp").forward(request, response);
@@ -257,14 +261,16 @@ public class Controlador extends HttpServlet {
                         return;
                     }
 
-                    if (nombresCliente == null || nombresCliente.trim().isEmpty() || !nombresCliente.matches("^[a-zA-Z\\s]+$")) {
-                        request.setAttribute("error", "El espacio de Nombres solo puede contener letras y espacios, sin acentos ni caracteres especiales.");
+                    if (nombresCliente == null || nombresCliente.trim().isEmpty()
+                            || !nombresCliente.matches("^[a-zA-Z\\s]+$")) {
+                        request.setAttribute("error",
+                                "El espacio de Nombres solo puede contener letras y espacios, sin acentos ni caracteres especiales.");
                         List lista = clienteDAO.listarCliente();
                         request.setAttribute("clientes", lista);
                         request.getRequestDispatcher("Clientes.jsp").forward(request, response);
                         return;
                     }
-                    
+
                     cliente.setNombresCliente(request.getParameter("txtNombresCliente"));
                     cliente.setDPICliente(request.getParameter("txtDPICliente"));
                     cliente.setDireccionCliente(request.getParameter("txtDireccionCliente"));
@@ -281,161 +287,165 @@ public class Controlador extends HttpServlet {
                     clienteDAO.eliminar(codCliente);
                     response.sendRedirect("Controlador?menu=Clientes&accion=Listar");
                     return;
-                
+
                 case "Cancelar":
-                    // El botón de cancelar solo estará visible en modo 'editar'. 
-                    // Al cancelarlo, simplemente redirigimos a 'Listar' para limpiar el formulario y volver al modo 'agregar'.
+                    // El botón de cancelar solo estará visible en modo 'editar'.
+                    // Al cancelarlo, simplemente redirigimos a 'Listar' para limpiar el formulario
+                    // y volver al modo 'agregar'.
                     response.sendRedirect("Controlador?menu=Clientes&accion=Listar");
                     return;
             }
             request.getRequestDispatcher("Clientes.jsp").forward(request, response);
 
-        // --- SERVICIOS ---
-        } 
-        else if (menu.equals("Empleado")) {
-    switch (accion) {
+            // --- SERVICIOS ---
+        } else if (menu.equals("Empleado")) {
+            switch (accion) {
 
-        case "Listar":
-            List listaEmpleados = empleadoDAO.listar();
-            request.setAttribute("empleados", listaEmpleados);
-            break;
+                case "Listar":
+                    List listaEmpleados = empleadoDAO.listar();
+                    request.setAttribute("empleados", listaEmpleados);
+                    break;
 
-        case "Agregar":
-            String DPI = request.getParameter("txtDPIEmpleado");
-            String nombres = request.getParameter("txtNombresEmpleado");
-            String telefono = request.getParameter("txtTelefonoEmpleado");
-            String est = request.getParameter("txtEstadoEmpleado");
-            String correo = request.getParameter("txtCorreoEmpleado");
+                case "Agregar":
+                    String DPI = request.getParameter("txtDPIEmpleado");
+                    String nombres = request.getParameter("txtNombresEmpleado");
+                    String telefono = request.getParameter("txtTelefonoEmpleado");
+                    String est = request.getParameter("txtEstadoEmpleado");
+                    String correo = request.getParameter("txtCorreoEmpleado");
 
-            // ✅ Validaciones
-            if (DPI == null || !DPI.matches("\\d{13}")) {
-                request.setAttribute("error", "El DPI debe contener exactamente 13 dígitos.");
-                request.getRequestDispatcher("Controlador?menu=Empleado&accion=Listar").forward(request, response);
-                return;
+                    // ✅ Validaciones
+                    if (DPI == null || !DPI.matches("\\d{13}")) {
+                        request.setAttribute("error", "El DPI debe contener exactamente 13 dígitos.");
+                        request.getRequestDispatcher("Controlador?menu=Empleado&accion=Listar").forward(request,
+                                response);
+                        return;
+                    }
+
+                    if (telefono == null || !telefono.matches("\\d{8}")) {
+                        request.setAttribute("error", "El teléfono debe contener exactamente 8 dígitos.");
+                        request.getRequestDispatcher("Controlador?menu=Empleado&accion=Listar").forward(request,
+                                response);
+                        return;
+                    }
+
+                    if (correo == null || correo.isEmpty() ||
+                            !(correo.endsWith("@gmail.com") || correo.endsWith("@outlook.com")
+                                    || correo.endsWith("@yahoo.com"))) {
+                        request.setAttribute("error",
+                                "El correo debe terminar en @gmail.com, @outlook.com o @yahoo.com");
+                        request.getRequestDispatcher("Controlador?menu=Empleado&accion=Listar").forward(request,
+                                response);
+                        return;
+                    }
+
+                    if (est == null || !(est.equals("1") || est.equals("2"))) {
+                        request.setAttribute("error", "El estado solo puede ser 1 (Activo) o 2 (Inactivo).");
+                        request.getRequestDispatcher("Controlador?menu=Empleado&accion=Listar").forward(request,
+                                response);
+                        return;
+                    }
+
+                    // Si pasa las validaciones → guardar
+                    empleado.setDPIEmpleado(DPI);
+                    empleado.setNombresEmpleado(nombres);
+                    empleado.setTelefonoEmpleado(telefono);
+                    empleado.setEstado(est);
+                    empleado.setCorreoEmpleado(correo);
+                    empleadoDAO.agregar(empleado);
+                    request.getRequestDispatcher("Controlador?menu=Empleado&accion=Listar").forward(request, response);
+                    break;
+
+                case "Editar":
+                    codEmpleado = Integer.parseInt(request.getParameter("codigoEmpleado"));
+                    Empleado e = empleadoDAO.listarCodigoEmpleado(codEmpleado);
+                    request.setAttribute("empleado", e);
+                    request.setAttribute("modo", "editar");
+                    request.getRequestDispatcher("Controlador?menu=Empleado&accion=Listar").forward(request, response);
+                    break;
+
+                case "Actualizar":
+                    String DPIEmp = request.getParameter("txtDPIEmpleado");
+                    String nombreEmp = request.getParameter("txtNombresEmpleado");
+                    String telefonoEmp = request.getParameter("txtTelefonoEmpleado");
+                    String estEmp = request.getParameter("txtEstadoEmpleado");
+                    String correoEmp = request.getParameter("txtCorreoEmpleado");
+
+                    // ✅ Validaciones (igual que en Agregar)
+                    if (DPIEmp == null || !DPIEmp.matches("\\d{13}")) {
+                        request.setAttribute("error", "El DPI debe contener exactamente 13 dígitos.");
+                        request.getRequestDispatcher("Controlador?menu=Empleado&accion=Listar").forward(request,
+                                response);
+                        return;
+                    }
+
+                    if (telefonoEmp == null || !telefonoEmp.matches("\\d{8}")) {
+                        request.setAttribute("error", "El teléfono debe contener exactamente 8 dígitos.");
+                        request.getRequestDispatcher("Controlador?menu=Empleado&accion=Listar").forward(request,
+                                response);
+                        return;
+                    }
+
+                    if (correoEmp == null || correoEmp.isEmpty() ||
+                            !(correoEmp.endsWith("@gmail.com") || correoEmp.endsWith("@outlook.com")
+                                    || correoEmp.endsWith("@yahoo.com"))) {
+                        request.setAttribute("error",
+                                "El correo debe terminar en @gmail.com, @outlook.com o @yahoo.com");
+                        request.getRequestDispatcher("Controlador?menu=Empleado&accion=Listar").forward(request,
+                                response);
+                        return;
+                    }
+
+                    if (estEmp == null || !(estEmp.equals("1") || estEmp.equals("2"))) {
+                        request.setAttribute("error", "El estado solo puede ser 1 (Activo) o 2 (Inactivo).");
+                        request.getRequestDispatcher("Controlador?menu=Empleado&accion=Listar").forward(request,
+                                response);
+                        return;
+                    }
+
+                    // Si pasa las validaciones → actualizar
+                    empleado.setDPIEmpleado(DPIEmp);
+                    empleado.setNombresEmpleado(nombreEmp);
+                    empleado.setTelefonoEmpleado(telefonoEmp);
+                    empleado.setEstado(estEmp);
+                    empleado.setCorreoEmpleado(correoEmp);
+                    empleado.setCodigoEmpleado(codEmpleado);
+                    empleadoDAO.actualizar(empleado);
+                    request.getRequestDispatcher("Controlador?menu=Empleado&accion=Listar").forward(request, response);
+                    break;
+
+                case "Eliminar":
+                    codEmpleado = Integer.parseInt(request.getParameter("codigoEmpleado"));
+                    empleadoDAO.eliminar(codEmpleado);
+                    request.getRequestDispatcher("Controlador?menu=Empleado&accion=Listar").forward(request, response);
+                    break;
+
+                case "Cancelar":
+                    request.setAttribute("modo", "agregar");
+                    request.getRequestDispatcher("Controlador?menu=Empleado&accion=Listar").forward(request, response);
+                    break;
             }
 
-            if (telefono == null || !telefono.matches("\\d{8}")) {
-                request.setAttribute("error", "El teléfono debe contener exactamente 8 dígitos.");
-                request.getRequestDispatcher("Controlador?menu=Empleado&accion=Listar").forward(request, response);
-                return;
-            }
+            request.getRequestDispatcher("Empleado.jsp").forward(request, response);
+        }
 
-            if (correo == null || correo.isEmpty() || 
-               !(correo.endsWith("@gmail.com") || correo.endsWith("@outlook.com") || correo.endsWith("@yahoo.com"))) {
-                request.setAttribute("error", "El correo debe terminar en @gmail.com, @outlook.com o @yahoo.com");
-                request.getRequestDispatcher("Controlador?menu=Empleado&accion=Listar").forward(request, response);
-                return;
-            }
-
-            if (est == null || !(est.equals("1") || est.equals("2"))) {
-                request.setAttribute("error", "El estado solo puede ser 1 (Activo) o 2 (Inactivo).");
-                request.getRequestDispatcher("Controlador?menu=Empleado&accion=Listar").forward(request, response);
-                return;
-            }
-
-            // Si pasa las validaciones → guardar
-            empleado.setDPIEmpleado(DPI);
-            empleado.setNombresEmpleado(nombres);
-            empleado.setTelefonoEmpleado(telefono);
-            empleado.setEstado(est);
-            empleado.setCorreoEmpleado(correo);
-            empleadoDAO.agregar(empleado);
-            request.getRequestDispatcher("Controlador?menu=Empleado&accion=Listar").forward(request, response);
-            break;
-
-        case "Editar":
-            codEmpleado = Integer.parseInt(request.getParameter("codigoEmpleado"));
-            Empleado e = empleadoDAO.listarCodigoEmpleado(codEmpleado);
-            request.setAttribute("empleado", e);
-            request.setAttribute("modo", "editar");
-            request.getRequestDispatcher("Controlador?menu=Empleado&accion=Listar").forward(request, response);
-            break;
-
-        case "Actualizar":
-            String DPIEmp = request.getParameter("txtDPIEmpleado");
-            String nombreEmp = request.getParameter("txtNombresEmpleado");
-            String telefonoEmp = request.getParameter("txtTelefonoEmpleado");
-            String estEmp = request.getParameter("txtEstadoEmpleado");
-            String correoEmp = request.getParameter("txtCorreoEmpleado");
-
-            // ✅ Validaciones (igual que en Agregar)
-            if (DPIEmp == null || !DPIEmp.matches("\\d{13}")) {
-                request.setAttribute("error", "El DPI debe contener exactamente 13 dígitos.");
-                request.getRequestDispatcher("Controlador?menu=Empleado&accion=Listar").forward(request, response);
-                return;
-            }
-
-            if (telefonoEmp == null || !telefonoEmp.matches("\\d{8}")) {
-                request.setAttribute("error", "El teléfono debe contener exactamente 8 dígitos.");
-                request.getRequestDispatcher("Controlador?menu=Empleado&accion=Listar").forward(request, response);
-                return;
-            }
-
-            if (correoEmp == null || correoEmp.isEmpty() ||
-               !(correoEmp.endsWith("@gmail.com") || correoEmp.endsWith("@outlook.com") || correoEmp.endsWith("@yahoo.com"))) {
-                request.setAttribute("error", "El correo debe terminar en @gmail.com, @outlook.com o @yahoo.com");
-                request.getRequestDispatcher("Controlador?menu=Empleado&accion=Listar").forward(request, response);
-                return;
-            }
-
-            if (estEmp == null || !(estEmp.equals("1") || estEmp.equals("2"))) {
-                request.setAttribute("error", "El estado solo puede ser 1 (Activo) o 2 (Inactivo).");
-                request.getRequestDispatcher("Controlador?menu=Empleado&accion=Listar").forward(request, response);
-                return;
-            }
-
-            // Si pasa las validaciones → actualizar
-            empleado.setDPIEmpleado(DPIEmp);
-            empleado.setNombresEmpleado(nombreEmp);
-            empleado.setTelefonoEmpleado(telefonoEmp);
-            empleado.setEstado(estEmp);
-            empleado.setCorreoEmpleado(correoEmp);
-            empleado.setCodigoEmpleado(codEmpleado);
-            empleadoDAO.actualizar(empleado);
-            request.getRequestDispatcher("Controlador?menu=Empleado&accion=Listar").forward(request, response);
-            break;
-
-        case "Eliminar":
-            codEmpleado = Integer.parseInt(request.getParameter("codigoEmpleado"));
-            empleadoDAO.eliminar(codEmpleado);
-            request.getRequestDispatcher("Controlador?menu=Empleado&accion=Listar").forward(request, response);
-            break;
-
-        case "Cancelar":
-            request.setAttribute("modo", "agregar");
-            request.getRequestDispatcher("Controlador?menu=Empleado&accion=Listar").forward(request, response);
-            break;
-    }
-
-    request.getRequestDispatcher("Empleado.jsp").forward(request, response);
-}
-
-
-        
-        
-        
-        
-        
-        
-        
         else if ("Servicios".equals(menu)) {
 
             switch (accion) {
 
-                // LISTAR 
+                // LISTAR
                 case "Listar":
                     List listaServicios = servicioDAO.listar();
                     request.setAttribute("servicios", listaServicios);
                     break;
 
-                //  AGREGAR 
+                // AGREGAR
                 case "Agregar":
                     String nombreServicio = request.getParameter("txtNombreServicio");
                     String descripcion = request.getParameter("txtDescripcion");
                     String tipo = request.getParameter("txtTipo");
                     Date fechaServicio = java.sql.Date.valueOf(request.getParameter("txtFechaServicio"));
                     int codigoVehiculo = Integer.parseInt(request.getParameter("txtCodigoVehiculo"));
-                    
+
                     servicio.setNombreServicio(nombreServicio);
                     servicio.setDescripcion(descripcion);
                     servicio.setTipo(tipo);
@@ -445,7 +455,7 @@ public class Controlador extends HttpServlet {
                     request.getRequestDispatcher("Controlador?menu=Servicios&accion=Listar").forward(request, response);
                     break;
 
-                //  EDITAR
+                // EDITAR
                 case "Editar":
                     codServicio = Integer.parseInt(request.getParameter("codigoServicio"));
                     Servicio s = servicioDAO.obtenerPorCodigo(codServicio);
@@ -454,7 +464,7 @@ public class Controlador extends HttpServlet {
                     request.getRequestDispatcher("Controlador?menu=Servicios&accion=Listar").forward(request, response);
                     break;
 
-                //  ACTUALIZAR 
+                // ACTUALIZAR
                 case "Actualizar":
                     String nombreSer = request.getParameter("txtNombreServicio");
                     String descripcionSer = request.getParameter("txtDescripcion");
@@ -469,7 +479,7 @@ public class Controlador extends HttpServlet {
                     request.getRequestDispatcher("Controlador?menu=Servicios&accion=Listar").forward(request, response);
                     break;
 
-                // ELIMINAR 
+                // ELIMINAR
                 case "Eliminar":
                     codServicio = Integer.parseInt(request.getParameter("codigoServicio"));
                     servicioDAO.eliminar(codServicio);
@@ -477,143 +487,143 @@ public class Controlador extends HttpServlet {
                     break;
                 case "Cancelar":
                     // Limpio el objeto servicio
-                    servicio = new Servicio();  
-                    request.setAttribute("servicio", null); 
+                    servicio = new Servicio();
+                    request.setAttribute("servicio", null);
                     request.setAttribute("modoEdicion", false);
                     request.getRequestDispatcher("Controlador?menu=Servicios&accion=Listar").forward(request, response);
-                return;
+                    return;
 
             }
             request.getRequestDispatcher("Servicios.jsp").forward(request, response);
 
-        // --- OTRAS VISTAS ---
-        } else if ("Producto".equals(menu)) {
-            request.getRequestDispatcher("Producto.jsp").forward(request, response);
-        } else if ("NuevaVenta".equals(menu)) {
-            request.getRequestDispatcher("RegistrarVenta.jsp").forward(request, response);
-        }else if ("Proveedor".equals(menu)) { 
-    switch (accion) {                     
-        case "Listar":          
-            List<Proveedor> listaProveedores = proveedorDao.listar(); 
-            request.setAttribute("proveedores", listaProveedores);  
-            request.getRequestDispatcher("Proveedor.jsp").forward(request, response);
-            break;
+            // --- Proveedores ---
+        } else if ("Proveedor".equals(menu)) {
+            switch (accion) {
+                case "Listar":
+                    List<Proveedor> listaProveedores = proveedorDao.listar();
+                    request.setAttribute("proveedores", listaProveedores);
+                    request.getRequestDispatcher("Proveedor.jsp").forward(request, response);
+                    break;
 
-        case "Agregar":           
-            String nombre = request.getParameter("txtNombreProveedor");
-            String telefono = request.getParameter("txtTelefonoProveedor");
-            String direccion = request.getParameter("txtDireccionProveedor");
-            String correo = request.getParameter("txtCorreoProveedor");
+                case "Agregar":
+                    String nombre = request.getParameter("txtNombreProveedor");
+                    String telefono = request.getParameter("txtTelefonoProveedor");
+                    String direccion = request.getParameter("txtDireccionProveedor");
+                    String correo = request.getParameter("txtCorreoProveedor");
 
-            // --- VALIDACIONES --- 
-            if (nombre == null || nombre.isEmpty() || nombre.matches(".*\\d.*")) {
-                request.setAttribute("error", "El nombre no debe contener números y no puede estar vacío.");
-                request.setAttribute("proveedores", proveedorDao.listar());
-                request.getRequestDispatcher("Proveedor.jsp").forward(request, response);
-                return;
+                    // --- VALIDACIONES ---
+                    if (nombre == null || nombre.isEmpty() || nombre.matches(".*\\d.*")) {
+                        request.setAttribute("error", "El nombre no debe contener números y no puede estar vacío.");
+                        request.setAttribute("proveedores", proveedorDao.listar());
+                        request.getRequestDispatcher("Proveedor.jsp").forward(request, response);
+                        return;
+                    }
+
+                    if (telefono == null || telefono.isEmpty() || !telefono.matches("\\d{8}")) {
+                        request.setAttribute("error", "El teléfono debe contener exactamente 8 números.");
+                        request.setAttribute("proveedores", proveedorDao.listar());
+                        request.getRequestDispatcher("Proveedor.jsp").forward(request, response);
+                        return;
+                    }
+
+                    if (correo == null || correo.isEmpty() ||
+                            (!correo.endsWith("@gmail.com") && !correo.endsWith("@outlook.com")
+                                    && !correo.endsWith("@yahoo.com"))) {
+                        request.setAttribute("error",
+                                "El correo debe terminar con @gmail.com, @outlook.com o @yahoo.com.");
+                        request.setAttribute("proveedores", proveedorDao.listar());
+                        request.getRequestDispatcher("Proveedor.jsp").forward(request, response);
+                        return;
+                    }
+
+                    proveedor.setNombreProveedor(nombre);
+                    proveedor.setTelefonoProveedor(telefono);
+                    proveedor.setDireccionProveedor(direccion);
+                    proveedor.setCorreoProveedor(correo);
+
+                    proveedorDao.agregar(proveedor);
+
+                    // Recargar lista
+                    request.setAttribute("proveedores", proveedorDao.listar());
+                    request.getRequestDispatcher("Proveedor.jsp").forward(request, response);
+                    return;
+
+                case "Editar":
+                    codProveedor = Integer.parseInt(request.getParameter("codigoProveedor"));
+                    Proveedor p = proveedorDao.listarCodigoProveedor(codProveedor);
+                    request.setAttribute("proveedor", p);
+                    request.setAttribute("modo", "editar");
+                    request.setAttribute("proveedores", proveedorDao.listar());
+                    request.getRequestDispatcher("Proveedor.jsp").forward(request, response);
+                    break;
+
+                case "Actualizar":
+                    String nombreP = request.getParameter("txtNombreProveedor");
+                    String telefonoP = request.getParameter("txtTelefonoProveedor");
+                    String direccionP = request.getParameter("txtDireccionProveedor");
+                    String correoP = request.getParameter("txtCorreoProveedor");
+
+                    Proveedor proveedorTemp = new Proveedor();
+                    proveedorTemp.setNombreProveedor(nombreP);
+                    proveedorTemp.setTelefonoProveedor(telefonoP);
+                    proveedorTemp.setDireccionProveedor(direccionP);
+                    proveedorTemp.setCorreoProveedor(correoP);
+
+                    // --- VALIDACIONES ---
+                    if (nombreP == null || nombreP.isEmpty() || nombreP.matches(".*\\d.*")) {
+                        request.setAttribute("error", "El nombre no debe contener números y no puede estar vacío.");
+                        request.setAttribute("proveedor", proveedorTemp);
+                        request.setAttribute("modo", "editar");
+                        request.setAttribute("proveedores", proveedorDao.listar());
+                        request.getRequestDispatcher("Proveedor.jsp").forward(request, response);
+                        return;
+                    }
+
+                    if (telefonoP == null || telefonoP.isEmpty() || !telefonoP.matches("\\d{8}")) {
+                        request.setAttribute("error", "El teléfono debe contener exactamente 8 números.");
+                        request.setAttribute("proveedor", proveedorTemp);
+                        request.setAttribute("modo", "editar");
+                        request.setAttribute("proveedores", proveedorDao.listar());
+                        request.getRequestDispatcher("Proveedor.jsp").forward(request, response);
+                        return;
+                    }
+
+                    if (correoP == null || correoP.isEmpty() ||
+                            (!correoP.endsWith("@gmail.com") && !correoP.endsWith("@outlook.com")
+                                    && !correoP.endsWith("@yahoo.com"))) {
+                        request.setAttribute("error",
+                                "El correo debe terminar con @gmail.com, @outlook.com o @yahoo.com.");
+                        request.setAttribute("proveedor", proveedorTemp);
+                        request.setAttribute("modo", "editar");
+                        request.setAttribute("proveedores", proveedorDao.listar());
+                        request.getRequestDispatcher("Proveedor.jsp").forward(request, response);
+                        return;
+                    }
+
+                    proveedorTemp.setCodigoProveedor(codProveedor);
+                    proveedorDao.actualizar(proveedorTemp);
+
+                    request.setAttribute("modo", "agregar");
+                    request.setAttribute("proveedores", proveedorDao.listar());
+                    request.getRequestDispatcher("Proveedor.jsp").forward(request, response);
+                    return;
+
+                case "Eliminar":
+                    codProveedor = Integer.parseInt(request.getParameter("codigoProveedor"));
+                    proveedorDao.eliminar(codProveedor);
+                    request.setAttribute("proveedores", proveedorDao.listar());
+                    request.getRequestDispatcher("Proveedor.jsp").forward(request, response);
+                    return;
+
+                case "Cancelar":
+                    request.setAttribute("modo", "agregar");
+                    request.setAttribute("proveedores", proveedorDao.listar());
+                    request.getRequestDispatcher("Proveedor.jsp").forward(request, response);
+                    break;
             }
-
-            if (telefono == null || telefono.isEmpty() || !telefono.matches("\\d{8}")) {
-                request.setAttribute("error", "El teléfono debe contener exactamente 8 números.");
-                request.setAttribute("proveedores", proveedorDao.listar());
-                request.getRequestDispatcher("Proveedor.jsp").forward(request, response);
-                return;
-            }
-
-            if (correo == null || correo.isEmpty() || 
-                (!correo.endsWith("@gmail.com") && !correo.endsWith("@outlook.com") && !correo.endsWith("@yahoo.com"))) {
-                request.setAttribute("error", "El correo debe terminar con @gmail.com, @outlook.com o @yahoo.com.");
-                request.setAttribute("proveedores", proveedorDao.listar());
-                request.getRequestDispatcher("Proveedor.jsp").forward(request, response);
-                return;
-            }
-
-            proveedor.setNombreProveedor(nombre);
-            proveedor.setTelefonoProveedor(telefono);
-            proveedor.setDireccionProveedor(direccion);
-            proveedor.setCorreoProveedor(correo);
-
-            proveedorDao.agregar(proveedor);
-
-            // Recargar lista
-            request.setAttribute("proveedores", proveedorDao.listar());
             request.getRequestDispatcher("Proveedor.jsp").forward(request, response);
-            return;
-
-        case "Editar":
-            codProveedor = Integer.parseInt(request.getParameter("codigoProveedor"));
-            Proveedor p = proveedorDao.listarCodigoProveedor(codProveedor);
-            request.setAttribute("proveedor", p);
-            request.setAttribute("modo", "editar");  
-            request.setAttribute("proveedores", proveedorDao.listar());
-            request.getRequestDispatcher("Proveedor.jsp").forward(request, response);
-            break;
-
-        case "Actualizar":
-            String nombreP = request.getParameter("txtNombreProveedor");
-            String telefonoP = request.getParameter("txtTelefonoProveedor");
-            String direccionP = request.getParameter("txtDireccionProveedor");
-            String correoP = request.getParameter("txtCorreoProveedor");
-
-            Proveedor proveedorTemp = new Proveedor();
-            proveedorTemp.setNombreProveedor(nombreP);
-            proveedorTemp.setTelefonoProveedor(telefonoP);
-            proveedorTemp.setDireccionProveedor(direccionP);
-            proveedorTemp.setCorreoProveedor(correoP);
-
-            // --- VALIDACIONES ---
-            if (nombreP == null || nombreP.isEmpty() || nombreP.matches(".*\\d.*")) {
-                request.setAttribute("error", "El nombre no debe contener números y no puede estar vacío.");
-                request.setAttribute("proveedor", proveedorTemp);
-                request.setAttribute("modo", "editar");
-                request.setAttribute("proveedores", proveedorDao.listar());
-                request.getRequestDispatcher("Proveedor.jsp").forward(request, response);
-                return;
-            }
-
-            if (telefonoP == null || telefonoP.isEmpty() || !telefonoP.matches("\\d{8}")) {
-                request.setAttribute("error", "El teléfono debe contener exactamente 8 números.");
-                request.setAttribute("proveedor", proveedorTemp);
-                request.setAttribute("modo", "editar");
-                request.setAttribute("proveedores", proveedorDao.listar());
-                request.getRequestDispatcher("Proveedor.jsp").forward(request, response);
-                return;
-            }
-
-            if (correoP == null || correoP.isEmpty() ||
-                (!correoP.endsWith("@gmail.com") && !correoP.endsWith("@outlook.com") && !correoP.endsWith("@yahoo.com"))) {
-                request.setAttribute("error", "El correo debe terminar con @gmail.com, @outlook.com o @yahoo.com.");
-                request.setAttribute("proveedor", proveedorTemp);
-                request.setAttribute("modo", "editar");
-                request.setAttribute("proveedores", proveedorDao.listar());
-                request.getRequestDispatcher("Proveedor.jsp").forward(request, response);
-                return;
-            }
-
-            proveedorTemp.setCodigoProveedor(codProveedor);
-            proveedorDao.actualizar(proveedorTemp);
-
-            request.setAttribute("modo", "agregar");
-            request.setAttribute("proveedores", proveedorDao.listar());
-            request.getRequestDispatcher("Proveedor.jsp").forward(request, response);
-            return;
-
-        case "Eliminar":
-            codProveedor = Integer.parseInt(request.getParameter("codigoProveedor"));
-            proveedorDao.eliminar(codProveedor);
-            request.setAttribute("proveedores", proveedorDao.listar());
-            request.getRequestDispatcher("Proveedor.jsp").forward(request, response);
-            return;
-
-        case "Cancelar":
-            request.setAttribute("modo", "agregar");
-            request.setAttribute("proveedores", proveedorDao.listar());
-            request.getRequestDispatcher("Proveedor.jsp").forward(request, response);
-            break;
-        }
-            request.getRequestDispatcher("Proveedor.jsp").forward(request, response);
-    }else if (menu.equals("Compras")) {
-            switch(accion){
+        } else if (menu.equals("Compras")) {
+            switch (accion) {
                 case "Listar":
                     List listaCompras = compraDao.listarCompra();
                     request.setAttribute("compras", listaCompras);
@@ -624,7 +634,7 @@ public class Controlador extends HttpServlet {
                     String descripcion = request.getParameter("txtDescripcion");
                     String estado = request.getParameter("txtEstado");
                     int codigoEmpleado = Integer.parseInt(request.getParameter("txtCodigoEmpleado"));
-                    
+
                     compra.setFecha(fecha);
                     compra.setTotal(total);
                     compra.setDescripcion(descripcion);
@@ -662,10 +672,10 @@ public class Controlador extends HttpServlet {
                 case "Cancelar":
                     request.setAttribute("modo", "agregar");
                     request.getRequestDispatcher("Controlador?menu=Compras&accion=Listar").forward(request, response);
-                        break;            
+                    break;
             }
             request.getRequestDispatcher("Compras.jsp").forward(request, response);
-        }  else if (menu.equals("DetalleCompra")) {
+        } else if (menu.equals("DetalleCompra")) {
             switch (accion) {
                 case "Listar":
                     List listaDetalle = detalleDaoC.listar();
@@ -681,25 +691,28 @@ public class Controlador extends HttpServlet {
                     if (precUnitAgr == null || precUnitAgr.isEmpty()
                             || cantAgr == null || cantAgr.isEmpty()
                             || codigoVehiculoAgr == null || codigoVehiculoAgr.isEmpty()
-                            || codigoCompraAgr == null || codigoCompraAgr.isEmpty()){
+                            || codigoCompraAgr == null || codigoCompraAgr.isEmpty()) {
 
                         request.setAttribute("error", "Todos los campos deben estar llenos.");
-                        request.getRequestDispatcher("Controlador?menu=DetalleCompra&accion=Listar").forward(request, response);
+                        request.getRequestDispatcher("Controlador?menu=DetalleCompra&accion=Listar").forward(request,
+                                response);
                         return;
                     }
 
                     if (!cantAgr.matches("\\d+")) {
                         request.setAttribute("error", "La cantidad debe ser ingresada en forma de número entero");
-                        request.getRequestDispatcher("Controlador?menu=DetalleCompra&accion=Listar").forward(request, response);
+                        request.getRequestDispatcher("Controlador?menu=DetalleCompra&accion=Listar").forward(request,
+                                response);
                         return;
                     }
 
                     if (!precUnitAgr.matches("\\d+(\\.\\d+)?")) {
-                        request.setAttribute("error", "El precio unitario debe ser ingresado en forma de número decimal");
-                        request.getRequestDispatcher("Controlador?menu=DetalleCompra&accion=Listar").forward(request, response);
+                        request.setAttribute("error",
+                                "El precio unitario debe ser ingresado en forma de número decimal");
+                        request.getRequestDispatcher("Controlador?menu=DetalleCompra&accion=Listar").forward(request,
+                                response);
                         return;
                     }
-
 
                     double precioUnit = Double.parseDouble(precUnitAgr);
                     int cantidadAgr = Integer.parseInt(cantAgr);
@@ -708,13 +721,15 @@ public class Controlador extends HttpServlet {
 
                     if (cantidadAgr <= 0) {
                         request.setAttribute("error", "La cantidad debe ser mayor a 0.");
-                        request.getRequestDispatcher("Controlador?menu=DetalleCompra&accion=Listar").forward(request, response);
+                        request.getRequestDispatcher("Controlador?menu=DetalleCompra&accion=Listar").forward(request,
+                                response);
                         return;
                     }
 
                     if (precioUnit <= 0) {
                         request.setAttribute("error", "El Precio Unitario debe ser mayor a 0.");
-                        request.getRequestDispatcher("Controlador?menu=DetalleCompra&accion=Listar").forward(request, response);
+                        request.getRequestDispatcher("Controlador?menu=DetalleCompra&accion=Listar").forward(request,
+                                response);
                         return;
                     }
 
@@ -725,7 +740,8 @@ public class Controlador extends HttpServlet {
                     detalleCompraN.setCodigoCompra(codCompraIntAgrs);
                     detalleDaoC.agregar(detalleCompraN);
 
-                    request.getRequestDispatcher("Controlador?menu=DetalleCompra&accion=Listar").forward(request, response);
+                    request.getRequestDispatcher("Controlador?menu=DetalleCompra&accion=Listar").forward(request,
+                            response);
                     return;
 
                 case "Editar":
@@ -734,7 +750,8 @@ public class Controlador extends HttpServlet {
                     DetalleCompra dc = detalleDaoC.listarPorCodigoC(codDetalleCompra);
                     request.setAttribute("detalleCompra", dc);
                     request.setAttribute("modo", "editar");
-                    request.getRequestDispatcher("Controlador?menu=DetalleCompra&accion=Listar").forward(request, response);
+                    request.getRequestDispatcher("Controlador?menu=DetalleCompra&accion=Listar").forward(request,
+                            response);
                     break;
 
                 case "Actualizar":
@@ -749,36 +766,40 @@ public class Controlador extends HttpServlet {
                             || codCompraActu == null || codCompraActu.isEmpty()) {
 
                         request.setAttribute("error", "Todos los campos deben estar llenos.");
-                        request.getRequestDispatcher("Controlador?menu=DetalleCompra&accion=Listar").forward(request, response);
+                        request.getRequestDispatcher("Controlador?menu=DetalleCompra&accion=Listar").forward(request,
+                                response);
                         return;
                     }
 
                     if (!cantActu.matches("\\d+")) {
                         request.setAttribute("error", "La cantidad debe ser ingresada en forma de número entero");
-                        request.getRequestDispatcher("Controlador?menu=DetalleCompra&accion=Listar").forward(request, response);
+                        request.getRequestDispatcher("Controlador?menu=DetalleCompra&accion=Listar").forward(request,
+                                response);
                         return;
                     }
 
                     if (!precUnitActu.matches("\\d+(\\.\\d+)?")) {
-                        request.setAttribute("error", "El precio unitario debe ser ingresado en forma de número decimal");
-                        request.getRequestDispatcher("Controlador?menu=DetalleCompra&accion=Listar").forward(request, response);
+                        request.setAttribute("error",
+                                "El precio unitario debe ser ingresado en forma de número decimal");
+                        request.getRequestDispatcher("Controlador?menu=DetalleCompra&accion=Listar").forward(request,
+                                response);
                         return;
                     }
 
                     double precioUnitActu = Double.parseDouble(precUnitActu);
                     int cantidadActu = Integer.parseInt(cantActu);
-                    
-
 
                     if (cantidadActu <= 0) {
                         request.setAttribute("error", "La cantidad debe ser mayor a 0.");
-                        request.getRequestDispatcher("Controlador?menu=DetalleCompra&accion=Listar").forward(request, response);
+                        request.getRequestDispatcher("Controlador?menu=DetalleCompra&accion=Listar").forward(request,
+                                response);
                         return;
                     }
 
                     if (precioUnitActu <= 0) {
                         request.setAttribute("error", "El Precio Unitario debe ser mayor a 0.");
-                        request.getRequestDispatcher("Controlador?menu=DetalleCompra&accion=Listar").forward(request, response);
+                        request.getRequestDispatcher("Controlador?menu=DetalleCompra&accion=Listar").forward(request,
+                                response);
                         return;
                     }
 
@@ -791,22 +812,25 @@ public class Controlador extends HttpServlet {
 
                     detalleDaoC.actualizar(actualizado);
                     request.setAttribute("modo", "agregar");
-                    request.getRequestDispatcher("Controlador?menu=DetalleCompra&accion=Listar").forward(request, response);
+                    request.getRequestDispatcher("Controlador?menu=DetalleCompra&accion=Listar").forward(request,
+                            response);
                     return;
 
                 case "Eliminar":
                     codDetalleCompra = Integer.parseInt(request.getParameter("codigoDetalleCompra"));
                     detalleDaoC.eliminar(codDetalleCompra);
-                    request.getRequestDispatcher("Controlador?menu=DetalleCompra&accion=Listar").forward(request, response);
+                    request.getRequestDispatcher("Controlador?menu=DetalleCompra&accion=Listar").forward(request,
+                            response);
                     return;
                 case "cancelar":
                     request.setAttribute("modo", "agregar");
-                    request.getRequestDispatcher("Controlador?menu=DetalleCompra&accion=Listar").forward(request, response);
+                    request.getRequestDispatcher("Controlador?menu=DetalleCompra&accion=Listar").forward(request,
+                            response);
                     break;
             }
 
             request.getRequestDispatcher("DetalleCompra.jsp").forward(request, response);
-        }else if (menu.equals("DetalleVenta")) {
+        } else if (menu.equals("DetalleVenta")) {
             switch (accion) {
                 case "Listar":
                     List listaDetalle = detalleDao.listar();
@@ -825,31 +849,39 @@ public class Controlador extends HttpServlet {
                             || codVentaAgr == null || codVentaAgr.isEmpty()) {
 
                         request.setAttribute("error", "Todos los campos deben estar llenos.");
-                        request.getRequestDispatcher("Controlador?menu=DetalleVenta&accion=Listar").forward(request, response);
+                        request.getRequestDispatcher("Controlador?menu=DetalleVenta&accion=Listar").forward(request,
+                                response);
                         return;
                     }
 
                     if (!cantAgr.matches("\\d+")) {
                         request.setAttribute("error", "La cantidad debe ser ingresada en forma de número entero");
-                        request.getRequestDispatcher("Controlador?menu=DetalleVenta&accion=Listar").forward(request, response);
+                        request.getRequestDispatcher("Controlador?menu=DetalleVenta&accion=Listar").forward(request,
+                                response);
                         return;
                     }
 
                     if (!precVentaAgr.matches("\\d+(\\.\\d+)?")) {
-                        request.setAttribute("error", "El precio de venta debe ser ingresada en forma de número decimal");
-                        request.getRequestDispatcher("Controlador?menu=DetalleVenta&accion=Listar").forward(request, response);
+                        request.setAttribute("error",
+                                "El precio de venta debe ser ingresada en forma de número decimal");
+                        request.getRequestDispatcher("Controlador?menu=DetalleVenta&accion=Listar").forward(request,
+                                response);
                         return;
                     }
 
                     if (!codVehiculoAgr.matches("\\d+")) {
-                        request.setAttribute("error", "El codigo de Vehiculo debe ser ingresada en forma de número entero");
-                        request.getRequestDispatcher("Controlador?menu=DetalleVenta&accion=Listar").forward(request, response);
+                        request.setAttribute("error",
+                                "El codigo de Vehiculo debe ser ingresada en forma de número entero");
+                        request.getRequestDispatcher("Controlador?menu=DetalleVenta&accion=Listar").forward(request,
+                                response);
                         return;
                     }
 
                     if (!codVentaAgr.matches("\\d+")) {
-                        request.setAttribute("error", "El codigo de Venta debe ser ingresada en forma de número entero");
-                        request.getRequestDispatcher("Controlador?menu=DetalleVenta&accion=Listar").forward(request, response);
+                        request.setAttribute("error",
+                                "El codigo de Venta debe ser ingresada en forma de número entero");
+                        request.getRequestDispatcher("Controlador?menu=DetalleVenta&accion=Listar").forward(request,
+                                response);
                         return;
                     }
 
@@ -860,13 +892,15 @@ public class Controlador extends HttpServlet {
 
                     if (cantInt <= 0) {
                         request.setAttribute("error", "La cantidad debe ser mayor a 0.");
-                        request.getRequestDispatcher("Controlador?menu=DetalleVenta&accion=Listar").forward(request, response);
+                        request.getRequestDispatcher("Controlador?menu=DetalleVenta&accion=Listar").forward(request,
+                                response);
                         return;
                     }
 
                     if (precVentaInt <= 0) {
                         request.setAttribute("error", "El Precio de Venta debe ser mayor a 0.");
-                        request.getRequestDispatcher("Controlador?menu=DetalleVenta&accion=Listar").forward(request, response);
+                        request.getRequestDispatcher("Controlador?menu=DetalleVenta&accion=Listar").forward(request,
+                                response);
                         return;
                     }
 
@@ -877,8 +911,8 @@ public class Controlador extends HttpServlet {
                     detalleVentaN.setCodigoVenta(codVentaInt);
                     detalleDao.agregar(detalleVentaN);
 
-
-                    request.getRequestDispatcher("Controlador?menu=DetalleVenta&accion=Listar").forward(request, response);
+                    request.getRequestDispatcher("Controlador?menu=DetalleVenta&accion=Listar").forward(request,
+                            response);
                     return;
 
                 case "Editar":
@@ -887,7 +921,8 @@ public class Controlador extends HttpServlet {
                     DetalleVenta dv = detalleDao.listarPorCodigoDetalle(codDetalleVenta);
                     request.setAttribute("detalleVenta", dv);
                     request.setAttribute("modo", "editar");
-                    request.getRequestDispatcher("Controlador?menu=DetalleVenta&accion=Listar").forward(request, response);
+                    request.getRequestDispatcher("Controlador?menu=DetalleVenta&accion=Listar").forward(request,
+                            response);
                     break;
 
                 case "Actualizar":
@@ -902,31 +937,39 @@ public class Controlador extends HttpServlet {
                             || codVentaAct == null || codVentaAct.isEmpty()) {
 
                         request.setAttribute("error", "Debe seleccionar una tupla de la tabla.");
-                        request.getRequestDispatcher("Controlador?menu=DetalleVenta&accion=Listar").forward(request, response);
+                        request.getRequestDispatcher("Controlador?menu=DetalleVenta&accion=Listar").forward(request,
+                                response);
                         return;
                     }
 
                     if (!cantAct.matches("\\d+")) {
                         request.setAttribute("error", "La cantidad debe ser ingresada en forma de número entero");
-                        request.getRequestDispatcher("Controlador?menu=DetalleVenta&accion=Listar").forward(request, response);
+                        request.getRequestDispatcher("Controlador?menu=DetalleVenta&accion=Listar").forward(request,
+                                response);
                         return;
                     }
 
                     if (!precVentaAct.matches("\\d+(\\.\\d+)?")) {
-                        request.setAttribute("error", "El precio de venta debe ser ingresada en forma de número decimal");
-                        request.getRequestDispatcher("Controlador?menu=DetalleVenta&accion=Listar").forward(request, response);
+                        request.setAttribute("error",
+                                "El precio de venta debe ser ingresada en forma de número decimal");
+                        request.getRequestDispatcher("Controlador?menu=DetalleVenta&accion=Listar").forward(request,
+                                response);
                         return;
                     }
 
                     if (!codVehiculoAct.matches("\\d+")) {
-                        request.setAttribute("error", "El codigo de Vehiculo debe ser ingresada en forma de número entero");
-                        request.getRequestDispatcher("Controlador?menu=DetalleVenta&accion=Listar").forward(request, response);
+                        request.setAttribute("error",
+                                "El codigo de Vehiculo debe ser ingresada en forma de número entero");
+                        request.getRequestDispatcher("Controlador?menu=DetalleVenta&accion=Listar").forward(request,
+                                response);
                         return;
                     }
 
                     if (!codVentaAct.matches("\\d+")) {
-                        request.setAttribute("error", "El codigo de Venta debe ser ingresada en forma de número entero");
-                        request.getRequestDispatcher("Controlador?menu=DetalleVenta&accion=Listar").forward(request, response);
+                        request.setAttribute("error",
+                                "El codigo de Venta debe ser ingresada en forma de número entero");
+                        request.getRequestDispatcher("Controlador?menu=DetalleVenta&accion=Listar").forward(request,
+                                response);
                         return;
                     }
 
@@ -937,13 +980,15 @@ public class Controlador extends HttpServlet {
 
                     if (cantidadAct <= 0) {
                         request.setAttribute("error", "La cantidad debe ser mayor a 0.");
-                        request.getRequestDispatcher("Controlador?menu=DetalleVenta&accion=Listar").forward(request, response);
+                        request.getRequestDispatcher("Controlador?menu=DetalleVenta&accion=Listar").forward(request,
+                                response);
                         return;
                     }
 
                     if (precioAct <= 0) {
                         request.setAttribute("error", "El Precio de Venta debe ser mayor a 0.");
-                        request.getRequestDispatcher("Controlador?menu=DetalleVenta&accion=Listar").forward(request, response);
+                        request.getRequestDispatcher("Controlador?menu=DetalleVenta&accion=Listar").forward(request,
+                                response);
                         return;
                     }
 
@@ -956,22 +1001,25 @@ public class Controlador extends HttpServlet {
 
                     detalleDao.actualizar(actualizado);
                     request.setAttribute("modo", "agregar");
-                    request.getRequestDispatcher("Controlador?menu=DetalleVenta&accion=Listar").forward(request, response);
+                    request.getRequestDispatcher("Controlador?menu=DetalleVenta&accion=Listar").forward(request,
+                            response);
                     return;
 
                 case "Eliminar":
                     codDetalleVenta = Integer.parseInt(request.getParameter("codigoDetalleVenta"));
                     detalleDao.eliminar(codDetalleVenta);
-                    request.getRequestDispatcher("Controlador?menu=DetalleVenta&accion=Listar").forward(request, response);
+                    request.getRequestDispatcher("Controlador?menu=DetalleVenta&accion=Listar").forward(request,
+                            response);
                     return;
                 case "cancelar":
                     request.setAttribute("modo", "agregar");
-                    request.getRequestDispatcher("Controlador?menu=DetalleVenta&accion=Listar").forward(request, response);
+                    request.getRequestDispatcher("Controlador?menu=DetalleVenta&accion=Listar").forward(request,
+                            response);
                     break;
             }
 
             request.getRequestDispatcher("DetalleVenta.jsp").forward(request, response);
-        }else if (menu.equals("Seguro")) {
+        } else if (menu.equals("Seguro")) {
             switch (accion) {
                 case "Listar":
                     List<Seguro> listaSeguros = seguroDao.listar();
@@ -980,128 +1028,135 @@ public class Controlador extends HttpServlet {
                     break;
 
                 case "Agregar":
-                        String tipoCobertura = request.getParameter("txttipoCobertura");
-                        String descripcion = request.getParameter("txtdescripcion");
-                        String costoStr = request.getParameter("txtcosto");
-                        String fechaInicioStr = request.getParameter("txtfechaInicio");
-                        String fechaFinStr = request.getParameter("txtfechaFin");
-                        String codigoVehiculoStr = request.getParameter("txtcodigoVehiculo");
+                    String tipoCobertura = request.getParameter("txttipoCobertura");
+                    String descripcion = request.getParameter("txtdescripcion");
+                    String costoStr = request.getParameter("txtcosto");
+                    String fechaInicioStr = request.getParameter("txtfechaInicio");
+                    String fechaFinStr = request.getParameter("txtfechaFin");
+                    String codigoVehiculoStr = request.getParameter("txtcodigoVehiculo");
 
-                        // VALIDACIÓN DE DESCRIPCIÓN (solo letras y espacios)
-                        if (descripcion == null || descripcion.trim().isEmpty() || !descripcion.matches("^[a-zA-Z\\s]+$")) {
-                            request.setAttribute("error", "El campo Descripción solo puede contener letras y espacios, sin acentos ni caracteres especiales.");
-                            request.getRequestDispatcher("Controlador?menu=Seguro&accion=Listar").forward(request, response);
-                            return;
-                        }
+                    // VALIDACIÓN DE DESCRIPCIÓN (solo letras y espacios)
+                    if (descripcion == null || descripcion.trim().isEmpty() || !descripcion.matches("^[a-zA-Z\\s]+$")) {
+                        request.setAttribute("error",
+                                "El campo Descripción solo puede contener letras y espacios, sin acentos ni caracteres especiales.");
+                        request.getRequestDispatcher("Controlador?menu=Seguro&accion=Listar").forward(request,
+                                response);
+                        return;
+                    }
 
-                        // VALIDACIÓN DE COSTO (solo números decimales o enteros)
-                        if (costoStr == null || costoStr.trim().isEmpty() || !costoStr.matches("^\\d+(\\.\\d+)?$")) {
-                            request.setAttribute("error", "El campo Costo solo puede contener números válidos (ej: 100 o 100.50).");
-                            request.getRequestDispatcher("Controlador?menu=Seguro&accion=Listar").forward(request, response);
-                            return;
-                        }
-                        
-   
+                    // VALIDACIÓN DE COSTO (solo números decimales o enteros)
+                    if (costoStr == null || costoStr.trim().isEmpty() || !costoStr.matches("^\\d+(\\.\\d+)?$")) {
+                        request.setAttribute("error",
+                                "El campo Costo solo puede contener números válidos (ej: 100 o 100.50).");
+                        request.getRequestDispatcher("Controlador?menu=Seguro&accion=Listar").forward(request,
+                                response);
+                        return;
+                    }
 
-                        // Conversión segura de datos
-                         Date fechaInicio = java.sql.Date.valueOf(fechaInicioStr);
-                        Date fechaFin = java.sql.Date.valueOf(fechaFinStr);
-                        double costo = Double.parseDouble(costoStr);
-                        int codigoVehiculo = Integer.parseInt(codigoVehiculoStr);
-                        
-                         // VALIDACIÓN DE FECHAS (fechaFin no puede ser anterior a fechaInicio)
-                        if (fechaFin.before(fechaInicio)) {
-                            request.setAttribute("error", "La Fecha de Fin no puede ser anterior a la Fecha de Inicio.");
-                            request.getRequestDispatcher("Controlador?menu=Seguro&accion=Listar").forward(request, response);
-                            return;
-                        }
+                    // Conversión segura de datos
+                    Date fechaInicio = java.sql.Date.valueOf(fechaInicioStr);
+                    Date fechaFin = java.sql.Date.valueOf(fechaFinStr);
+                    double costo = Double.parseDouble(costoStr);
+                    int codigoVehiculo = Integer.parseInt(codigoVehiculoStr);
 
-                        seguro.setTipoCobertura(tipoCobertura);
-                        seguro.setDescripcion(descripcion);
-                        seguro.setFechaInicio(fechaInicio);
-                        seguro.setFechaFin(fechaFin);
-                        seguro.setCosto(costo);
-                        seguro.setCodigoVehiculo(codigoVehiculo);
+                    // VALIDACIÓN DE FECHAS (fechaFin no puede ser anterior a fechaInicio)
+                    if (fechaFin.before(fechaInicio)) {
+                        request.setAttribute("error", "La Fecha de Fin no puede ser anterior a la Fecha de Inicio.");
+                        request.getRequestDispatcher("Controlador?menu=Seguro&accion=Listar").forward(request,
+                                response);
+                        return;
+                    }
 
-                        seguroDao.agregar(seguro);
-                        request.setAttribute("modo", "editar");
-                        request.getRequestDispatcher("Controlador?menu=Seguro&accion=Listar").forward(request, response);
-                        break;
-                    
-               case "Editar":
-                        codSeguro = Integer.parseInt(request.getParameter("codigoSeguro"));
-                        Seguro s = seguroDao.listarCodigoSeguro(codSeguro);
-                        request.setAttribute("seguro", s); // objeto a editar
-                        request.setAttribute("modo", "editar");
-                        // Solo hacemos forward a Seguros.jsp, no a "Listar"
-                        request.getRequestDispatcher("Controlador?menu=Seguro&accion=Listar").forward(request, response);
-                        break;
+                    seguro.setTipoCobertura(tipoCobertura);
+                    seguro.setDescripcion(descripcion);
+                    seguro.setFechaInicio(fechaInicio);
+                    seguro.setFechaFin(fechaFin);
+                    seguro.setCosto(costo);
+                    seguro.setCodigoVehiculo(codigoVehiculo);
 
+                    seguroDao.agregar(seguro);
+                    request.setAttribute("modo", "editar");
+                    request.getRequestDispatcher("Controlador?menu=Seguro&accion=Listar").forward(request, response);
+                    break;
 
-              case "Actualizar":
-                        String tipoCoberturaS = request.getParameter("txttipoCobertura");
-                        String descripcionS = request.getParameter("txtdescripcion");
-                        String costoStrS = request.getParameter("txtcosto");
-                        String fechaInicioStrS = request.getParameter("txtfechaInicio");
-                        String fechaFinStrS = request.getParameter("txtfechaFin");
-                        String codigoSeguroStr = request.getParameter("txtcodigoSeguro");
+                case "Editar":
+                    codSeguro = Integer.parseInt(request.getParameter("codigoSeguro"));
+                    Seguro s = seguroDao.listarCodigoSeguro(codSeguro);
+                    request.setAttribute("seguro", s); // objeto a editar
+                    request.setAttribute("modo", "editar");
+                    // Solo hacemos forward a Seguros.jsp, no a "Listar"
+                    request.getRequestDispatcher("Controlador?menu=Seguro&accion=Listar").forward(request, response);
+                    break;
 
-                        // VALIDACIONES
-                        if (descripcionS == null || descripcionS.trim().isEmpty() || !descripcionS.matches("^[a-zA-Z\\s]+$")) {
-                            request.setAttribute("error", "El campo Descripción solo puede contener letras y espacios.");
-                            request.getRequestDispatcher("Controlador?menu=Seguro&accion=Listar").forward(request, response);
-                            return;
-                        }
-                        
-                       if (costoStrS == null || costoStrS.trim().isEmpty() || !costoStrS.matches("^\\d+(\\.\\d+)?$")) {
-                           request.setAttribute("error", "El campo Costo solo puede contener números válidos.");
-                           request.getRequestDispatcher("Controlador?menu=Seguro&accion=Listar").forward(request, response);
-                           return;
-                       }
-                            
-                       // CONVERSIÓN DE DATOS
-                       Date fechaInicioS = java.sql.Date.valueOf(fechaInicioStrS);
-                       Date fechaFinS = java.sql.Date.valueOf(fechaFinStrS);
-                       double costoS = Double.parseDouble(costoStrS);
-                       int codigoSeguro = Integer.parseInt(codigoSeguroStr);
-                            
-                      // VALIDACIÓN DE FECHAS
-                     if (fechaFinS.before(fechaInicioS)) {
-                            request.setAttribute("error", "La Fecha de Fin no puede ser anterior a la Fecha de Inicio.");
-                            request.getRequestDispatcher("Controlador?menu=Seguro&accion=Listar").forward(request, response);
-                            return;
-                        }
+                case "Actualizar":
+                    String tipoCoberturaS = request.getParameter("txttipoCobertura");
+                    String descripcionS = request.getParameter("txtdescripcion");
+                    String costoStrS = request.getParameter("txtcosto");
+                    String fechaInicioStrS = request.getParameter("txtfechaInicio");
+                    String fechaFinStrS = request.getParameter("txtfechaFin");
+                    String codigoSeguroStr = request.getParameter("txtcodigoSeguro");
 
-                     // SETEO DEL OBJETO
-                       seguro.setCodigoSeguro(codigoSeguro);
-                       seguro.setDescripcion(descripcionS);
-                       seguro.setFechaInicio(fechaInicioS);
-                       seguro.setFechaFin(fechaFinS);
-                       seguro.setCosto(costoS);
+                    // VALIDACIONES
+                    if (descripcionS == null || descripcionS.trim().isEmpty()
+                            || !descripcionS.matches("^[a-zA-Z\\s]+$")) {
+                        request.setAttribute("error", "El campo Descripción solo puede contener letras y espacios.");
+                        request.getRequestDispatcher("Controlador?menu=Seguro&accion=Listar").forward(request,
+                                response);
+                        return;
+                    }
+
+                    if (costoStrS == null || costoStrS.trim().isEmpty() || !costoStrS.matches("^\\d+(\\.\\d+)?$")) {
+                        request.setAttribute("error", "El campo Costo solo puede contener números válidos.");
+                        request.getRequestDispatcher("Controlador?menu=Seguro&accion=Listar").forward(request,
+                                response);
+                        return;
+                    }
+
+                    // CONVERSIÓN DE DATOS
+                    Date fechaInicioS = java.sql.Date.valueOf(fechaInicioStrS);
+                    Date fechaFinS = java.sql.Date.valueOf(fechaFinStrS);
+                    double costoS = Double.parseDouble(costoStrS);
+                    int codigoSeguro = Integer.parseInt(codigoSeguroStr);
+
+                    // VALIDACIÓN DE FECHAS
+                    if (fechaFinS.before(fechaInicioS)) {
+                        request.setAttribute("error", "La Fecha de Fin no puede ser anterior a la Fecha de Inicio.");
+                        request.getRequestDispatcher("Controlador?menu=Seguro&accion=Listar").forward(request,
+                                response);
+                        return;
+                    }
+
+                    // SETEO DEL OBJETO
+                    seguro.setCodigoSeguro(codigoSeguro);
+                    seguro.setDescripcion(descripcionS);
+                    seguro.setFechaInicio(fechaInicioS);
+                    seguro.setFechaFin(fechaFinS);
+                    seguro.setCosto(costoS);
 
                     // ACTUALIZAR EN LA BASE DE DATOS
-                       seguroDao.actualizar(seguro);
+                    seguroDao.actualizar(seguro);
 
                     // REDIRECCIÓN PARA RECARGAR LISTA
-                       request.setAttribute("modo", "agregar");
-                       request.getRequestDispatcher("Controlador?menu=Seguro&accion=Listar").forward(request, response);
-                       break;
+                    request.setAttribute("modo", "agregar");
+                    request.getRequestDispatcher("Controlador?menu=Seguro&accion=Listar").forward(request, response);
+                    break;
 
                 case "Eliminar":
-                        codSeguro = Integer.parseInt(request.getParameter("codigoSeguro")); // Se obtiene el código del seguro
-                        seguroDao.eliminar(codSeguro); // Se llama al SeguroDAO para eliminarlo de la base de datos
-                        request.getRequestDispatcher("Controlador?menu=Seguro&accion=Listar").forward(request, response);
-                        break;    
-                
+                    codSeguro = Integer.parseInt(request.getParameter("codigoSeguro")); // Se obtiene el código del
+                                                                                        // seguro
+                    seguroDao.eliminar(codSeguro); // Se llama al SeguroDAO para eliminarlo de la base de datos
+                    request.getRequestDispatcher("Controlador?menu=Seguro&accion=Listar").forward(request, response);
+                    break;
+
                 case "Cancelar":
-                        request.setAttribute("modo", "agregar");
-                        request.getRequestDispatcher("Controlador?menu=Seguro&accion=Listar").forward(request, response);
-                        break;
-                        
-            }       
+                    request.setAttribute("modo", "agregar");
+                    request.getRequestDispatcher("Controlador?menu=Seguro&accion=Listar").forward(request, response);
+                    break;
+
+            }
             request.getRequestDispatcher("Seguros.jsp").forward(request, response);
-        }else if (menu.equals("Venta")) {
-            switch(accion){
+        } else if (menu.equals("Venta")) {
+            switch (accion) {
                 case "Listar":
                     List listaVentas = ventaDao.listar();
                     request.setAttribute("ventas", listaVentas);
@@ -1129,7 +1184,7 @@ public class Controlador extends HttpServlet {
                     request.setAttribute("modo", "editar");
                     request.getRequestDispatcher("Controlador?menu=Venta&accion=Listar").forward(request, response);
                     break;
-                    
+
                 case "Actualizar":
                     Date fechaVen = java.sql.Date.valueOf(request.getParameter("txtFecha"));
                     Double totalVen = Double.parseDouble(request.getParameter("txtTotal"));
@@ -1155,6 +1210,85 @@ public class Controlador extends HttpServlet {
                     break;
             }
             request.getRequestDispatcher("Venta.jsp").forward(request, response);
+
+            // VEHICULOS
+        } else if (menu.equals("Vehiculo")) {
+            switch (accion) {
+                case "Listar":
+                    List listaVehiculos = vehiculoDao.listar();
+                    request.setAttribute("vehiculos", listaVehiculos);
+                    List proveedoresCon = proveedorDao.listar(); // Necesitas el DAO de proveedores
+                    request.setAttribute("proveedores", proveedoresCon);
+                    break;
+
+                case "Agregar":
+                    String modelo = request.getParameter("txtModelo");
+                    String descripcion = request.getParameter("txtDescripcion");
+                    String marca = request.getParameter("txtMarca");
+                    String color = request.getParameter("txtColor");
+                    Integer stock = Integer.parseInt(request.getParameter("txtStock"));
+                    Double precio = Double.parseDouble(request.getParameter("txtPrecio"));
+                    String anio = request.getParameter("txtAnio");
+                    Integer codigoProveedor = Integer.parseInt(request.getParameter("txtCodigoProveedor"));
+                    vehiculo.setModelo(modelo);
+                    vehiculo.setDescripcion(descripcion);
+                    vehiculo.setMarca(marca);
+                    vehiculo.setColor(color);
+                    vehiculo.setStock(stock);
+                    vehiculo.setPrecio(precio);
+                    vehiculo.setAnio(anio);
+                    vehiculo.setCodigoProveedor(codigoProveedor);
+                    vehiculoDao.agregar(vehiculo);
+                    request.setAttribute("modo", "agregar");
+                    // Forward hacia el mismo servlet para Listar
+                    request.getRequestDispatcher("Controlador?menu=Vehiculo&accion=Listar").forward(request, response);
+                    break;
+
+                case "Editar":
+                    codVehiculo = Integer.parseInt(request.getParameter("codigoVehiculo"));
+                    Vehiculo v = vehiculoDao.listarCodigoVehiculo(codVehiculo);
+                    request.setAttribute("vehiculo", v);
+                    request.setAttribute("modo", "editar");
+                    // Forward hacia el mismo servlet para Listar (igual que Empleados)
+                    request.getRequestDispatcher("Controlador?menu=Vehiculo&accion=Listar").forward(request, response);
+                    break;
+
+                case "Actualizar":
+                    String modeloVeh = request.getParameter("txtModelo");
+                    String descripcionVeh = request.getParameter("txtDescripcion");
+                    String marcaVeh = request.getParameter("txtMarca");
+                    String colorVeh = request.getParameter("txtColor");
+                    Integer stockVeh = Integer.parseInt(request.getParameter("txtStock"));
+                    Double precioVeh = Double.parseDouble(request.getParameter("txtPrecio"));
+                    String anioVeh = request.getParameter("txtAnio");
+
+                    vehiculo.setModelo(modeloVeh);
+                    vehiculo.setDescripcion(descripcionVeh);
+                    vehiculo.setMarca(marcaVeh);
+                    vehiculo.setColor(colorVeh);
+                    vehiculo.setStock(stockVeh);
+                    vehiculo.setPrecio(precioVeh);
+                    vehiculo.setAnio(anioVeh);
+                    vehiculo.setCodigoVehiculo(codVehiculo);
+                    vehiculoDao.actualizar(vehiculo);
+                    // Forward hacia el mismo servlet para Listar
+                    request.getRequestDispatcher("Controlador?menu=Vehiculo&accion=Listar").forward(request, response);
+                    break;
+
+                case "Eliminar":
+                    codVehiculo = Integer.parseInt(request.getParameter("codigoVehiculo"));
+                    vehiculoDao.eliminar(codVehiculo);
+                    // Forward hacia el mismo servlet para Listar
+                    request.getRequestDispatcher("Controlador?menu=Vehiculo&accion=Listar").forward(request, response);
+                    break;
+                case "Cancelar":
+                    request.setAttribute("modo", "agregar");
+                    request.getRequestDispatcher("Controlador?menu=Vehiculo&accion=Listar").forward(request, response);
+                    break;
+            }
+
+            // Al final, forward hacia la JSP solo si quieres mostrar la vista inicial
+            request.getRequestDispatcher("Vehiculo.jsp").forward(request, response);
         }
     }
 
