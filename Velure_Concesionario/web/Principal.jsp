@@ -370,7 +370,7 @@
     </div>
     <!-- Logo centrado y más grande -->
     <a class="logo-center" href="#" onclick="showHome()">
-        <img src="img/Velure.png" alt="Logo">
+        <img src="img/V.png" alt="Logo">
     </a>
     <!-- Usuario a la derecha -->
     <div class="dropdown">
