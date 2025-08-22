@@ -13,9 +13,9 @@
                 <title>Cliente</title>
                 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
                 <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
-                <link href="styles/clientes.css" rel="stylesheet">
+                <link href="styles/styleSheet.css" rel="stylesheet">
                 <script
-                    src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script
+                    src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     </head>
     <body>
@@ -66,11 +66,11 @@
                                 </div>
                                 <div class="form-group">
                                     <label><strong>Estado:</strong></label>
-                                    <input type="text" value="${cliente.estado}" name="txtEstado" class="form-control">
+                                    <input type="text" value="${cliente.estado}" name="txtEstado" maxlength="1" minlength="1" pattern="\d{1}" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label><strong>Teléfono:</strong></label>
-                                    <input type="text" value="${cliente.telefonoCliente}" name="txtTelefonoCliente" class="form-control">
+                                    <input type="text" value="${cliente.telefonoCliente}" name="txtTelefonoCliente" maxlength="8" minlength="8" pattern="\d{8}" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label><strong>Correo:</strong></label>

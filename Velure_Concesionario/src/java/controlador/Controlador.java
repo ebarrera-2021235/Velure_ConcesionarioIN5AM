@@ -168,7 +168,7 @@ public class Controlador extends HttpServlet {
                     }
 
                     if (nombresCliente == null || nombresCliente.trim().isEmpty()
-                            || !nombresCliente.matches("^[a-zA-Z\\s]+$")) {
+                            || !nombresCliente.matches("^[A-ZÁÉÍÓÚÜÑ][a-záéíóúüñ'\\-\\s]+$")) {
                         request.setAttribute("error",
                                 "El espacio de Nombres solo puede contener letras y espacios, sin acentos ni caracteres especiales.");
                         List lista = clienteDAO.listarCliente();
@@ -294,7 +294,7 @@ public class Controlador extends HttpServlet {
             }
             request.getRequestDispatcher("Clientes.jsp").forward(request, response);
 
-            // --- SERVICIOS ---
+            // --- Empleados ---
         } else if (menu.equals("Empleado")) {
             switch (accion) {
 
@@ -310,7 +310,6 @@ public class Controlador extends HttpServlet {
                     String est = request.getParameter("txtEstadoEmpleado");
                     String correo = request.getParameter("txtCorreoEmpleado");
 
-                    // ✅ Validaciones
                     if (DPI == null || !DPI.matches("\\d{13}")) {
                         request.setAttribute("error", "El DPI debe contener exactamente 13 dígitos.");
                         request.getRequestDispatcher("Controlador?menu=Empleado&accion=Listar").forward(request,
@@ -367,7 +366,6 @@ public class Controlador extends HttpServlet {
                     String estEmp = request.getParameter("txtEstadoEmpleado");
                     String correoEmp = request.getParameter("txtCorreoEmpleado");
 
-                    // ✅ Validaciones (igual que en Agregar)
                     if (DPIEmp == null || !DPIEmp.matches("\\d{13}")) {
                         request.setAttribute("error", "El DPI debe contener exactamente 13 dígitos.");
                         request.getRequestDispatcher("Controlador?menu=Empleado&accion=Listar").forward(request,
@@ -441,6 +439,22 @@ public class Controlador extends HttpServlet {
 
                 // AGREGAR
                 case "Agregar":
+                    if (request.getParameter("txtFecha") == null || request.getParameter("txtFecha").isEmpty()
+                        || request.getParameter("txtTotal") == null || request.getParameter("txtTotal").isEmpty()
+                        || request.getParameter("txtDescripcion") == null || request.getParameter("txtDescripcion").isEmpty()
+                        || request.getParameter("txtTipoDePago") == null || request.getParameter("txtTipoDePago").isEmpty()
+                        || request.getParameter("txtCodigoCliente") == null || request.getParameter("txtCodigoCliente").isEmpty()
+                        || request.getParameter("txtCodigoEmpleado") == null || request.getParameter("txtCodigoEmpleado").isEmpty()) {
+
+                        request.setAttribute("error", "Todos los campos deben estar llenos.");
+                        request.setAttribute("ventas", ventaDao.listar());
+                        request.setAttribute("clientes", clienteDAO.listarCliente());
+                        request.setAttribute("empleados", empleadoDAO.listar());
+                        request.getRequestDispatcher("Venta.jsp").forward(request, response);
+                        return;
+                    }
+                    
+                    
                     String nombreServicio = request.getParameter("txtNombreServicio");
                     String descripcion = request.getParameter("txtDescripcion");
                     String tipo = request.getParameter("txtTipo");
@@ -467,6 +481,21 @@ public class Controlador extends HttpServlet {
 
                 // ACTUALIZAR
                 case "Actualizar":
+                    if (request.getParameter("txtFecha") == null || request.getParameter("txtFecha").isEmpty()                       
+                            || request.getParameter("txtTotal") == null || request.getParameter("txtTotal").isEmpty()
+                            || request.getParameter("txtDescripcion") == null || request.getParameter("txtDescripcion").isEmpty()
+                            || request.getParameter("txtTipoDePago") == null || request.getParameter("txtTipoDePago").isEmpty()
+                            || request.getParameter("txtCodigoCliente") == null || request.getParameter("txtCodigoCliente").isEmpty()
+                            || request.getParameter("txtCodigoEmpleado") == null || request.getParameter("txtCodigoEmpleado").isEmpty()) {
+
+                            request.setAttribute("error", "Todos los campos deben estar llenos.");
+                            request.setAttribute("ventas", ventaDao.listar());
+                            request.setAttribute("clientes", clienteDAO.listarCliente());
+                            request.setAttribute("empleados", empleadoDAO.listar());
+                            request.getRequestDispatcher("Venta.jsp").forward(request, response);
+                            return;
+                    }
+                    
                     String nombreSer = request.getParameter("txtNombreServicio");
                     String descripcionSer = request.getParameter("txtDescripcion");
                     String tipoSer = request.getParameter("txtTipo");
@@ -513,6 +542,17 @@ public class Controlador extends HttpServlet {
                     String correo = request.getParameter("txtCorreoProveedor");
 
                     // --- VALIDACIONES ---
+                    if(nombre == null || nombre.isEmpty() || telefono == null || telefono.isEmpty()
+                            || direccion == null || direccion.isEmpty() || correo == null || correo.isEmpty()){
+                        
+                        request.setAttribute("error", "Todos los campos deben estar llenos.");
+                        // Para manejar el error, necesitas redirigir a la misma vista de listado
+                        // para que el usuario pueda ver el mensaje y los datos se vuelvan a cargar.
+                        // El JPS de Clientes mostrará el error por el script.
+                        request.setAttribute("proveedores", proveedorDao.listar());
+                        request.getRequestDispatcher("Proveedor.jsp").forward(request, response);
+                        
+                    }
                     if (nombre == null || nombre.isEmpty() || nombre.matches(".*\\d.*")) {
                         request.setAttribute("error", "El nombre no debe contener números y no puede estar vacío.");
                         request.setAttribute("proveedores", proveedorDao.listar());
@@ -532,8 +572,8 @@ public class Controlador extends HttpServlet {
                                     && !correo.endsWith("@yahoo.com"))) {
                         request.setAttribute("error",
                                 "El correo debe terminar con @gmail.com, @outlook.com o @yahoo.com.");
-                        request.setAttribute("proveedores", proveedorDao.listar());
-                        request.getRequestDispatcher("Proveedor.jsp").forward(request, response);
+                        //request.setAttribute("proveedores", proveedorDao.listar());
+                        request.getRequestDispatcher("Controlador?menu=Proveedor&accion==Listar").forward(request, response);
                         return;
                     }
 
@@ -543,6 +583,7 @@ public class Controlador extends HttpServlet {
                     proveedor.setCorreoProveedor(correo);
 
                     proveedorDao.agregar(proveedor);
+                    response.sendRedirect("Controlador?menu=Proveedor&accion=Listar");
 
                     // Recargar lista
                     request.setAttribute("proveedores", proveedorDao.listar());
@@ -1181,12 +1222,34 @@ public class Controlador extends HttpServlet {
                     request.setAttribute("empleados", empleadosCon);
                     break;
                 case "Agregar":
+                  
+                    
+                    if (request.getParameter("txtFecha") == null || request.getParameter("txtFecha").isEmpty()
+                        || request.getParameter("txtTotal") == null || request.getParameter("txtTotal").isEmpty()
+                        || request.getParameter("txtDescripcion") == null || request.getParameter("txtDescripcion").isEmpty()
+                        || request.getParameter("txtTipoDePago") == null || request.getParameter("txtTipoDePago").isEmpty()
+                        || request.getParameter("txtCodigoCliente") == null || request.getParameter("txtCodigoCliente").isEmpty()
+                        || request.getParameter("txtCodigoEmpleado") == null || request.getParameter("txtCodigoEmpleado").isEmpty()) {
+
+                        request.setAttribute("error", "Todos los campos deben estar llenos.");
+                        request.setAttribute("ventas", ventaDao.listar());
+                        request.setAttribute("clientes", clienteDAO.listarCliente());
+                        request.setAttribute("empleados", empleadoDAO.listar());
+                        request.getRequestDispatcher("Venta.jsp").forward(request, response);
+                        return;
+                    }
+                    
+                    // conversion despues de validar
+
                     Date fecha = java.sql.Date.valueOf(request.getParameter("txtFecha"));
                     Double total = Double.parseDouble(request.getParameter("txtTotal"));
                     String descripcion = request.getParameter("txtDescripcion");
                     String tipoDePago = request.getParameter("txtTipoDePago");
                     int codigoCliente = Integer.parseInt(request.getParameter("txtCodigoCliente"));
                     int codigoEmpleado = Integer.parseInt(request.getParameter("txtCodigoEmpleado"));
+
+
+
                     venta.setFecha(fecha);
                     venta.setTotal(total);
                     venta.setDescripcion(descripcion);
@@ -1205,6 +1268,20 @@ public class Controlador extends HttpServlet {
                     break;
 
                 case "Actualizar":
+                    if (request.getParameter("txtFecha") == null || request.getParameter("txtFecha").isEmpty()
+                        || request.getParameter("txtTotal") == null || request.getParameter("txtTotal").isEmpty()
+                        || request.getParameter("txtDescripcion") == null || request.getParameter("txtDescripcion").isEmpty()
+                        || request.getParameter("txtTipoDePago") == null || request.getParameter("txtTipoDePago").isEmpty()
+                        || request.getParameter("txtCodigoCliente") == null || request.getParameter("txtCodigoCliente").isEmpty()
+                        || request.getParameter("txtCodigoEmpleado") == null || request.getParameter("txtCodigoEmpleado").isEmpty()) {
+
+                        request.setAttribute("error", "Todos los campos deben estar llenos.");
+                        request.setAttribute("ventas", ventaDao.listar());
+                        request.setAttribute("clientes", clienteDAO.listarCliente());
+                        request.setAttribute("empleados", empleadoDAO.listar());
+                        request.getRequestDispatcher("Venta.jsp").forward(request, response);
+                        return;
+                    }
                     Date fechaVen = java.sql.Date.valueOf(request.getParameter("txtFecha"));
                     Double totalVen = Double.parseDouble(request.getParameter("txtTotal"));
                     String descripcionVen = request.getParameter("txtDescripcion");
@@ -1241,6 +1318,7 @@ public class Controlador extends HttpServlet {
                     break;
 
                 case "Agregar":
+                    
                     String modelo = request.getParameter("txtModelo");
                     String descripcion = request.getParameter("txtDescripcion");
                     String marca = request.getParameter("txtMarca");
@@ -1249,6 +1327,25 @@ public class Controlador extends HttpServlet {
                     Double precio = Double.parseDouble(request.getParameter("txtPrecio"));
                     String anio = request.getParameter("txtAnio");
                     Integer codigoProveedor = Integer.parseInt(request.getParameter("txtCodigoProveedor"));
+                    
+                     if (modelo == null || modelo.isEmpty()
+                            || descripcion == null || descripcion.isEmpty()
+                            || marca == null || marca.isEmpty()
+                            || color == null || color.isEmpty()
+                            || stock == 0
+                            || precio == 0 || anio == null || anio.isEmpty()
+                            || codigoProveedor == 0) {
+
+                        request.setAttribute("error", "Todos los campos deben estar llenos.");
+                        // Para manejar el error, necesitas redirigir a la misma vista de listado
+                        // para que el usuario pueda ver el mensaje y los datos se vuelvan a cargar.
+                        // El JPS de Clientes mostrará el error por el script.
+                        List lista = vehiculoDao.listar();
+                        request.setAttribute("vehiculo", lista);
+                        request.getRequestDispatcher("Vehiculo.jsp").forward(request, response);
+                        return;
+                    }
+
                     vehiculo.setModelo(modelo);
                     vehiculo.setDescripcion(descripcion);
                     vehiculo.setMarca(marca);
