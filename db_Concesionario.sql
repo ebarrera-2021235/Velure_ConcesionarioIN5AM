@@ -34,6 +34,7 @@ Create table Usuarios(
     contrasenia varchar(25) not null,
     correoUsuario varchar(50) not null,
     codigoEmpleado int not null,
+    imagen varchar (5200) not null,
     primary key PK_codigoUsuario(codigoUsuario),
     constraint FK_Usuarios_Empleado foreign key (codigoEmpleado)
 		references Empleados (codigoEmpleado)

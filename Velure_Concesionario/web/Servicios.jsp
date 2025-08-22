@@ -268,7 +268,7 @@
             <div class="card-body">
                 <form action="Controlador?menu=Servicios" method="POST" id="formServicio">
                     <!-- Campo oculto para almacenar el id del servicio (necesario para actualizar) -->
-                    <input type="hidden" name="txtCodigoServicio" value="${servicio != null ? servicio.codigoServicio : ''}">
+                    <input type="hidden" name="codigoServicio" value="${servicio != null ? servicio.codigoServicio : ''}">
 
                     <!-- Campos del formulario -->
                     <div class="form-group">
@@ -298,12 +298,23 @@
                                ${servicio != null ? 'readonly' : ''}>
                     </div>
 
-                    <!-- Botones de acción con validación de campos -->
-                    <input type="submit" name="accion" value="Agregar" class="btn btn-form btn-agregar" onclick="return validarCampos();">
-                    <input type="submit" name="accion" value="Actualizar" class="btn btn-form btn-actualizar" onclick="return validarCampos();">
+                    <!-- Botones de acción -->
+                    <!-- Botones de acción -->
+                    <input type="submit" name="accion" value="Agregar" 
+                           class="btn btn-form btn-agregar" id="btnAgregar" onclick="return validarCampos();">
+
+                    <input type="submit" name="accion" value="Actualizar" 
+                           class="btn btn-form btn-actualizar" id="btnActualizar" style="display:none;" onclick="return validarCampos();">
+
+                    <!-- Botón cancelar -->
+                    <button type="button" class="btn btn-form btn-cancelar" id="btnCancelar" style="display:none;" onclick="cancelarEdicion();">
+                        Cancelar
+                    </button>
+
                 </form>
             </div>
         </div>
+
 
         <!-- TABLA PARA MOSTRAR LOS SERVICIOS -->
         <div class="col-md-8 table-responsive">
@@ -343,6 +354,37 @@
 
     </div>
 </div>
+<script>
+    // Cuando el controlador envía un servicio (al hacer clic en Editar), ocultamos Agregar y mostramos Actualizar + Cancelar
+    window.onload = function () {
+        let servicioEnEdicion = "${servicio != null ? servicio.codigoServicio : ''}";
+        if (servicioEnEdicion !== "") {
+            document.getElementById("btnAgregar").style.display = "none";
+            document.getElementById("btnActualizar").style.display = "inline-block";
+            document.getElementById("btnCancelar").style.display = "inline-block";
+        }
+    };
+
+    // Función para cancelar edición
+    function cancelarEdicion() {
+    // Limpia el formulario
+    document.getElementById("formServicio").reset();
+
+    // Limpia manualmente todos los campos (porque JSP los rellena al renderizar)
+    document.querySelector("input[name='codigoServicio']").value = "";
+    document.querySelector("input[name='txtNombreServicio']").value = "";
+    document.querySelector("input[name='txtDescripcion']").value = "";
+    document.querySelector("input[name='txtTipo']").value = "";
+    document.querySelector("input[name='txtFechaServicio']").value = "";
+    document.querySelector("input[name='txtCodigoVehiculo']").value = "";
+
+    // Mostrar/ocultar botones
+    document.getElementById("btnAgregar").style.display = "inline-block";
+    document.getElementById("btnActualizar").style.display = "none";
+    document.getElementById("btnCancelar").style.display = "none";
+}
+
+</script>
 
 <!-- Scripts de interacción -->
 <script>
