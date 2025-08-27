@@ -9,10 +9,17 @@
             <web-module-libraries/>
             <web-module-additional-libraries/>
             <source-roots>
+<<<<<<< HEAD
                 <root id="src.dir" name="Source Packages"/>
             </source-roots>
             <test-roots>
                 <root id="test.src.dir" name="Test Packages"/>
+=======
+                <root id="src.dir"/>
+            </source-roots>
+            <test-roots>
+                <root id="test.src.dir"/>
+>>>>>>> origin/ebarrera-2021235
             </test-roots>
         </data>
     </configuration>
